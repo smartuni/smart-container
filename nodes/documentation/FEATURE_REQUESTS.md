@@ -15,6 +15,6 @@ save to sd-card on data arrival
 - sync protocoll when data rate is high enough to re-transmit data from out-of-range transmissions
 
 ### Ideas
-    - Battery Low (on-action) or battery state (periodically)     (probably not possible, speak again next week (21.04))
-    - 'Alive check' on event-based nodes. Send ping every x hours
+- Battery Low (on-action) or battery state (periodically)     (probably not possible, speak again next week (21.04))
+- 'Alive check' on event-based nodes. Send ping every x hours
     
