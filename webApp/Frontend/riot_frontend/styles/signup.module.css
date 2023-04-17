@@ -1,0 +1,23 @@
+.signup {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 20px;
+    color: #444;
+    font-size: 16px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
