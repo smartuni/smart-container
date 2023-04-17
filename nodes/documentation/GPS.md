@@ -38,3 +38,23 @@
 - FIX (output): works like the "Red LED" to indicate if satellites are found
 - PPS (output): "pulse per second"
 - EN (input): Pulling it high disables the GPS module
+
+## Hardware connection
+The module must be connected to the **Nucleo F103RB** board as follows:
+- 3V -> CN6 3V3
+- GND -> CN6 GND
+- TX -> TODO
+- RX -> TODO
+
+## Usage
+The module communicates via its UART interface. Therefore a board with U(S)ART capabilities is necessary to communicate with the module. For our project we use the **Nucleo F103RB** board and the TX/RX pins are connected to the *UART2* (TODO) interface.\
+For testing purposes and example code the projects `periph_uart` and `periph_uart_mode` inside the `tests` directory of the RIOT project can be used.\
+
+For serial commands see the [PMTK command packet datasheet](https://cdn-shop.adafruit.com/datasheets/PMTK%20command%20packet-Complete-C39-A01.pdf).
+
+### Commands sent to the GPS module
+- `225 PMTK_CMD_PERIODIC_MODE`: Enter Standby or Backup mode for power saving
+- `251 PMTK_SET_NMEA_BAUDRATE`: Set Baudrate
+
+### Data to be sent from the GPS module (to be implemented in code via RIOT)
+- `010 PMTK_SYS_MSG`: Output system message (3 = module is in "Normal" mode)
