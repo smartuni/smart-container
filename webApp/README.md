@@ -2,15 +2,15 @@
 
 ## Team
 
-Team Lead Emily
+Team Lead *Emily*
 
-**Frontend**: Lead Sahar
+**Frontend**: Lead *Sahar*
 - Alicia
 - Hamid
 - Landon
 - Sahar
 
-**Backend**: Lead Emily
+**Backend**: Lead *Emily*
 - David
 - Emily
 - Florian
