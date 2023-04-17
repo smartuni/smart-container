@@ -18,6 +18,7 @@ Team Lead Emily
 ## TecStack
 
 **Frontend**:
+- Next.js
 
 **Backend**:
 - Django (Python)
