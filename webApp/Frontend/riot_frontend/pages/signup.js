@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from '@/styles/signup.module.css'
+import Link from "next/link";
 
 export default function SignUp() {
     const router = useRouter();
@@ -55,22 +56,34 @@ export default function SignUp() {
         <div className="signup">
             <nav>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Log In</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <Link href="/">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/login">
+                            Log In
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/contact">
+                            Contact
+                        </Link>
+                    </li>
                 </ul>
             </nav>
             <h1 className="signup-header">Sign Up</h1>
             <div className="signup-body">
                 <form onSubmit={handleSubmit}>
-                <div className={styles['form-group']}>
+                    <div className={styles['form-group']}>
                         <label className={styles.label}>
                             First name:
                             <input
                                 type="text"
                                 value={firstname}
                                 onChange={(e) => setFirstname(e.target.value)}
-                            /> 
+                            />
                             {errors.firstname && <span className={styles.error}>{errors.firstname}</span>}
                         </label>
                     </div>
@@ -81,7 +94,7 @@ export default function SignUp() {
                                 type="text"
                                 value={lastname}
                                 onChange={(e) => setLastname(e.target.value)}
-                            /> 
+                            />
                             {errors.lastname && <span className={styles.error}>{errors.lastname}</span>}
                         </label>
                     </div>
@@ -92,7 +105,7 @@ export default function SignUp() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                            /> 
+                            />
                             {errors.email && <span className={styles.error}>{errors.email}</span>}
                         </label>
                     </div>
