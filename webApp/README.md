@@ -41,21 +41,15 @@ We are responsible for displaying collected data from distributed nodes.
 {
   "Container": [
     { 
-      "id" : "UUID",
-      "position": {
-        "GPS": {
-          "lat": "float",
-          "long": "float"
-        },
-        "time": "DateTime"
-      },
-      "temperature": "float",
-      "humidity": "float",
-      "acceleration": "boolean",
-      "door_sensor": "boolean",
-      "nfc_tag": "UserId"
-    }
-  ],
+      "id": "string", 
+      "start": "string", 
+      "dest": "string", 
+      "door_status": "boolean", 
+      "content": "string", 
+      "userId": "string", 
+      "crashed": "boolean"
+ },
+],
   "User": [
    { 
      "id" : "UUID",
