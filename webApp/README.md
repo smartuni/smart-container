@@ -38,21 +38,34 @@ We are responsible for displaying collected data from distributed nodes.
 ## Data model
 
 ```json
-[
-  { 
-    "id" : "UUID",
-    "position": {
-      "GPS": {
-        "lat": "float",
-        "long": "float"
+{
+  Container: [
+    { 
+      "id" : "UUID",
+      "position": {
+        "GPS": {
+          "lat": "float",
+          "long": "float"
+        },
+        "time": "DateTime"
       },
-      "time": "DateTime"
-    },
-    "temperature": "float",
-    "humidity": "float",
-    "acceleration": "boolean",
-    "door_sensor": "boolean",
-    "nfc_tag": "UserId"
-  }
-]
-
+      "temperature": "float",
+      "humidity": "float",
+      "acceleration": "boolean",
+      "door_sensor": "boolean",
+      "nfc_tag": "UserId"
+    }
+  ],
+  User: [
+   { 
+     "id" : "UUID",
+     "firstName": "string",
+     "lastName": "string",
+     "email": "string",
+     "password": "string",
+     "company": "string",
+     "role": "string",
+   }
+  ]
+}
+```
