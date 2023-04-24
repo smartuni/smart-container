@@ -40,19 +40,19 @@ We are responsible for displaying collected data from distributed nodes.
 ```json
 [
   { 
-    id : UUID,
-    position: {
-      GPS: {
-        lat: float,
-        long: float
-      }, 
-      time: DateTime
+    "id" : "UUID",
+    "position": {
+      "GPS": {
+        "lat": "float",
+        "long": "float"
+      },
+      "time": "DateTime"
     },
-    temperature: float,
-    humidity: float,
-    acceleration: boolean,
-    door_sensor: boolean,
-    nfc_tag: UserId
+    "temperature": "float",
+    "humidity": "float",
+    "acceleration": "boolean",
+    "door_sensor": "boolean",
+    "nfc_tag": "UserId"
   }
 ]
 
