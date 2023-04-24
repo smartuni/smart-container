@@ -35,7 +35,7 @@ We are responsible for displaying collected data from distributed nodes.
 - Door sensor
 - NFC-tag (get content of container listed, Authentication)
 
-## Data model
+## Data model (Api response type: JSON)
 
 ```json
 {
