@@ -37,6 +37,7 @@ We are responsible for displaying collected data from distributed nodes.
 
 ## Data model
 
+```
 [
   { 
     id : UUID,
@@ -54,3 +55,4 @@ We are responsible for displaying collected data from distributed nodes.
     nfc_tag: UserId
   }
 ]
+
