@@ -39,7 +39,7 @@ We are responsible for displaying collected data from distributed nodes.
 
 ```json
 {
-  Container: [
+  "Container": [
     { 
       "id" : "UUID",
       "position": {
@@ -56,7 +56,7 @@ We are responsible for displaying collected data from distributed nodes.
       "nfc_tag": "UserId"
     }
   ],
-  User: [
+  "User": [
    { 
      "id" : "UUID",
      "firstName": "string",
