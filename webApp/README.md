@@ -48,8 +48,8 @@ We are responsible for displaying collected data from distributed nodes.
       "content": "string", 
       "userId": "string", 
       "crashed": "boolean"
- },
-],
+    },
+  ],
   "User": [
    { 
      "id" : "UUID",
@@ -59,6 +59,15 @@ We are responsible for displaying collected data from distributed nodes.
      "password": "string",
      "company": "string",
      "role": "string",
+   }
+  ],
+  "SensorData": [
+   { 
+     "id" : "integer",
+     "data_type": "string",
+     "value": "string",
+     "datetime": "string",
+     "container_id": "integer"
    }
   ]
 }
