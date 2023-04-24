@@ -34,3 +34,23 @@ We are responsible for displaying collected data from distributed nodes.
 - Acceleration (status of the node (crashed?))
 - Door sensor
 - NFC-tag (get content of container listed, Authentication)
+
+## Data model
+
+[
+  { 
+    id : UUID,
+    position: {
+      GPS: {
+        lat: float,
+        long: float
+      }, 
+      time: DateTime
+    },
+    temperature: float,
+    humidity: float,
+    acceleration: boolean,
+    door_sensor: boolean,
+    nfc_tag: UserId
+  }
+]
