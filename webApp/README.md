@@ -13,6 +13,7 @@ Team Lead *Emily*
 **Backend**: Lead *Emily*
 - David
 - Emily
+- Hilary
 - Florian
 
 ## TecStack

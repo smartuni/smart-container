@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import styles from '@/styles/signup.module.css'
-import Link from "next/link";
+import styles from '/styles/signup.module.css'
 
 export default function SignUp() {
     const router = useRouter();
@@ -56,21 +55,9 @@ export default function SignUp() {
         <div className="signup">
             <nav>
                 <ul>
-                    <li>
-                        <Link href="/">
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/login">
-                            Log In
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/contact">
-                            Contact
-                        </Link>
-                    </li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#">Log In</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
             <h1 className="signup-header">Sign Up</h1>
