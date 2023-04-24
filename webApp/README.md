@@ -37,7 +37,7 @@ We are responsible for displaying collected data from distributed nodes.
 
 ## Data model
 
-```
+```json
 [
   { 
     id : UUID,
