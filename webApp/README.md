@@ -4,7 +4,7 @@
 
 Team Lead *Emily*
 
-**Frontend**: Lead *Sahar*
+**Frontend**: Lead *Alicia*
 - Alicia
 - Hamid
 - Landon
