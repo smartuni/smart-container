@@ -110,7 +110,7 @@ export default function SignUp() {
                     <button type="submit">Sign up</button>
                     <button>Cancel</button>
                     <footer>
-                        <p>If you already have an account, please <a href="pages/login">log in here</a>.</p>
+                        <p>If you already have an account, please <a href="/signin">log in here</a>.</p>
                     </footer>
                 </form>
             </div>
