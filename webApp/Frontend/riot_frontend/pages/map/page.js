@@ -10,8 +10,9 @@ export default function Map() {
       <div>
         <nav >
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">About Us</a></li>
+            {/* <li><a href="/">Home</a></li> */}
+            <li><a href="/home">Home</a></li>
+            <li><a href="about">About Us</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#">Log out</a></li>
           </ul>
