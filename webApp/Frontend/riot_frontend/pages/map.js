@@ -26,11 +26,11 @@ export default function Map() {
       <div>
         <p className={styles.mapHint}>Click on a container to see details!</p>
       </div>
-      <div className={styles.mapButtonDiv}>
-        <button className={styles.mapButtons}>Info</button>
-        <button className={styles.mapButtons}>Click</button>
-        <button className={styles.mapButtons}>Click</button>
-        <button className={styles.mapButtons}>Click</button>
+      <div className={styles.containersInfo}>
+        <div>Info1</div>
+        <div>Info2</div>
+        <div>Info3</div>
+        <div>Info4</div>
       </div>
     </div>
   );

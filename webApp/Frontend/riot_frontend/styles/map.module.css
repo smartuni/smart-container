@@ -21,7 +21,7 @@
     font-size: 20px;
   }
   
-  .mapButtonDiv{
+  .containersInfo{
     width: 150px;
     display: flex;
     flex-direction: column;
@@ -30,8 +30,14 @@
     top: -1100px;
   }
   
-  .mapButtons{
+  .containersInfo div{
     width: 150px;
     height: 65px;
     margin-bottom: 15px;
+    padding-top: 35px;
+    background-color: #c6ccdc;
+    color: #0f285a;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 15px;
   }
