@@ -47,7 +47,13 @@ We are responsible for displaying collected data from distributed nodes.
       "door_status": "boolean", 
       "content": "string", 
       "userId": "string", 
-      "crashed": "boolean"
+      "crashed": "boolean",
+      "threshold": {
+        "string": {
+          "min": "string",
+          "max": "string",
+        }
+      }
     },
   ],
   "User": [
