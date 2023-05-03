@@ -35,3 +35,22 @@
     height: 65px;
     margin-bottom: 15px;
   }
+
+  .sideBar {
+    flex: 0 0 350px;
+    border: 2px solid gray;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+  }
+
+  .sideBar div {
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(174, 201, 241); 
+    border: 1px solid gray; 
+    border-radius: 5px; 
+    margin: 15px;
+  }

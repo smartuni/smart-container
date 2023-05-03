@@ -10,9 +10,9 @@ export default function Home() {
       <nav >
         <ul>
           <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="/map/page">Contact</a></li>
           <li><a href="/signup">Sign up</a></li>
-          <li><a href="/map/page">To Map Page</a></li>
+          <li><a href="/map">To Map Page</a></li>
         </ul>
       </nav>
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
