@@ -2,7 +2,7 @@
 APPLICATION = bme280Test
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= nucleo-l152re
+BOARD ?= pba-d-01-kw2x
 
 # Absolute Path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
