@@ -27,7 +27,7 @@ export default function Map() {
         <p className={styles.mapHint}>Click on a container to see details!</p>
       </div>
       <div className={styles.mapButtonDiv}>
-        <button className={styles.mapButtons}>Click</button>
+        <button className={styles.mapButtons}>Info</button>
         <button className={styles.mapButtons}>Click</button>
         <button className={styles.mapButtons}>Click</button>
         <button className={styles.mapButtons}>Click</button>
