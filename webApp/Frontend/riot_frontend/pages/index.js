@@ -10,7 +10,7 @@ export default function Home() {
       <nav >
         <ul>
           <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="/map">Contact</a></li>
           <li><a href="/signup">Sign up</a></li>
           <li><a href="/map/page">To Map Page</a></li>
         </ul>
