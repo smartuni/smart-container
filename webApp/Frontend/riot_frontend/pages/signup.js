@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import styles from '@/styles/signup.module.css'
+import styles from '/styles/signup.module.css'
 
 export default function SignUp() {
     const router = useRouter();
@@ -55,7 +55,7 @@ export default function SignUp() {
         <div className="signup">
             <nav>
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="#">Log In</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
@@ -110,7 +110,7 @@ export default function SignUp() {
                     <button type="submit">Sign up</button>
                     <button>Cancel</button>
                     <footer>
-                        <p>If you already have an account, please <a href="pages/login">log in here</a>.</p>
+                        <p>If you already have an account, please <a href="/signin">log in here</a>.</p>
                     </footer>
                 </form>
             </div>
