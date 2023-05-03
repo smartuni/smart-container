@@ -36,3 +36,21 @@ Nordic semiconductor nRF52840-DK
 
 - capable of CoAP and LoRaWAN (via additional shield)
 - external SD-card module for data storage is required
+
+## Communication
+- one route per sensor
+- discovery per multicast (so sensors discover well-known core of concentrator)
+- sensors post their data to concentrator which responds with async acknowledgment
+- sensors repeat until they receive ack and then sleep again
+
+## Encryption
+...
+
+## TO-DO
+- measure power draw of all sensor nodes in "typical"-operation
+- implement periodic timer for periodic sensors and interrupts for event sensors
+- implement coap communication
+- integrate offline storage component provided by Security Team
+- add encryption to communication
+- implement LoRaWAN with LoRaWAN SSL
+- profit
