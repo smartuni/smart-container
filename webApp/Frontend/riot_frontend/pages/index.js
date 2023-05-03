@@ -6,12 +6,10 @@ import { FiMenu } from "react-icons/fi";
 import css from '../styles/index.module.css'
 
 
-
-
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
+  
   const [showMenu, setShowMenu] = useState(true)
 
   const handleNavIcon = () => setShowMenu((prev) => !prev)
