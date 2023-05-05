@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Sensor_Data(models.Model):
     sensor_type = models.CharField(max_length=10)
@@ -7,7 +8,7 @@ class Sensor_Data(models.Model):
     sensor_time = models.DateTimeField()
 
     class Meta:
-        ordering = ['sensor_time']
+        ordering = ["sensor_time"]
 
 
 class Container(models.Model):
@@ -18,8 +19,18 @@ class Container(models.Model):
     container_destination = models.CharField()
     container_time = models.DateTimeField()
 
-    def __str__(self):
-        return self.container_id
-    
     class Meta:
-        ordering = ['container_id']
+        ordering = ["container_id"]
+
+
+class User(models.Model):
+    user_id = models.IntegerField()
+    firstName = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    role = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["user_id"]
