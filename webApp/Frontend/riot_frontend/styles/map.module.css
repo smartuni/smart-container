@@ -6,9 +6,21 @@
     font-size: 20px;
     margin: 0px;
   }
+
+  .map {
+    float: left;
+    width: 85%;
+  }
+
+  /* Media query for zoom levels 80% to 100% */
+  @media screen and (min-width: 768px) and (max-width: 1600px){
+    .map {
+      width: 80%;
+    }
+  }
   
   .mainMap {
-     height: 514px;
+    height: 514px;
     width: 95%;
     border: 2px solid black;
     border-radius: 5px;

@@ -21,7 +21,7 @@ export default function Map() {
         <div>Info3</div>
         <div>Info4</div>
       </div>
-      <div style={{ float: 'left', width: '85%'}}>
+      <div className={styles.map}>
           <p className={styles.mapHint}>Your Containers</p>
           <Image src={img} alt="map" className={styles.mainMap}/>
           <p className={styles.mapHint}>Click on a container to see details!</p>
