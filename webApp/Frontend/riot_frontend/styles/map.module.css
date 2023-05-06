@@ -8,11 +8,10 @@
   }
   
   .mainMap {
-    width: 90%;
-    height: 80%;
+     height: 514px;
+    width: 95%;
     border: 2px solid black;
     border-radius: 5px;
-    margin-left: 160px;
   }
   
   .mapHint {
@@ -22,16 +21,13 @@
   }
   
   .containersInfo{
-    width: 150px;
-    display: flex;
+    width: 250px;
     flex-direction: column;
-    position: relative;
-    left: 15px;
-    top: -1100px;
+    float: left;
   }
   
   .containersInfo div{
-    width: 150px;
+    width: 250px;
     height: 65px;
     margin-bottom: 15px;
     padding-top: 35px;
