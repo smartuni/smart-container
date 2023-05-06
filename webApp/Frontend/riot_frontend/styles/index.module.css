@@ -1,0 +1,20 @@
+.container {
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    width: 45rem;
+    height: 514px;
+    background-repeat: no-repeat;
+    background-image: url('/container.png');
+    border: 1px solid whitesmoke;
+    border-radius: 15px;
+}
+
+
+.create_account {
+    margin-top: 28rem;
+}
+
+.nav_size {
+    display: none;
+}
