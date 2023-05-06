@@ -25,7 +25,7 @@ export default function Home2() {
         <ul>
           <li><a href="/about">About Us</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/signup">Sign up</a></li>
+          <li><a href="/signin">Sign in</a></li>
           <li><a href="/map">To Map Page</a></li>
         </ul>
       </nav>
