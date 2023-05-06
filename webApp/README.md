@@ -30,7 +30,7 @@ Team Lead *Emily*
 We are responsible for displaying collected data from distributed nodes.
 - Position (GPS, Time)
 - Temperature
-- Humanity
+- Humidity
 - Acceleration (status of the node (crashed?))
 - Door sensor
 - NFC-tag (get content of container listed, Authentication)
