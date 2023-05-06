@@ -17,10 +17,7 @@ export default function Home2() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-
       <button onClick={handleNavIcon} className={css.nav_size}> </button>
-
-
       <nav className={css.navbar} style={{ display: showMenu ? 'block' : 'none' }}>
         <ul>
           <li><a href="/about">About Us</a></li>
@@ -29,17 +26,12 @@ export default function Home2() {
           <li><a href="/map">To Map Page</a></li>
         </ul>
       </nav>
-
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-
-
         <div className={css.container}>
           <a href="/signup">
             <button className={css.create_account}>Create Account</button>
           </a>
         </div>
-
-
       </div>
     </main>
   );
