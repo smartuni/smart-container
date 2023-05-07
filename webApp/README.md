@@ -32,6 +32,7 @@ We are responsible for displaying collected data from distributed nodes.
 - Temperature
 - Humidity
 - Acceleration (status of the node (crashed?))
+- Wather leak
 - Door sensor
 - NFC-tag (get content of container listed, Authentication)
 
