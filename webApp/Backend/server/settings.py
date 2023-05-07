@@ -79,8 +79,8 @@ DATABASES = {
         'HOST': '188.68.38.46',
         'PORT': '5432',
         'USER': 'riot_django',
-        'PASSWORD': 'z2...',
-        'NAME': 'web_app',
+        'PASSWORD': '2zX44jaF',
+        'NAME': 'riot_web_app',
     }
 }
 
