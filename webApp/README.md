@@ -41,7 +41,7 @@ We are responsible for displaying collected data from distributed nodes.
 {
   "Container": [
     { 
-      "id": "string", 
+      "id": "UUID", 
       "start": "string", 
       "dest": "string", 
       "door_status": "boolean", 
@@ -69,11 +69,11 @@ We are responsible for displaying collected data from distributed nodes.
   ],
   "SensorData": [
    { 
-     "id" : "integer",
+     "id" : "UUID",
      "data_type": "string",
      "value": "string",
      "datetime": "string",
-     "container_id": "integer"
+     "container_id": "UUID"
    }
   ]
 }
