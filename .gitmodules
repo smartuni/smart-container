@@ -1,3 +1,6 @@
 [submodule "nodes/RIOT"]
 	path = nodes/RIOT
 	url = https://github.com/smartuni/RIOT.git
+[submodule "security/RIOT"]
+	path = security/RIOT
+	url = https://github.com/RIOT-OS/RIOT
