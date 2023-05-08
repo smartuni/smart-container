@@ -5,7 +5,7 @@ APPLICATION = bme280Test
 BOARD ?= nucleo-l152re
 
 # Absolute Path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../RIOT
+RIOTBASE ?= $(CURDIR)/../../RIOT
 
 # Use saul
 USEMODULE += saul
