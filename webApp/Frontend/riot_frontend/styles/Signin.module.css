@@ -1,6 +1,6 @@
 .form-signin {
   width: 100%;
-  max-width: 330px;
+  max-width: 1000px;
   padding: 15px;
   margin: auto;
 }
@@ -22,13 +22,13 @@
 
 
 .form-signin input[type="email"] {
-  margin-bottom: -2px;
+  margin-bottom: 0px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="password"] {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -41,18 +41,22 @@
 }
 
 .form-group {
+  display: block;
   margin-bottom: 20px;
+  color: #444;
+  font-size: 16px;
 }
 
 .error {
   color: red;
   font-size: 0.8em;
-  margin-top: 5px;
+  margin-bottom: -36px;
+  position: absolute;
 }
 
 .label {
   display: block;
   margin-bottom: 20px;
-  color: #444;
+  color: #5196d6;
   font-size: 16px;
 }
