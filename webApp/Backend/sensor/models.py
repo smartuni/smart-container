@@ -1,8 +1,10 @@
 from django.db import models
+import uuid
 
 
 # Create your models here.
 class Sensor_Data(models.Model):
+    sensor_data_id = models.UUIDField
     sensor_type = models.CharField(max_length=10)
     sensor_data = models.CharField(max_length=100)
     sensor_time = models.DateTimeField()
@@ -12,7 +14,7 @@ class Sensor_Data(models.Model):
 
 
 class Container(models.Model):
-    container_id = models.IntegerField()
+    container_id = models.UUIDField()
     container_content = models.CharField(max_length=100)
     container_door_closed = models.BooleanField()
     container_start = models.CharField()
@@ -24,7 +26,7 @@ class Container(models.Model):
 
 
 class User(models.Model):
-    user_id = models.IntegerField()
+    user_id = models.UUIDField()
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
