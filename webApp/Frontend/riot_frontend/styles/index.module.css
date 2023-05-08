@@ -18,3 +18,66 @@
 .nav_size {
     display: none;
 }
+
+
+
+@media only screen and (max-width: 1000px) {
+
+    .container {
+        margin: auto;
+        margin-top: 150px;
+        padding: 20px;
+        width: 45rem;
+        height: 480px;
+    }
+
+    .navbar {
+        display: block;
+        margin-left: 0;
+        margin-bottom: 20px;
+        height: 0;
+        padding: 0;
+    }
+
+
+    .navbar li {
+        font-size: 18px;
+        width: 150px;
+        height: 40px;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin: 10px auto 20px 10px;
+    }
+
+    .navbar ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .nav_size {
+        display: none;
+    }
+}
+
+
+@media only screen and (max-width: 676px) {
+    .nav_size {
+        display: block;
+    }
+
+    .navbar li {
+        margin-top: -28px;
+        font-size: 15px;
+        width: 100px;
+        height: 40px;
+        margin-left: 10px;
+    }
+
+    .navbar ul {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding-left: 0;
+    }
+
+}
