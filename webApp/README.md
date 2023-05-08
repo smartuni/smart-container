@@ -13,7 +13,6 @@ Team Lead *Emily*
 **Backend**: Lead *Emily*
 - David
 - Emily
-- Hilary
 - Florian
 
 ## TecStack
@@ -45,7 +44,7 @@ We are responsible for displaying collected data from distributed nodes.
       "id": "UUID", 
       "start": "string", 
       "dest": "string", 
-      "door_status": "boolean", 
+      "doorStatus": "boolean", 
       "content": "string", 
       "userId": "UUID", 
       "crashed": "boolean",
@@ -71,10 +70,10 @@ We are responsible for displaying collected data from distributed nodes.
   "SensorData": [
    { 
      "id" : "UUID",
-     "data_type": "string",
+     "dataType": "string",
      "value": "string",
      "datetime": "string",
-     "container_id": "UUID"
+     "containerId": "UUID"
    }
   ]
 }

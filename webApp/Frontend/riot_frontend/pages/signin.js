@@ -42,6 +42,8 @@ function Signin() {
     }
 };
 
+
+
   return (
     <div className="signin-new">
       <nav>
@@ -58,13 +60,14 @@ function Signin() {
             <div className={styles['form-group']}>
               <label className={styles.label}> 
                 <input 
-                  type="email" 
+                  type="loginEmail" 
                   className="form-control" 
                   id="floatingInput" 
                   placeholder="name@example.com" 
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {errors.firstname && <span className={styles.error}>{errors.firstname}</span>}
+                {errors.email && <span className={styles.error}>{errors.email}</span>}
               </label>
             </div>
             
@@ -83,7 +86,7 @@ function Signin() {
           </label>
         </div>
             
-        <label htmlFor="floatingPassword">Password</label>
+        
           
         <div className={cx(styles.checkbox,"mb")}>
           <label>
