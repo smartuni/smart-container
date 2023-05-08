@@ -1,6 +1,6 @@
 #include "stdint.h"
 
-#include "eeprom.h"
+#include "periph/eeprom.h"
 #include "crypto/ciphers.h"
 #include "phydat.h"
 
@@ -44,7 +44,7 @@ int encrypt_buf(uint8_t *key, uint8_t *plain_text, uint8_t *cipher_text)
         return -1;
     }
 
-    for (i = 0; i < sizeof(plain_text) / AES_BLOCK_SIZE; +ii)
+    for (i = 0; i < sizeof(plain_text) / AES_BLOCK_SIZE; ++i)
     {
         if (cipher_encrypt(&cipher, plain_text + i * AES_BLOCK_SIZE, cipher_text + i * AES_BLOCK_SIZE) < 0)
         {
