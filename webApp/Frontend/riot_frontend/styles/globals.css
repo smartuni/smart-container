@@ -1,6 +1,6 @@
 body {
   background-color: #020117;
-  color: #000;
+  color: #fff;
   font-family: 'Helvetica', sans-serif;
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@ h1 {
 }
 
 button {
-  background-color: #c6ccdc;
+  background-color: #b9c9e7;
   color: #0f285a;
   font-size: 15px;
   font-weight: 800;
@@ -46,6 +46,15 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
 
 input[type="email"] {
   margin-left: 35px;
+}
+
+input[type="loginEmail"] {
+  margin-left: 0px;
+  border: none;
+  border-bottom: 1px solid #9abae0;
+  font-size: 16px;
+  padding: 10px;
+  width: 35%;
 }
 
 textarea {
