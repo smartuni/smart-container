@@ -36,7 +36,7 @@ export default function Home() {
             <a href="/signup">Sign up</a>
           </li>
           <li>
-            <a href="/map/page">To Map Page</a>
+            <a href="/map">To Map Page</a>
           </li>
         </ul>
       </nav>
