@@ -56,7 +56,7 @@ export default function SignUp() {
             <nav>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="#">Log In</a></li>
+                    <li><a href="/signin">Log In</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
