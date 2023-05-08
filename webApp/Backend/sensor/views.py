@@ -4,6 +4,10 @@ from rest_framework.parsers import JSONParser
 from .models import SensorData
 from .serializer import SensorSerializer
 
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+
 # Create your views here.
 """
 Retrieve a single sensor info from db
@@ -31,6 +35,33 @@ def sensor_detail(request, pk):
         sensor.delete()
         return HttpResponse(status=204)
     
+# TODO: Change the Response type to JSON
+def signUp(request):
+    try:
+        user = User.objects.create_user("florian", "florian@haw.de", "123")
+    except:
+        return HttpResponse("The user seems to be already existing.")
 
-def signOut(request, userUuid):
-    return HttpResponse("You want me to sign out the user with id:  %s." % userUuid)
+    return HttpResponse("You are singed up as: %s", user)
+
+def signIn(request):
+    username = request.POST.get("username", "")
+    password = request.POST.get("password", "")
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        login(request, user)
+        return HttpResponse("You are logged in")
+    else:
+        return HttpResponse("Sorry but there is a mismatch with your credentials.")
+
+@login_required
+def signOut(request):
+    logout(request)
+    return HttpResponse("Successfully signed out.")
+
+def checkSignedIn(request):
+    if request.user.is_authenticated:
+        return HttpResponse("You are currently signed in.")
+    else:
+        return HttpResponse("You are currently NOT signed in.")

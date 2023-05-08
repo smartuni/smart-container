@@ -4,7 +4,7 @@ class Container(models.Model):
     id = models.UUIDField
     start = models.CharField(max_length=256)
     dest = models.CharField(max_length=256)
-    door_status = models.BooleanField
+    doorStatus = models.BooleanField
     content = models.CharField(max_length=1024)
     userId = models.UUIDField
     crashed = models.BooleanField
@@ -18,10 +18,10 @@ class Container(models.Model):
 
 class SensorData(models.Model):
     id = models.UUIDField
-    data_type = models.CharField(max_length=64)
+    dataType = models.CharField(max_length=64)
     value = models.CharField(max_length=1024)
     datetime = models.DateTimeField
-    container_id = models.UUIDField
+    containerId = models.UUIDField
 
 class User(models.Model):
     id = models.UUIDField
