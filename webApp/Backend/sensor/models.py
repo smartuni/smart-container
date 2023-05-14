@@ -40,7 +40,7 @@ class Container(models.Model):
     )
     container_content = models.CharField(max_length=100)
     container_door_closed = models.BooleanField()
-    container_start = models.CharField(max_length=100)
+    container_start = models.CharField(max_length=101)
     container_destination = models.CharField(max_length=100)
     container_time = models.DateTimeField()
 

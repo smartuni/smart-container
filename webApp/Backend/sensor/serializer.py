@@ -16,7 +16,6 @@ class ContainerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Container
         fields = [
-            "id",
             "container_id",
             "container_content",
             "container_door_closed",
@@ -31,7 +30,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "id",
             "user_id",
             "firstName",
             "lastName",
