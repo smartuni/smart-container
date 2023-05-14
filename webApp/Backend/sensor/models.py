@@ -3,7 +3,7 @@ import uuid
 
 
 # Create your models here.
-class Sensor_Data(models.Model):
+class SensorData(models.Model):
     """
     Model class for the storing of sensor data
     owner: the container that the sensor is attached to
@@ -12,6 +12,7 @@ class Sensor_Data(models.Model):
     sensor_time: the time the data was recorded
     """
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(
         "Container", related_name="sensor_data", on_delete=models.CASCADE
     )
@@ -44,15 +45,7 @@ class Container(models.Model):
     container_time = models.DateTimeField()
 
     class Meta:
-        ordering = ["id"]
-
-
-class SensorData(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    data_type = models.CharField(max_length=64)
-    value = models.CharField(max_length=1024)
-    datetime = models.DateTimeField
-    container_id = models.UUIDField
+        ordering = ["container_id"]
 
 
 class User(models.Model):
@@ -67,7 +60,7 @@ class User(models.Model):
     role: the role of the user
     """
 
-    user_id = models.IntegerField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
     email = models.CharField(max_length=100)

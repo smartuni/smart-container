@@ -1,16 +1,16 @@
 from rest_framework import serializers
-from .models import Sensor_Data, User, Container
+from .models import SensorData, User, Container
 
 
 class SensorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sensor_Data
+        model = SensorData
         fields = ["id", "sensor_type", "sensor_data", "sensor_time"]
 
 
 class ContainerSerializer(serializers.ModelSerializer):
     sensor_data = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Sensor_Data.objects.all()
+        many=True, queryset=SensorData.objects.all()
     )
 
     class Meta:
