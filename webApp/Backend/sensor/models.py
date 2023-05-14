@@ -41,7 +41,15 @@ class Container(models.Model):
     container_time = models.DateTimeField()
 
     class Meta:
-        ordering = ["container_id"]
+        ordering = ["id"]
+
+
+class SensorData(models.Model):
+    id = models.UUIDField
+    data_type = models.CharField(max_length=64)
+    value = models.CharField(max_length=1024)
+    datetime = models.DateTimeField
+    container_id = models.UUIDField
 
 
 class User(models.Model):

@@ -77,11 +77,11 @@ WSGI_APPLICATION = "server.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "mydb",
-        "USER": "riot_django",
-        "PASSWORD": "riot55",
-        "HOST": "localhost",
+        "HOST": "188.68.38.46",
         "PORT": "5432",
+        "USER": "riot_django",
+        "PASSWORD": "2zX44jaF",
+        "NAME": "riot_web_app",
     }
 }
 
