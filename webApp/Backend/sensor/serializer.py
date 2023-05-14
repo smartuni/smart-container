@@ -9,6 +9,10 @@ class SensorSerializer(serializers.ModelSerializer):
 
 
 class ContainerSerializer(serializers.ModelSerializer):
+    sensor_data = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Sensor_Data.objects.all()
+    )
+
     class Meta:
         model = Container
         fields = [
@@ -19,6 +23,7 @@ class ContainerSerializer(serializers.ModelSerializer):
             "container_start",
             "container_destination",
             "container_time",
+            "sensor_data",
         ]
 
 
