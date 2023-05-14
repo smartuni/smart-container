@@ -14,7 +14,7 @@ export default function Contact() {
           <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/about">About Us</a></li>
-            <li><a href="/map">Back to Map</a></li>
+            <li><a href="/map">To Map Page</a></li>
             <li><a href="#">Log out</a></li>
           </ul>
         </nav>
