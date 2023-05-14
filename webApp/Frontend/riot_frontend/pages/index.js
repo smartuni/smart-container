@@ -21,7 +21,7 @@ export default function Home() {
       <button onClick={handleNavIcon} className={css.nav_size}><FiMenu />  </button>
 
 
-      <nav className={css.navbar} style={{ display: showMenu ? 'flex' : 'none' }}>
+      <nav className={css.navbar} style={{ display: showMenu ? 'block' : 'none' }}>
         <ul>
           <li>
             <a href="#">Home</a>
