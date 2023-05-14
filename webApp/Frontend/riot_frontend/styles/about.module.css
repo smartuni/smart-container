@@ -1,0 +1,47 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+    font-size: 20px;
+    font-family: monospace;
+  }
+  
+  .left {
+    flex: 1;
+    margin-left: 20px;
+  }
+
+  .left h2 {
+    margin-top: 0px;
+    margin-bottom: 50px;
+    color: darkturquoise;
+  }
+
+  .left h3{
+    font-family: monospace;
+  }
+
+  .left h3, .left ul{
+    text-align: left;
+  }
+
+  .left li {
+    margin-bottom: 10px;
+  }
+  
+  .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+    background-color: white;
+    margin-right: 100px;
+    border-radius: 1000px;
+  }
+  
+  .right img {
+    max-width: 100%;
+    height: auto;
+  }
+  
