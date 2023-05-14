@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 # Create your models here.
@@ -33,7 +34,9 @@ class Container(models.Model):
     container_time: the time the container was loaded and shipped
     """
 
-    container_id = models.IntegerField()
+    container_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False
+    )
     container_content = models.CharField(max_length=100)
     container_door_closed = models.BooleanField()
     container_start = models.CharField(max_length=100)
@@ -45,7 +48,7 @@ class Container(models.Model):
 
 
 class SensorData(models.Model):
-    id = models.UUIDField
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     data_type = models.CharField(max_length=64)
     value = models.CharField(max_length=1024)
     datetime = models.DateTimeField
@@ -64,7 +67,7 @@ class User(models.Model):
     role: the role of the user
     """
 
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(primary_key=True, default=uuid.uuid4, editable=False)
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
