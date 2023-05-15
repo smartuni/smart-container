@@ -57,7 +57,7 @@ static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, c
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Temperature: %s\n", (char *)pdu->payload);
+        printf("Temperature: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
@@ -70,7 +70,7 @@ static ssize_t _humidity_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Humidity: %s\n", (char *)pdu->payload);
+        printf("Humidity: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
@@ -83,7 +83,7 @@ static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coa
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Waterleak: %s\n", (char *)pdu->payload);
+        printf("Waterleak: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
@@ -96,7 +96,7 @@ static ssize_t _door_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_req
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Door: %s\n", (char *)pdu->payload);
+        printf("Door: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
@@ -109,7 +109,7 @@ static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_requ
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("GPS: %s\n", (char *)pdu->payload);
+        printf("GPS: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
@@ -122,7 +122,7 @@ static ssize_t _acceleration_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, 
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Acceleration: %s\n", (char *)pdu->payload);
+        printf("Acceleration: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
