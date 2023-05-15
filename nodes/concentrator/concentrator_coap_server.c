@@ -13,12 +13,12 @@
 #include "periph/gpio.h"
 #include "board.h"
 
-static ssize_t _temperature_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _humidity_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _waterleak_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _door_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _gps_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _acceleration_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
+static ssize_t _temperature_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _humidity_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _waterleak_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _door_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _gps_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _acceleration_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
 
 /* CoAP resources. Must be sorted by path (ASCII order). */
 static const coap_resource_t _resources[] = {
@@ -50,79 +50,79 @@ void server_init(void)
     gcoap_register_listener(&_listener);
 }
 
-static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Temperature: %s\n", (char *)pdu->payload);
+        printf("Temperature: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _humidity_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _humidity_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Humidity: %s\n", (char *)pdu->payload);
+        printf("Humidity: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Waterleak: %s\n", (char *)pdu->payload);
+        printf("Waterleak: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _door_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _door_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Door: %s\n", (char *)pdu->payload);
+        printf("Door: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("GPS: %s\n", (char *)pdu->payload);
+        printf("GPS: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _acceleration_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _acceleration_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
     (void)len;
 
     if (pdu->payload_len > 0) {
-        printf("Acceleration: %s\n", (char *)pdu->payload);
+        printf("Acceleration: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
