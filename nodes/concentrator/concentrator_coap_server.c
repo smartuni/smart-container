@@ -13,12 +13,12 @@
 #include "periph/gpio.h"
 #include "board.h"
 
-static ssize_t _temperature_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _humidity_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _waterleak_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _door_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _gps_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
-static ssize_t _acceleration_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, void *ctx);
+static ssize_t _temperature_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _humidity_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _waterleak_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _door_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _gps_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
+static ssize_t _acceleration_handler(coap_pkt_t* pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx);
 
 /* CoAP resources. Must be sorted by path (ASCII order). */
 static const coap_resource_t _resources[] = {
@@ -50,7 +50,7 @@ void server_init(void)
     gcoap_register_listener(&_listener);
 }
 
-static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
@@ -63,7 +63,7 @@ static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, v
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _humidity_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _humidity_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
@@ -76,7 +76,7 @@ static ssize_t _humidity_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
@@ -89,7 +89,7 @@ static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, voi
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _door_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _door_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
@@ -102,7 +102,7 @@ static ssize_t _door_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ct
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
@@ -115,7 +115,7 @@ static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
-static ssize_t _acceleration_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
+static ssize_t _acceleration_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_request_ctx_t *ctx)
 {
     (void)ctx;
     (void)buf;
