@@ -1,9 +1,13 @@
 GPS Sensor
 ===
 
-Describe here what the application is about.
+GPS Sensor RIOT application.
 
 Usage
 =====
 
-Describe here how to use this application
+1. Build and flash
+`make all flash`
+
+2. (Optionally) Run Shell
+`sudo term`
