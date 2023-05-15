@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Sensor_Data
+from .models import SensorData
     
 class SensorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sensor_Data
-        fields = ['id', 'sensor_type', 'sensor_data', 'sensor_time']
+        model = SensorData
+        fields = ['id', 'data_type', 'value', 'datetime', 'container_id']
 
