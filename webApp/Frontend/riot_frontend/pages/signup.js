@@ -57,7 +57,7 @@ export default function SignUp() {
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/signin">Log In</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
             </nav>
             <h1 className="signup-header">Sign Up</h1>

@@ -50,7 +50,7 @@ function Signin() {
           <ul>
             <li><a href="/">Home</a></li>
             <li><a href="signup">Sign Up</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
       </nav>
       <main className={cx(styles["form-signin"],"text-center","mt-5")}>
