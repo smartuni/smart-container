@@ -1,4 +1,3 @@
-@Author Dennis Fischer
 Changes:
     boards --> nrf52840dk --> include --> board.h 
 
