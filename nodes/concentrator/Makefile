@@ -3,6 +3,8 @@ APPLICATION = coap-example
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= feather-nrf52840
+# This USEMODULE should be used if LORAWAN Board is connected to nrf52840 board!!
+USEMODULE += sx1272
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
