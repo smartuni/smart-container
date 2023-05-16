@@ -1,7 +1,8 @@
-/home/guest/exercises/sensor_coap/bin/feather-nrf52840/ipv6_addr/ipv6_addr.o: \
- /home/guest/exercises/RIOT/sys/net/network_layer/ipv6/addr/ipv6_addr.c \
- /home/guest/exercises/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h \
- /home/guest/exercises/RIOT/core/lib/include/assert.h \
+/home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/ipv6_addr/ipv6_addr.o: \
+ /home/guest/smart-container/nodes/RIOT/sys/net/network_layer/ipv6/addr/ipv6_addr.c \
+ /home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/stdlib.h /usr/include/newlib/machine/ieeefp.h \
  /usr/include/newlib/_ansi.h /usr/include/newlib/nano/newlib.h \
  /usr/include/newlib/_newlib_version.h /usr/include/newlib/sys/config.h \
@@ -17,22 +18,23 @@
  /usr/include/newlib/sys/types.h /usr/include/newlib/sys/_stdint.h \
  /usr/include/newlib/sys/_pthreadtypes.h \
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
- /home/guest/exercises/RIOT/sys/include/fmt.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
- /home/guest/exercises/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/exercises/RIOT/core/lib/include/modules.h \
- /home/guest/exercises/RIOT/core/lib/include/riot_version.h \
- /home/guest/exercises/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/exercises/RIOT/core/lib/include/container.h \
- /home/guest/exercises/RIOT/sys/include/net/ipv6/addr.h \
+ /home/guest/smart-container/nodes/RIOT/sys/include/fmt.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
+ /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/addr.h \
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h \
- /home/guest/exercises/RIOT/sys/include/byteorder.h \
- /home/guest/exercises/RIOT/sys/include/unaligned.h \
- /home/guest/exercises/RIOT/sys/include/net/ipv4/addr.h
+ /home/guest/smart-container/nodes/RIOT/sys/include/byteorder.h \
+ /home/guest/smart-container/nodes/RIOT/sys/include/unaligned.h \
+ /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv4/addr.h
 
-/home/guest/exercises/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
+/home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
 
-/home/guest/exercises/RIOT/core/lib/include/assert.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /usr/include/newlib/stdlib.h:
 
@@ -84,26 +86,24 @@
 
 /usr/include/newlib/sys/stdio.h:
 
-/home/guest/exercises/RIOT/sys/include/fmt.h:
+/home/guest/smart-container/nodes/RIOT/sys/include/fmt.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
 
-/home/guest/exercises/RIOT/core/lib/include/kernel_defines.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
 
-/home/guest/exercises/RIOT/core/lib/include/modules.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
 
-/home/guest/exercises/RIOT/core/lib/include/riot_version.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
 
-/home/guest/exercises/RIOT/core/lib/include/compiler_hints.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
 
-/home/guest/exercises/RIOT/core/lib/include/container.h:
-
-/home/guest/exercises/RIOT/sys/include/net/ipv6/addr.h:
+/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/addr.h:
 
 /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h:
 
-/home/guest/exercises/RIOT/sys/include/byteorder.h:
+/home/guest/smart-container/nodes/RIOT/sys/include/byteorder.h:
 
-/home/guest/exercises/RIOT/sys/include/unaligned.h:
+/home/guest/smart-container/nodes/RIOT/sys/include/unaligned.h:
 
-/home/guest/exercises/RIOT/sys/include/net/ipv4/addr.h:
+/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv4/addr.h:

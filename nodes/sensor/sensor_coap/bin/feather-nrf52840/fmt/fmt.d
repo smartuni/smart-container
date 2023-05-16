@@ -1,9 +1,9 @@
-/home/guest/exercises/sensor_coap/bin/feather-nrf52840/fmt/fmt.o: \
- /home/guest/exercises/RIOT/sys/fmt/fmt.c \
- /home/guest/exercises/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h \
- /home/guest/exercises/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdarg.h \
+/home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/fmt/fmt.o: \
+ /home/guest/smart-container/nodes/RIOT/sys/fmt/fmt.c \
+ /home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdarg.h \
  /usr/include/newlib/stdio.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/nano/newlib.h /usr/include/newlib/_newlib_version.h \
  /usr/include/newlib/sys/config.h /usr/include/newlib/machine/ieeefp.h \
@@ -18,20 +18,22 @@
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
  /usr/include/newlib/string.h /usr/include/newlib/sys/string.h \
  /usr/include/newlib/unistd.h /usr/include/newlib/sys/unistd.h \
- /home/guest/exercises/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/exercises/RIOT/core/lib/include/modules.h \
- /home/guest/exercises/RIOT/core/lib/include/riot_version.h \
- /home/guest/exercises/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/exercises/RIOT/core/lib/include/container.h \
- /home/guest/exercises/RIOT/sys/include/fmt.h
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
+ /home/guest/smart-container/nodes/RIOT/sys/include/fmt.h \
+ /home/guest/smart-container/nodes/RIOT/sys/include/stdio_base.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h
 
-/home/guest/exercises/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
+/home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
 
-/home/guest/exercises/RIOT/core/lib/include/assert.h:
-
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdarg.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
 /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdarg.h:
 
 /usr/include/newlib/stdio.h:
 
@@ -81,14 +83,18 @@
 
 /usr/include/newlib/sys/unistd.h:
 
-/home/guest/exercises/RIOT/core/lib/include/kernel_defines.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
 
-/home/guest/exercises/RIOT/core/lib/include/modules.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
 
-/home/guest/exercises/RIOT/core/lib/include/riot_version.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
 
-/home/guest/exercises/RIOT/core/lib/include/compiler_hints.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
 
-/home/guest/exercises/RIOT/core/lib/include/container.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
 
-/home/guest/exercises/RIOT/sys/include/fmt.h:
+/home/guest/smart-container/nodes/RIOT/sys/include/fmt.h:
+
+/home/guest/smart-container/nodes/RIOT/sys/include/stdio_base.h:
+
+/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
