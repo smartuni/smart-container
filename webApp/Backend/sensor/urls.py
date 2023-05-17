@@ -12,4 +12,8 @@ urlpatterns = [
         views.ContainerDetail.as_view(),
         name="container_detail",
     ),
+    path("signUp/", views.signUp),
+    path("signIn/", views.signIn),
+    path("signOut/", views.signOut),
+    path("checkSignedIn/", views.checkSignedIn),
 ]

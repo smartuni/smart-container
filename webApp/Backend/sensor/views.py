@@ -7,6 +7,10 @@ from rest_framework import generics
 from rest_framework.views import APIView
 
 
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+
 # Create your views here.
 
 

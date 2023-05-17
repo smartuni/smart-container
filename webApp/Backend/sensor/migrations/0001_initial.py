@@ -6,53 +6,82 @@ import uuid
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Container',
+            name="Container",
             fields=[
-                ('container_id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('container_content', models.CharField(max_length=100)),
-                ('container_door_closed', models.BooleanField()),
-                ('container_start', models.CharField(max_length=101)),
-                ('container_destination', models.CharField(max_length=100)),
-                ('container_time', models.DateTimeField()),
+                (
+                    "container_id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("container_content", models.CharField(max_length=100)),
+                ("container_door_closed", models.BooleanField()),
+                ("container_start", models.CharField(max_length=101)),
+                ("container_destination", models.CharField(max_length=100)),
+                ("container_time", models.DateTimeField()),
             ],
             options={
-                'ordering': ['container_id'],
+                "ordering": ["container_id"],
             },
         ),
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('user_id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('firstName', models.CharField(max_length=100)),
-                ('lastName', models.CharField(max_length=100)),
-                ('email', models.CharField(max_length=100)),
-                ('password', models.CharField(max_length=100)),
-                ('company', models.CharField(max_length=100)),
-                ('role', models.CharField(max_length=100)),
+                (
+                    "user_id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("firstName", models.CharField(max_length=100)),
+                ("lastName", models.CharField(max_length=100)),
+                ("email", models.CharField(max_length=100)),
+                ("password", models.CharField(max_length=100)),
+                ("company", models.CharField(max_length=100)),
+                ("role", models.CharField(max_length=100)),
             ],
             options={
-                'ordering': ['user_id'],
+                "ordering": ["user_id"],
             },
         ),
         migrations.CreateModel(
-            name='SensorData',
+            name="SensorData",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('sensor_type', models.CharField(max_length=10)),
-                ('sensor_data', models.CharField(max_length=100)),
-                ('sensor_time', models.DateTimeField()),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sensor_data', to='sensor.container')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("sensor_type", models.CharField(max_length=10)),
+                ("sensor_data", models.CharField(max_length=100)),
+                ("sensor_time", models.DateTimeField()),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="sensor_data",
+                        to="sensor.container",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['sensor_time'],
+                "ordering": ["sensor_time"],
             },
         ),
     ]
