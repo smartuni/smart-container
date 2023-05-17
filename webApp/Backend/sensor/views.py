@@ -1,18 +1,46 @@
 import json
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
 from .models import SensorData, Container, User
 from .serializer import SensorSerializer, ContainerSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 
 
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-
 # Create your views here.
+
+
+@csrf_exempt
+def signIn(request):
+    userSignInObj = json.loads(request.body or "{}")
+    responseObj = ResponseModel()
+
+    username = userSignInObj["username"] or None
+    password = userSignInObj["password"] or None
+
+    if username == None or not (1 <= len(username) <= 128):
+        responseObj.errorMsg = (
+            "Username has to be a String with length of 1 - 128 characters."
+        )
+        return HttpResponse(json.dumps(responseObj.__dict__))
+    if password == None or not (8 <= len(password) <= 128):
+        responseObj.errorMsg = (
+            "Password has to be a String with length of 8 - 128 characters."
+        )
+        return HttpResponse(json.dumps(responseObj.__dict__))
+
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        login(request, user)
+        responseObj.data = "You are logged in"
+        return HttpResponse(json.dumps(responseObj.__dict__))
+    else:
+        responseObj.errorMsg = "Sorry but there is a mismatch with your credentials."
+        return HttpResponse(json.dumps(responseObj.__dict__))
 
 
 class SensorList(generics.ListAPIView):
@@ -120,36 +148,6 @@ def signUp(request):
 
     responseObj.data = f"You are singed up as: {user}"
     return HttpResponse(json.dumps(responseObj.__dict__))
-
-
-@csrf_exempt
-def signIn(request):
-    userSignInObj = json.loads(request.body or "{}")
-    responseObj = ResponseModel()
-
-    username = userSignInObj["username"] or None
-    password = userSignInObj["password"] or None
-
-    if username == None or not (1 <= len(username) <= 128):
-        responseObj.errorMsg = (
-            "Username has to be a String with length of 1 - 128 characters."
-        )
-        return HttpResponse(json.dumps(responseObj.__dict__))
-    if password == None or not (8 <= len(password) <= 128):
-        responseObj.errorMsg = (
-            "Password has to be a String with length of 8 - 128 characters."
-        )
-        return HttpResponse(json.dumps(responseObj.__dict__))
-
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        login(request, user)
-        responseObj.data = "You are logged in"
-        return HttpResponse(json.dumps(responseObj.__dict__))
-    else:
-        responseObj.errorMsg = "Sorry but there is a mismatch with your credentials."
-        return HttpResponse(json.dumps(responseObj.__dict__))
 
 
 @csrf_exempt
