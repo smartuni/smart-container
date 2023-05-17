@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -80,6 +81,12 @@ class ContainerLocation(APIView):
         ).latest("sensor_time")
         serializer = SensorSerializer(gpsLocation)
         return JsonResponse(serializer.data, safe=False)
+
+
+class ResponseModel:
+    def __init__(self, errorMsg="", data=""):
+        self.errorMsg = errorMsg
+        self.data = data
 
 
 @csrf_exempt
