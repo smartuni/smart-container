@@ -4,6 +4,7 @@ from rest_framework.parsers import JSONParser
 from .models import SensorData, Container, User
 from .serializer import SensorSerializer, ContainerSerializer, UserSerializer
 from rest_framework import generics
+from rest_framework.views import APIView
 
 
 # Create your views here.
@@ -61,3 +62,17 @@ class ContainerDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Container.objects.all()
     serializer_class = ContainerSerializer
+
+
+class ContainerLocation(APIView):
+    """
+    Retrieve container location
+    """
+
+    def get(self, request, format=None):
+        container = Container.objects.get(container_id=request.GET["container_id"])
+        gpsLocation = SensorData.objects.filter(
+            sensor_type="GPS", owner=container
+        ).latest("sensor_time")
+        serializer = SensorSerializer(gpsLocation)
+        return JsonResponse(serializer.data, safe=False)
