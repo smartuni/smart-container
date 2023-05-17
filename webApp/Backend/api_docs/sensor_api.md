@@ -14,10 +14,14 @@ A sensor data entry returns their contents based on the provided API endpoint in
 
 > List all sensor data
 
-This view can be accessed using this statement:
+This view can be accessed using this statement using an async await function in JavaScript:
 
 ```js
-const sensorListResponse = await fetch("http://127.0.0.1:8000/sensor_list");
+async function fetchAsync() {
+  const response = await fetch("http://127.0.0.1:8000/api/sensor_list");
+  const data = await response.json();
+  console.log(data[0].owner);
+}
 ```
 
 A sensor list can be viewed using get.
@@ -34,19 +38,9 @@ A sensor data entry can be retrieved, updated or deleted from within the API by 
 ```js
 const sensorDetailResponse = await fetch("http://127.0.0.1:8000/sensor_detail/<uuid:id>/");
 ```
-or using requestOptions (recommended):
-```js
-const sensorDetailRequestOptions = {
-    method: 'GET',
-    credentials: 'include' as RequestCredentials,
-    mode: 'cors' as RequestMode,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: sensorID }),
-}
-
-const sensorDetailResponse = await fetch("http://127.0.0.1:8000/sensor_detail/", sensorDetailRequestOptions);
-```
 
 A sensor detail contains just the information of the single sensor data instance recorded from the database. For our case, viewing sensor data using GET is the most interesting case.
 
 An example output of a GET request to this API:
+
+

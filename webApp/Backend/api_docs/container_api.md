@@ -18,6 +18,26 @@ A container data entry returns their contents based on the provided API endpoint
 This view can be accessed using this statement:
 
 ```js
-const containerListResponse = await fetch("http://
+const containerListResponse = await fetch("http://127.0.0.1:8000/api/container_list");
+```
 
 A container data entry returns their contents based on the provided API endpoint in JSON format. 
+
+## ContainerLocation
+
+> Find the current Location of a container based on its last posted coordinates
+
+```js
+async function fetchLocationOfContainer(id){
+const containerLocationResponse = await fetch("http://127.0.0.1:8000/api/container_location/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        "id": id,
+    }),
+})};
+
+```
+

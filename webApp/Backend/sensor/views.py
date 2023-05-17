@@ -72,13 +72,13 @@ class ContainerLocation(APIView):
     Retrieve container location
     """
 
-    def get(self, request, format=None):
-        container = Container.objects.get(container_id=request.GET["container_id"])
+    def post(self, request, format=None):
+        container = Container.objects.get(container_id=request.data["id"])
         gpsLocation = SensorData.objects.filter(
             sensor_type="GPS", owner=container
         ).latest("sensor_time")
-        serializer = SensorSerializer(gpsLocation)
-        return JsonResponse(serializer.data, safe=False)
+        serializer = SensorSerializer(gpsLocation, many=False)
+        return JsonResponse(serializer.data["sensor_data"], safe=False)
 
 
 @csrf_exempt

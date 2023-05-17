@@ -5,7 +5,7 @@ from .models import SensorData, User, Container
 class SensorSerializer(serializers.ModelSerializer):
     class Meta:
         model = SensorData
-        fields = ["id", "sensor_type", "sensor_data", "sensor_time"]
+        fields = ["id", "sensor_type", "sensor_data", "sensor_time", "owner"]
 
 
 class ContainerSerializer(serializers.ModelSerializer):
