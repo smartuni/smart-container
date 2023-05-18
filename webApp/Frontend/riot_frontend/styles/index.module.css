@@ -10,7 +10,31 @@
     border-radius: 15px;
 }
 
+.logo_border {
+    margin: auto;
+    margin-top: 50px;
+    padding: 150px;
+    max-width: 100%;
+    max-height: 100%;
+    width: 40rem;
+    height: 280px;
+    background-repeat: no-repeat;
+    
+    
+    border: 1px solid whitesmoke;
+    border-radius: 15px;
 
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 10%;
+    height: 250px;
+    width: 30rem;
+    margin-top: -100px;
+    margin-bottom: 100px;
+    margin-left: 60px;
+}
 .create_account {
     margin-top: 28rem;
 }

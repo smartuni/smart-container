@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import css from '../styles/index.module.css'
-
+import Logo from '../public/RIOT_Sum_2023_Logo.png';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,7 +44,12 @@ export default function Home() {
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
 
 
-        <div className={css.container}>
+        <div className={css.logo_border}>
+          <div className={css.logo}>
+          <Image src='/RIOT_Sum_2023_Logo.png' width={500} height={500}></Image>
+
+          </div>
+          
           <a href="/signup">
             <button className={css.create_account}>Create Account</button>
           </a>
