@@ -1,30 +1,27 @@
 import TempChart from "./temperature";
-
-const tempData = [
-    { time: '12:00', temperature: 23 },
-    { time: '12:30', temperature: 24 },
-    { time: '13:00', temperature: 26 },
-    { time: '13:30', temperature: 25 },
-    { time: '14:00', temperature: 23 },
-  ];
-
-const TemperatureChart = () => {
+import Head from 'next/head';
+import Image from 'next/image';
+import Header from '../components/Header';
+import TopCards from "@/components/TopCards";
+import BarChart from "@/components/BarChart";
+import RecentOrders from "@/components/RecentOrders";
+export default function Home() {
   return (
-    <div>
-      <div>
-        <nav >
-          <ul>
-            <li><a href="/map/page">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Log out</a></li>
-          </ul>
-        </nav>
-      </div>
-      <h2>Temperature over the last 24 hours</h2>
-      <TempChart data={tempData} />
+    <>
+    <Head>
+      <title>Create Next App</title>
+      <meta name='description' content='Generated to create next app'/>
+      <meta name='viewport' content='width=device-width, initial-scale=1'/>
+      <link rel='icon' href='/favicon.ico'/>
+    </Head>
+    <main className='bg-gray-100 min-h-screen'>
+    <Header/>
+    <TopCards/>
+    <div className="p-4 grid md:grid-cols-3 grid-cols-1 gap-4">
+      <BarChart/>
+      <RecentOrders/>
     </div>
-  );
-};
-
-export default TemperatureChart;
+    </main>
+    </>
+  )
+}
