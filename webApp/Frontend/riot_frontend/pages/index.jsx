@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import css from '../styles/index.module.css'
-import boatGif from '../assets/vessel-fishing.gif'
-
+import boatGif from '../assets/hhla-container.gif'
+import cloudsGif from '../assets/sky-clouds.gif'
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -20,6 +20,7 @@ export default function Home() {
         <div className='p-4'>
             <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
 
+                
                 <div className='px-4 pt-4'>
                     <h2 className="font-bold text-center">Welcome to </h2>
                     
