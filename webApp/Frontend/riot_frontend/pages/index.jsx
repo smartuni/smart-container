@@ -22,18 +22,43 @@ export default function Home() {
 
                 
                 <div className='px-4 pt-4'>
-                    <h2 className="font-bold text-center">Welcome to </h2>
+                    <h2 className="font-bold text-center">WELCOME</h2>
+                    <h2 className="font-bold text-center">TO</h2>
                     
                         <div className="position-relative text-center">
-                            <span className='font-bold text-blue-700 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>R</span>
-                            <span className='font-bold text-blue-600  pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>I</span>
-                            <span className='font-bold text-blue-500  pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>O</span>
-                            <span className='font-bold text-blue-400  sm:text-4xl md:text-6xl lg:text-9xl text-6xl' >T</span>
+                            <span className='font-bold text-blue-700 hover:text-blue-800 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>R</span>
+                            <span className='font-bold text-blue-600  hover:text-blue-800 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>I</span>
+                            <span className='font-bold text-blue-500  hover:text-blue-800 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>O</span>
+                            <span className='font-bold text-blue-400  hover:text-blue-800 sm:text-4xl md:text-6xl lg:text-9xl text-6xl' >T</span>
                         </div>  
                 </div>
                 <div>
                     <Image src={boatGif} class="mx-auto"/>
                 </div>
+
+                {/*-------------------------------------------- */}
+                <div className='h-screen items-center justify-center'>
+                    <div className='bg-white  justify-between w-full border p-4 rounded-lg'>
+            
+                        <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center p-2 rounded-lg cursor-pointer">
+                            <p className="font-bold">Sign In</p>
+                        </Link>
+
+                    </div>
+
+                
+
+                    <div className='bg-white  justify-between w-full border p-4 rounded-lg'>
+                    
+                        <Link href = '/contact' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center p-2 rounded-lg cursor-pointer">
+                            <p className="font-bold">Sign Up</p>
+                        </Link>
+                    </div>
+
+                </div>
+                {/*-------------------------------------- */}
+
+
             </div>
         </div>
         
