@@ -1,17 +1,23 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import {RxSketchLogo, RxDashboard, RxPerson} from 'react-icons/rx'
+import {RxDashboard, RxPerson} from 'react-icons/rx'
 import {HiOutlineShoppingBag} from 'react-icons/hi'
 import { FiSettings } from 'react-icons/fi'
+import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
 const Sidebar = ({ children }) => {
     return (
         <div className='flex'>
             <div className='fixed w-20 h-screen p-4 bg-white border-r-[1px] flex flex-col justify-between'>
                 <div className='flex flex-col items-center'>
                     <Link href='/'>
-                        <div className='bg-purple-800 text-white p-3 rounded-lg inline-block'>
-                            <RxSketchLogo size={20}/>
+                        <div className='bg-blue-300 hover:bg-blue-200 text-white p-3 rounded-lg inline-block'>
+                        <Image // Logo button that brings user to home page
+                            src={myLogo}
+                            
+                            width="350px"
+                            height="300px"
+                        />
                         </div>
                     </Link>
                     <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
