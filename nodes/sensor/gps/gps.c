@@ -43,11 +43,7 @@ int parse_gga(const char *_gga) {
     }
 
     print_str("\n=== GGA RESULT ===\n");
-    print_str("- Coordinates: lat=");
-    print_float(minmea_tocoord(&frame.latitude), 6);
-    print_str(" lon=");
-    print_float(minmea_tocoord(&frame.longitude), 6);
-    print_str("\n");
+    printf("latitude=%f; longitude=%f\n", minmea_tocoord(&frame.latitude), minmea_tocoord(&frame.longitude));
     return EXIT_SUCCESS;
 }
 
@@ -59,7 +55,7 @@ int parse_gsa(const char *_gsa) {
     }
     
     print_str("\n=== GSA RESULT ===\n");
-    printf("...\n");
+    printf("sats=%d; mode=%c; fix_type=%d\n", *frame.sats, frame.mode, frame.fix_type);
     return EXIT_SUCCESS;
 }
 
@@ -71,7 +67,7 @@ int parse_gsv(const char *_gsv) {
     }
     
     print_str("\n=== GSV RESULT ===\n");
-    printf("Total satellites: %d\n", frame.total_sats);
+    printf("total_sats=%d; total_msgs=%d; msg_nr=%d\n", frame.total_sats, frame.total_msgs, frame.msg_nr);
     return EXIT_SUCCESS;
 }
 
@@ -83,10 +79,16 @@ int parse_rmc(const char *_rmc) {
     }
 
     print_str("\n=== RMC RESULT ===\n");
-    printf("- valid: %s\n", frame.valid ? "true" : "false");
-    printf("- Coordinates: lat=%f, lon=%f\n", minmea_tocoord(&frame.latitude), minmea_tocoord(&frame.longitude));
-    printf("- Speed: %f\n", minmea_tofloat(&frame.speed));
-    printf("- Date: %02d.%02d.20%02d\n", frame.date.day, frame.date.month, frame.date.year);
+    float latitude = minmea_tocoord(&(frame.latitude));
+    float longitude = minmea_tocoord(&(frame.longitude));
+    float speed = minmea_tofloat(&frame.speed);
+    char buf_latitude[9];
+    char buf_longitude[9];
+    char buf_speed[8];
+    fmt_float(buf_latitude, latitude, 6);
+    fmt_float(buf_longitude, longitude, 6);
+    fmt_float(buf_speed, speed, 2);
+    printf("valid=%s; latitude=%s; longitude=%s; speed=%s; date: %02d.%02d.20%02d\n", frame.valid ? "true" : "false", buf_latitude, buf_longitude, buf_speed, frame.date.day, frame.date.month, frame.date.year);
 
     return EXIT_SUCCESS;
 }
@@ -99,14 +101,13 @@ int parse_vtg(const char *_vtg) {
     }
     
     print_str("\n=== VTG RESULT ===\n");
-    printf("- FAA mode: %d\n- mag. degrees: %f\n- true degrees: %f\n", frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
+    printf("faa_mode=%d; magnetic_track_degrees=%f; true_track_degrees=%f\n", frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
     return EXIT_SUCCESS;
 }
 
 mutex_t mutex_gps;
 
 int parse_gps_string(const char *_str) {
-
 /*     
     enum minmea_sentence_id sentence = minmea_sentence_id(_str, false);
     printf("%s -> minmea sentence %d\n", _str, sentence);

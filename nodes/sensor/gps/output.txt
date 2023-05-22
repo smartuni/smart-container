@@ -1,0 +1,108 @@
+➜  gps git:(gps_sensor) ✗ sudo make term PORT=/dev/ttyACM1
+/home/maik/Projects/HAW/smart-container/nodes/RIOT/dist/tools/pyterm/pyterm -p "/dev/ttyACM1" -b "115200"  
+Twisted not available, please install it if you want to use pyterm's JSON capabilities
+2023-05-22 18:18:04,226 # Connect to serial port /dev/ttyACM1
+Welcome to pyterm!
+Type '/exit' to exit.
+2023-05-22 18:18:05,231 # main(): This is RIOT! (Version: 2023.07-devel-325-g2863d-HEAD)
+2023-05-22 18:18:05,233 # ===================================
+2023-05-22 18:18:05,234 # SMARTCONTAINER GPS SENSOR
+2023-05-22 18:18:05,236 # ===================================
+2023-05-22 18:18:05,237 # Success: Initialized UART_DEV(0) at 9600 baud
+2023-05-22 18:18:05,375 # 
+2023-05-22 18:18:05,376 # === GGA RESULT ===
+2023-05-22 18:18:05,376 # latitude=; longitude=
+2023-05-22 18:18:05,425 # 
+2023-05-22 18:18:05,426 # === GSA RESULT ===
+2023-05-22 18:18:05,426 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:05,501 # 
+2023-05-22 18:18:05,501 # === RMC RESULT ===
+2023-05-22 18:18:05,502 # valid=true; latitude=53.557289; longitude=10.023534; speed=2.24; date: 22.05.2023
+2023-05-22 18:18:05,540 # 
+2023-05-22 18:18:05,540 # === VTG RESULT ===
+2023-05-22 18:18:05,541 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:06,415 # 
+2023-05-22 18:18:06,416 # === GGA RESULT ===
+2023-05-22 18:18:06,417 # latitude=; longitude=
+2023-05-22 18:18:06,465 # 
+2023-05-22 18:18:06,465 # === GSA RESULT ===
+2023-05-22 18:18:06,465 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:06,540 # 
+2023-05-22 18:18:06,540 # === RMC RESULT ===
+2023-05-22 18:18:06,541 # valid=true; latitude=53.557285; longitude=10.023532; speed=2.19; date: 22.05.2023
+2023-05-22 18:18:06,579 # 
+2023-05-22 18:18:06,580 # === VTG RESULT ===
+2023-05-22 18:18:06,580 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:07,376 # 
+2023-05-22 18:18:07,377 # === GGA RESULT ===
+2023-05-22 18:18:07,378 # latitude=; longitude=
+2023-05-22 18:18:07,426 # 
+2023-05-22 18:18:07,426 # === GSA RESULT ===
+2023-05-22 18:18:07,426 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:07,499 # 
+2023-05-22 18:18:07,500 # === GSV RESULT ===
+2023-05-22 18:18:07,500 # total_sats=12; total_msgs=3; msg_nr=1
+2023-05-22 18:18:07,569 # 
+2023-05-22 18:18:07,569 # === GSV RESULT ===
+2023-05-22 18:18:07,570 # total_sats=12; total_msgs=3; msg_nr=2
+2023-05-22 18:18:07,629 # 
+2023-05-22 18:18:07,629 # === GSV RESULT ===
+2023-05-22 18:18:07,630 # total_sats=12; total_msgs=3; msg_nr=3
+2023-05-22 18:18:07,704 # 
+2023-05-22 18:18:07,704 # === RMC RESULT ===
+2023-05-22 18:18:07,705 # valid=true; latitude=53.557281; longitude=10.023528; speed=2.10; date: 22.05.2023
+2023-05-22 18:18:07,743 # 
+2023-05-22 18:18:07,744 # === VTG RESULT ===
+2023-05-22 18:18:07,744 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:08,373 # 
+2023-05-22 18:18:08,375 # === GGA RESULT ===
+2023-05-22 18:18:08,376 # latitude=; longitude=
+2023-05-22 18:18:08,423 # 
+2023-05-22 18:18:08,424 # === GSA RESULT ===
+2023-05-22 18:18:08,424 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:08,498 # 
+2023-05-22 18:18:08,498 # === RMC RESULT ===
+2023-05-22 18:18:08,499 # valid=true; latitude=53.557273; longitude=10.023528; speed=2.05; date: 22.05.2023
+2023-05-22 18:18:08,538 # 
+2023-05-22 18:18:08,538 # === VTG RESULT ===
+2023-05-22 18:18:08,539 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:09,365 # 
+2023-05-22 18:18:09,366 # === GGA RESULT ===
+2023-05-22 18:18:09,367 # latitude=; longitude=
+2023-05-22 18:18:09,415 # 
+2023-05-22 18:18:09,415 # === GSA RESULT ===
+2023-05-22 18:18:09,416 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:09,490 # 
+2023-05-22 18:18:09,490 # === RMC RESULT ===
+2023-05-22 18:18:09,491 # valid=true; latitude=53.557270; longitude=10.023528; speed=2; date: 22.05.2023
+2023-05-22 18:18:09,530 # 
+2023-05-22 18:18:09,530 # === VTG RESULT ===
+2023-05-22 18:18:09,530 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:10,405 # 
+2023-05-22 18:18:10,406 # === GGA RESULT ===
+2023-05-22 18:18:10,407 # latitude=; longitude=
+2023-05-22 18:18:10,455 # 
+2023-05-22 18:18:10,455 # === GSA RESULT ===
+2023-05-22 18:18:10,455 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:10,530 # 
+2023-05-22 18:18:10,530 # === RMC RESULT ===
+2023-05-22 18:18:10,531 # valid=true; latitude=53.557273; longitude=10.023536; speed=2; date: 22.05.2023
+2023-05-22 18:18:10,570 # 
+2023-05-22 18:18:10,571 # === VTG RESULT ===
+2023-05-22 18:18:10,574 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:11,354 # 
+2023-05-22 18:18:11,355 # === GGA RESULT ===
+2023-05-22 18:18:11,356 # latitude=; longitude=
+2023-05-22 18:18:11,404 # 
+2023-05-22 18:18:11,404 # === GSA RESULT ===
+2023-05-22 18:18:11,405 # sats=32; mode=A; fix_type=2
+2023-05-22 18:18:11,479 # 
+2023-05-22 18:18:11,480 # === RMC RESULT ===
+2023-05-22 18:18:11,480 # valid=true; latitude=53.557273; longitude=10.023546; speed=2; date: 22.05.2023
+2023-05-22 18:18:11,519 # 
+2023-05-22 18:18:11,519 # === VTG RESULT ===
+2023-05-22 18:18:11,520 # faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-22 18:18:12,250 # Exiting Pyterm
+make: *** [/home/maik/Projects/HAW/smart-container/nodes/sensor/gps/../../RIOT/Makefile.include:873: term] Unterbrechung
+
+➜  gps git:(gps_sensor) ✗ 

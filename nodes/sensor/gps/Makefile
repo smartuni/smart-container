@@ -13,7 +13,6 @@ FEATURES_OPTIONAL += periph_uart_rxstart_irq
 USEPKG += minmea
 
 USEMODULE += fmt
-USEMODULE += shell
 USEMODULE += xtimer
 
 # avoid running Kconfig by default
