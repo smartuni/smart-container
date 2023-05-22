@@ -43,7 +43,13 @@ int parse_gga(const char *_gga) {
     }
 
     print_str("\n=== GGA RESULT ===\n");
-    printf("latitude=%f; longitude=%f\n", minmea_tocoord(&frame.latitude), minmea_tocoord(&frame.longitude));
+    float latitude = minmea_tocoord(&(frame.latitude));
+    float longitude = minmea_tocoord(&(frame.longitude));
+    char buf_latitude[9];
+    char buf_longitude[9];
+    fmt_float(buf_latitude, latitude, 6);
+    fmt_float(buf_longitude, longitude, 6);
+    printf("latitude=%s; longitude=%s\n", buf_latitude, buf_longitude);
     return EXIT_SUCCESS;
 }
 
