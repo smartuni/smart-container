@@ -15,8 +15,8 @@
  /usr/include/newlib/machine/_default_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/cdefs.h /usr/include/newlib/sys/string.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/unaligned.h \
  /home/guest/smart-container/nodes/RIOT/sys/posix/include/netinet/in.h \
  /usr/include/newlib/inttypes.h /usr/include/newlib/sys/_intsup.h \
@@ -75,11 +75,11 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
-
 /usr/include/newlib/sys/cdefs.h:
 
 /usr/include/newlib/sys/string.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/unaligned.h:
 

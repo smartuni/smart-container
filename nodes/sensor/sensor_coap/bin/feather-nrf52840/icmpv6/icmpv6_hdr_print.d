@@ -12,11 +12,11 @@
  /usr/include/newlib/sys/_types.h /usr/include/newlib/machine/_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/types.h /usr/include/newlib/sys/_stdint.h \
  /usr/include/newlib/sys/_pthreadtypes.h \
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
  /usr/include/newlib/inttypes.h /usr/include/newlib/sys/_intsup.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/icmpv6.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/byteorder.h \
  /usr/include/newlib/string.h /usr/include/newlib/sys/string.h \
@@ -58,8 +58,6 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
-
 /usr/include/newlib/sys/types.h:
 
 /usr/include/newlib/sys/_stdint.h:
@@ -73,6 +71,8 @@
 /usr/include/newlib/inttypes.h:
 
 /usr/include/newlib/sys/_intsup.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/icmpv6.h:
 

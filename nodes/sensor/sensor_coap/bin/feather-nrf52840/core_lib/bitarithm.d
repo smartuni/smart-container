@@ -12,11 +12,11 @@
  /usr/include/newlib/sys/_types.h /usr/include/newlib/machine/_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/types.h /usr/include/newlib/sys/_stdint.h \
  /usr/include/newlib/sys/_pthreadtypes.h \
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/bitarithm.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /home/guest/smart-container/nodes/RIOT/cpu/nrf52/include/cpu_conf.h \
  /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/cpu_conf_common.h \
  /home/guest/smart-container/nodes/RIOT/cpu/nrf52/include/vendor/nrf52840.h \
@@ -64,8 +64,6 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
-
 /usr/include/newlib/sys/types.h:
 
 /usr/include/newlib/sys/_stdint.h:
@@ -77,6 +75,8 @@
 /usr/include/newlib/sys/stdio.h:
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/bitarithm.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /home/guest/smart-container/nodes/RIOT/cpu/nrf52/include/cpu_conf.h:
 

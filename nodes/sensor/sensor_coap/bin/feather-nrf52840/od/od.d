@@ -12,10 +12,10 @@
  /usr/include/newlib/sys/_types.h /usr/include/newlib/machine/_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/types.h /usr/include/newlib/sys/_stdint.h \
  /usr/include/newlib/sys/_pthreadtypes.h \
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/ctype.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/fmt.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/od.h
@@ -56,8 +56,6 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
-
 /usr/include/newlib/sys/types.h:
 
 /usr/include/newlib/sys/_stdint.h:
@@ -67,6 +65,8 @@
 /usr/include/newlib/machine/types.h:
 
 /usr/include/newlib/sys/stdio.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /usr/include/newlib/ctype.h:
 

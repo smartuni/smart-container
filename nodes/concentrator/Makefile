@@ -37,7 +37,7 @@ USEMODULE += fmt
 USEMODULE += netutils
 # Add also the shell, some shell commands
 USEMODULE += shell
-USEMODULE += shell_cmds_default
+USEMODULE += shell_commands
 USEMODULE += ps
 
 # Comment this out to disable code in RIOT that does safety checking

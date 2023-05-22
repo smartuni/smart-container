@@ -14,7 +14,7 @@
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
  /usr/include/newlib/sys/cdefs.h /usr/include/newlib/sys/string.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/sixlowpan/config.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/timex.h \
  /usr/include/newlib/inttypes.h /usr/include/newlib/sys/_intsup.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/time_units.h \
@@ -22,11 +22,6 @@
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h \
  /home/guest/smart-container/nodes/RIOT/core/include/msg.h \
  /home/guest/smart-container/nodes/RIOT/core/include/sched.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
  /home/guest/smart-container/nodes/RIOT/core/include/native_sched.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/clist.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/list.h \
@@ -78,7 +73,7 @@
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/sixlowpan/config.h:
 
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
+/home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/timex.h:
 
@@ -95,16 +90,6 @@
 /home/guest/smart-container/nodes/RIOT/core/include/msg.h:
 
 /home/guest/smart-container/nodes/RIOT/core/include/sched.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
 
 /home/guest/smart-container/nodes/RIOT/core/include/native_sched.h:
 

@@ -11,14 +11,10 @@
  /usr/include/newlib/machine/_default_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/cdefs.h /usr/include/newlib/sys/string.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/fmt.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/netapi.h \
  /home/guest/smart-container/nodes/RIOT/core/include/thread.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/clist.h \
@@ -46,7 +42,6 @@
  /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/thread_arch.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/netopt.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/nettype.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/ethertype.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/protnum.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/pkt.h \
@@ -58,7 +53,6 @@
  /home/guest/smart-container/nodes/RIOT/sys/include/event.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/irq.h \
  /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/debug_irq_disable.h \
  /home/guest/smart-container/nodes/RIOT/core/include/thread_flags.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/ptrtag.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/ztimer.h \
@@ -111,13 +105,7 @@
  /usr/include/newlib/errno.h /usr/include/newlib/sys/errno.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/iolist.h \
  /usr/include/newlib/unistd.h /usr/include/newlib/sys/unistd.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/netif.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/ext.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/ext/frag.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/ext/rh.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/hdr.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/net/inet_csum.h
+ /home/guest/smart-container/nodes/RIOT/sys/include/net/netif.h
 
 /home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
 
@@ -151,23 +139,15 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
-
 /usr/include/newlib/sys/cdefs.h:
 
 /usr/include/newlib/sys/string.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/fmt.h:
 
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
+
 /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/netapi.h:
 
@@ -225,8 +205,6 @@
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/nettype.h:
 
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
 /home/guest/smart-container/nodes/RIOT/sys/include/net/ethertype.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/protnum.h:
@@ -250,8 +228,6 @@
 /home/guest/smart-container/nodes/RIOT/core/lib/include/irq.h:
 
 /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/debug_irq_disable.h:
 
 /home/guest/smart-container/nodes/RIOT/core/include/thread_flags.h:
 
@@ -366,15 +342,3 @@
 /usr/include/newlib/sys/unistd.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/netif.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/ext.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/ext/frag.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/ext/rh.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/hdr.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/net/inet_csum.h:

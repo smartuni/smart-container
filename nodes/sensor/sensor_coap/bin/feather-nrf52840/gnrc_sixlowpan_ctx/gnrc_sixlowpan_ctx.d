@@ -10,10 +10,6 @@
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h \
  /home/guest/smart-container/nodes/RIOT/core/include/mutex.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/list.h \
  /home/guest/smart-container/nodes/RIOT/core/include/thread.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/clist.h \
@@ -37,6 +33,8 @@
  /home/guest/smart-container/nodes/RIOT/core/include/sched.h \
  /home/guest/smart-container/nodes/RIOT/core/include/thread_flags.h \
  /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/thread_arch.h \
+ /home/guest/smart-container/nodes/RIOT/core/lib/include/irq.h \
+ /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/sixlowpan/ctx.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/addr.h \
  /usr/include/newlib/string.h /usr/include/newlib/sys/reent.h \
@@ -51,7 +49,6 @@
  /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv4/addr.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/timex.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/time_units.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
  /home/guest/smart-container/nodes/RIOT/sys/include/ztimer.h \
  /home/guest/smart-container/nodes/RIOT/core/include/msg.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/rmutex.h \
@@ -90,14 +87,6 @@
 /home/guest/smart-container/nodes/RIOT/core/include/mutex.h:
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/list.h:
 
@@ -145,6 +134,10 @@
 
 /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/thread_arch.h:
 
+/home/guest/smart-container/nodes/RIOT/core/lib/include/irq.h:
+
+/home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h:
+
 /home/guest/smart-container/nodes/RIOT/sys/include/net/gnrc/sixlowpan/ctx.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/net/ipv6/addr.h:
@@ -178,8 +171,6 @@
 /home/guest/smart-container/nodes/RIOT/sys/include/timex.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/time_units.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/include/ztimer.h:
 

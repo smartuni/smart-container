@@ -4,7 +4,6 @@
 ## Team Members
 1. Mohamed ElGhamrawy (mohamed.elghamrawy@haw-hamburg.de)
 2. Mostafa Salman (mostafa.salman@haw-hamburg.de)
-3. Eileen Feigler (eileen.feigler@haw-hamburg.de)
 
 ---
 

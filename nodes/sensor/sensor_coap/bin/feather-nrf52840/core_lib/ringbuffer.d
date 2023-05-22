@@ -12,7 +12,6 @@
  /usr/include/newlib/machine/_default_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/cdefs.h /usr/include/newlib/sys/string.h
 
 /home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
@@ -48,8 +47,6 @@
 /usr/include/newlib/sys/lock.h:
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
-
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /usr/include/newlib/sys/cdefs.h:
 

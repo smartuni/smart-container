@@ -7,6 +7,21 @@ BOARD ?= feather-nrf52840
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../../RIOT
 
+
+################ sensor specific! #################
+# Use saul
+USEMODULE += saul
+USEMODULE += saul_default
+
+# Include BME280 via I2C
+USEMODULE += bme280_i2c
+
+# Specify default I2C device and address
+# Address is 0x76 or 0x77
+CFLAGS += -DBMX280_PARAM_I2C_DEV=I2C_DEV\(0\)
+CFLAGS += -DBMX280_PARAM_i2C_ADDR=0x76
+####################################################
+
 # enable default networking devides in the platform
 USEMODULE += netdev_default
 

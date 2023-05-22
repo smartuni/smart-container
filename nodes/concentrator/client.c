@@ -15,7 +15,6 @@
  *
  * @author      Ken Bannister <kb2ma@runbox.com>
  * @author      Hauke Petersen <hauke.petersen@fu-berlin.de>
- * @author      Hendrik van Essen <hendrik.ve@fu-berlin.de>
  *
  * @}
  */
@@ -25,11 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <arpa/inet.h>
-
 #include "fmt.h"
 #include "net/gcoap.h"
-#include "net/sock/util.h"
 #include "net/utils.h"
 #include "od.h"
 
@@ -145,7 +141,30 @@ static void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
     }
 }
 
-static size_t _send(uint8_t *buf, size_t len, char *addr_str)
+static bool _parse_endpoint(sock_udp_ep_t *remote,
+                            const char *addr_str, const char *port_str)
+{
+    netif_t *netif;
+
+    /* parse hostname */
+    if (netutils_get_ipv6((ipv6_addr_t *)&remote->addr, &netif, addr_str) < 0) {
+        puts("gcoap_cli: unable to parse destination address");
+        return false;
+    }
+    remote->netif = netif ? netif_get_id(netif) : SOCK_ADDR_ANY_NETIF;
+    remote->family = AF_INET6;
+
+    /* parse port */
+    remote->port = atoi(port_str);
+    if (remote->port == 0) {
+        puts("gcoap_cli: unable to parse destination port");
+        return false;
+    }
+
+    return true;
+}
+
+static size_t _send(uint8_t *buf, size_t len, char *addr_str, char *port_str)
 {
     size_t bytes_sent;
     sock_udp_ep_t *remote;
@@ -155,19 +174,9 @@ static size_t _send(uint8_t *buf, size_t len, char *addr_str)
         remote = &_proxy_remote;
     }
     else {
-        if (sock_udp_name2ep(&new_remote, addr_str) != 0) {
+        if (!_parse_endpoint(&new_remote, addr_str, port_str)) {
             return 0;
         }
-
-        if (new_remote.port == 0) {
-            if (IS_USED(MODULE_GCOAP_DTLS)) {
-                new_remote.port = CONFIG_GCOAPS_PORT;
-            }
-            else {
-                new_remote.port = CONFIG_GCOAP_PORT;
-            }
-        }
-
         remote = &new_remote;
     }
 
@@ -214,19 +223,12 @@ int gcoap_cli_cmd(int argc, char **argv)
         printf("CoAP open requests: %u\n", open_reqs);
         printf("Configured Proxy: ");
         if (_proxied) {
-#ifdef SOCK_HAS_IPV6
             char addrstr[IPV6_ADDR_MAX_STR_LEN];
-#else
-            char addrstr[IPV4_ADDR_MAX_STR_LEN];
-#endif
-            inet_ntop(_proxy_remote.family, &_proxy_remote.addr, addrstr, sizeof(addrstr));
-
-            if (_proxy_remote.family == AF_INET6) {
-                printf("[%s]:%u\n", addrstr, _proxy_remote.port);
-            }
-            else {
-                printf("%s:%u\n", addrstr, _proxy_remote.port);
-            }
+            printf("[%s]:%u\n",
+                   ipv6_addr_to_str(addrstr,
+                                    (ipv6_addr_t *) &_proxy_remote.addr.ipv6,
+                                    sizeof(addrstr)),
+                   _proxy_remote.port);
         }
         else {
             puts("None");
@@ -234,21 +236,11 @@ int gcoap_cli_cmd(int argc, char **argv)
         return 0;
     }
     else if (strcmp(argv[1], "proxy") == 0) {
-        if ((argc == 4) && (strcmp(argv[2], "set") == 0)) {
-            if (sock_udp_name2ep(&_proxy_remote, argv[3]) != 0) {
+        if ((argc == 5) && (strcmp(argv[2], "set") == 0)) {
+            if (!_parse_endpoint(&_proxy_remote, argv[3], argv[4])) {
                 puts("Could not set proxy");
                 return 1;
             }
-
-            if (_proxy_remote.port == 0) {
-                if (IS_USED(MODULE_GCOAP_DTLS)) {
-                    _proxy_remote.port = CONFIG_GCOAPS_PORT;
-                }
-                else {
-                    _proxy_remote.port = CONFIG_GCOAP_PORT;
-                }
-            }
-
             _proxied = true;
             return 0;
         }
@@ -257,7 +249,7 @@ int gcoap_cli_cmd(int argc, char **argv)
             _proxied = false;
             return 0;
         }
-        printf("usage: %s proxy set <host>[:port]\n", argv[0]);
+        printf("usage: %s proxy set <addr>[%%iface] <port>\n", argv[0]);
         printf("       %s proxy unset\n", argv[0]);
         return 1;
     }
@@ -282,59 +274,25 @@ int gcoap_cli_cmd(int argc, char **argv)
         apos++;
     }
 
-    if (((argc == apos + 1) && (code_pos == 0)) ||    /* ping */
-        ((argc == apos + 2) && (code_pos == 1)) ||    /* get */
-        ((argc == apos + 2 ||
-          argc == apos + 3) && (code_pos > 1))) {     /* post or put */
+    if (((argc == apos + 2) && (code_pos == 0)) ||    /* ping */
+        ((argc == apos + 3) && (code_pos == 1)) ||    /* get */
+        ((argc == apos + 3 ||
+          argc == apos + 4) && (code_pos > 1))) {     /* post or put */
 
         char *uri = NULL;
         int uri_len = 0;
         if (code_pos) {
-            uri = argv[apos+1];
-            uri_len = strlen(argv[apos+1]);
-        }
-
-        if (uri && ((uri_len <= 0) || (uri[0] != '/'))) {
-            puts("ERROR: URI-Path must start with a \"/\"");
-            return _print_usage(argv);
+            uri = argv[apos+2];
+            uri_len = strlen(argv[apos+2]);
         }
 
         if (_proxied) {
-            sock_udp_ep_t tmp_remote;
-            if (sock_udp_name2ep(&tmp_remote, argv[apos]) != 0) {
-                return _print_usage(argv);
-            }
-
-            if (tmp_remote.port == 0) {
-                if (IS_USED(MODULE_GCOAP_DTLS)) {
-                    tmp_remote.port = CONFIG_GCOAPS_PORT;
-                }
-                else {
-                    tmp_remote.port = CONFIG_GCOAP_PORT;
-                }
-            }
-
-#ifdef SOCK_HAS_IPV6
-            char addrstr[IPV6_ADDR_MAX_STR_LEN];
-#else
-            char addrstr[IPV4_ADDR_MAX_STR_LEN];
-#endif
-            inet_ntop(tmp_remote.family, &tmp_remote.addr, addrstr, sizeof(addrstr));
-
-            if (tmp_remote.family == AF_INET6) {
-                uri_len = snprintf(proxy_uri, sizeof(proxy_uri), "coap://[%s]:%d%s",
-                                   addrstr, tmp_remote.port, uri);
-            }
-            else {
-                uri_len = snprintf(proxy_uri, sizeof(proxy_uri), "coap://%s:%d%s",
-                                   addrstr, tmp_remote.port, uri);
-            }
-
+            uri_len = snprintf(proxy_uri, 64, "coap://[%s]:%s%s", argv[apos], argv[apos+1], uri);
             uri = proxy_uri;
 
             gcoap_req_init(&pdu, &buf[0], CONFIG_GCOAP_PDU_BUF_SIZE, code_pos, NULL);
         }
-        else {
+        else{
             gcoap_req_init(&pdu, &buf[0], CONFIG_GCOAP_PDU_BUF_SIZE, code_pos, uri);
         }
         coap_hdr_set_type(pdu.hdr, msg_type);
@@ -344,7 +302,7 @@ int gcoap_cli_cmd(int argc, char **argv)
             memcpy(_last_req_path, uri, uri_len);
         }
 
-        size_t paylen = (argc == apos + 3) ? strlen(argv[apos+2]) : 0;
+        size_t paylen = (argc == apos + 4) ? strlen(argv[apos+3]) : 0;
         if (paylen) {
             coap_opt_add_format(&pdu, COAP_FORMAT_TEXT);
         }
@@ -356,7 +314,7 @@ int gcoap_cli_cmd(int argc, char **argv)
         if (paylen) {
             len = coap_opt_finish(&pdu, COAP_OPT_FINISH_PAYLOAD);
             if (pdu.payload_len >= paylen) {
-                memcpy(pdu.payload, argv[apos+2], paylen);
+                memcpy(pdu.payload, argv[apos+3], paylen);
                 len += paylen;
             }
             else {
@@ -370,19 +328,19 @@ int gcoap_cli_cmd(int argc, char **argv)
 
         printf("gcoap_cli: sending msg ID %u, %u bytes\n", coap_get_id(&pdu),
                (unsigned) len);
-        if (!_send(&buf[0], len, argv[apos])) {
+        if (!_send(&buf[0], len, argv[apos], argv[apos+1])) {
             puts("gcoap_cli: msg send failed");
         }
         else {
             /* send Observe notification for /cli/stats */
-            // notify_observers();
+            //notify_observers();
         }
         return 0;
     }
     else {
-        printf("usage: %s <get|post|put> [-c] <host>[:port] <path> [data]\n",
+        printf("usage: %s <get|post|put> [-c] <addr>[%%iface] <port> <path> [data]\n",
                argv[0]);
-        printf("       %s ping <host>[:port]\n", argv[0]);
+        printf("       %s ping <addr>[%%iface] <port>\n", argv[0]);
         printf("Options\n");
         printf("    -c  Send confirmably (defaults to non-confirmable)\n");
         return 1;
