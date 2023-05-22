@@ -6,6 +6,13 @@ import { FiMenu } from "react-icons/fi";
 import css from '../styles/index.module.css'
 import boatGif from '../assets/hhla-container.gif'
 import cloudsGif from '../assets/sky-clouds.gif'
+
+
+
+
+
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -13,6 +20,7 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(true)
 
   const handleNavIcon = () => setShowMenu((prev) => !prev)
+
 
 
   return (
