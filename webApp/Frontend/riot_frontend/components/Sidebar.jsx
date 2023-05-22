@@ -4,7 +4,7 @@ import Image from 'next/image'
 import {RxSketchLogo, RxDashboard, RxPerson} from 'react-icons/rx'
 import {HiOutlineShoppingBag} from 'react-icons/hi'
 import { FiSettings } from 'react-icons/fi'
-import { AiOutlineInfoCircle, AiOutlinePhone } from 'react-icons/ai'
+import { AiOutlineInfoCircle, AiOutlinePhone, AiOutlineHome } from 'react-icons/ai'
 import { BiMap } from 'react-icons/bi'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
 const Sidebar = ({ children }) => {
@@ -14,13 +14,7 @@ const Sidebar = ({ children }) => {
                 <div className='flex flex-col items-center'>
                     <Link href='/'>
                         <div className='bg-blue-200 hover:bg-blue-300 text-white p-3 rounded-lg inline-block'>
-                        <Image
-                            src={myLogo}
-                            size={20}
-                            alt="Picture of the author"
-                            
-                            layout="fixed" // layout="fill", layout="intrinsic" 
-                        />
+                        <AiOutlineHome size={20}/>
                         </div>
                     </Link>
                     <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
@@ -29,7 +23,7 @@ const Sidebar = ({ children }) => {
                             <RxDashboard size={20}/>
                         </div>
                     </Link>
-                    <Link href='/customers'>
+                    {/* <Link href='/customers'>
                         <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block'>
                             <RxPerson size={20}/>
                         </div>
@@ -38,7 +32,7 @@ const Sidebar = ({ children }) => {
                         <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block'>
                             <HiOutlineShoppingBag size={20}/>
                         </div>
-                    </Link>
+                    </Link> */}
                     <Link href='/map'>
                         <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block'>
                             <BiMap size={20}/>

@@ -3,6 +3,7 @@ import { FaShoppingBag } from 'react-icons/fa';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { data } from '../data/container.js';
 
+
 const orders = () => {
   return (
     <div className='bg-gray-100 min-h-screen'>
@@ -19,7 +20,7 @@ const orders = () => {
             <span className='hidden sm:grid'>Method</span>
           </div>
           <ul>
-            {data.map((order, id) => (
+            {container.Container.map((order, id) => (
               <li
                 key={id}
                 className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'

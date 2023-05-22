@@ -1,58 +1,58 @@
 
-export const container = [
+export const containers = [
     {
-      Container: {
-        id: "ConUUID",
-        start: "start",
-        dest: "dest",
-        doorStatus: "doorStatus",
-        content: "content",
-        userId: "userId",
-        crashed: "crashed?",
+      
+        id: "1",
+        start: "Hamburg",
+        dest: "Belgium",
+        doorStatus: "closed",
+        content: "content123",
+        userId: "31",
+        crashed: "False",
         threshold: {
           string: {
-            min: "min",
-            max: "max",
+            min: "10",
+            max: "20",
+          }
+        },
+    },
+    {
+    
+        id: "2",
+        start: "Rotterdam",
+        dest: "South Africa",
+        doorStatus: "open",
+        content: "contentTest",
+        userId: "30",
+        crashed: "True",
+        threshold: {
+          string: {
+            min: "30",
+            max: "40",
           }
         }
-    },
-
-    Container: {
-      id: "ConUUID",
-      start: "start",
-      dest: "dest",
-      doorStatus: "doorStatus",
-      content: "content",
-      userId: "userId",
-      crashed: "crashed?",
-      threshold: {
-        string: {
-          min: "min",
-          max: "max",
-        }
-      }
-  },
-
-    User: {
-      id: "UserUUID",
-      firstName: "firstName",
-      lastName: "lastName",
-      email: "email",
-      password: "password",
-      company: "company",
-      role: "role",
-    },
-
-    SensorData: {
-      id: "SensUUID",
-      dataType: "dataType",
-      value: "value",
-      datetime: "datetime",
-      containerId: "containerId",
     }
 
+    // User: {
+    //   id: "UserUUID",
+    //   firstName: "firstName",
+    //   lastName: "lastName",
+    //   email: "email",
+    //   password: "password",
+    //   company: "company",
+    //   role: "role",
+    // },
 
-  }
+    // SensorData: {
+    //   id: "SensUUID",
+    //   dataType: "dataType",
+    //   value: "value",
+    //   datetime: "datetime",
+    //   containerId: "containerId",
+    // }
+
+
+  
       
 ]
 
