@@ -20,9 +20,9 @@ const orders = () => {
             <span className='hidden sm:grid'>Method</span>
           </div>
           <ul>
-            {container.Container.map((order, id) => (
+            {/* {container.Container.map((order, id) => ( */}
               <li
-                key={id}
+                // key={id}
                 className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'
               >
                 <div className='flex'>
@@ -31,31 +31,31 @@ const orders = () => {
                   </div>
                   <div className='pl-4'>
                     <p className='text-gray-800 font-bold'>
-                      ${order.total.toLocaleString()}
+                      {/* ${order.total.toLocaleString()} */}
                     </p>
-                    <p className='text-gray-800 text-sm'>{order.name.first}</p>
+                    {/* <p className='text-gray-800 text-sm'>{order.name.first}</p> */}
                   </div>
                 </div>
                 <p className='text-gray-600 sm:text-left text-right'>
                   <span
-                    className={
-                      order.status == 'Processing'
-                        ? 'bg-green-200 p-2 rounded-lg'
-                        : order.status == 'Completed'
-                        ? 'bg-blue-200 p-2 rounded-lg'
-                        : 'bg-yellow-200 p-2 rounded-lg'
-                    }
+                    // className={
+                    //   order.status == 'Processing'
+                    //     ? 'bg-green-200 p-2 rounded-lg'
+                    //     : order.status == 'Completed'
+                    //     ? 'bg-blue-200 p-2 rounded-lg'
+                    //     : 'bg-yellow-200 p-2 rounded-lg'
+                    // }
                   >
-                    {order.status}
+                    {/* {order.status} */}
                   </span>
                 </p>
-                <p className='hidden md:flex'>{order.date}</p>
+                {/* <p className='hidden md:flex'>{order.date}</p> */}
                 <div className='sm:flex hidden justify-between items-center'>
-                  <p>{order.method}</p>
+                  {/* <p>{order.method}</p> */}
                   <BsThreeDotsVertical />
                 </div>
               </li>
-            ))}
+            {/* ))} */}
           </ul>
         </div>
       </div>

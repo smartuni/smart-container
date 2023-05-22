@@ -23,8 +23,8 @@ export default function Home() {
                 
                 {/*Welcome and RIOT -------------------------------------------- */}
                 <div className='pt-4 w-full h-full'>
-                    <h2 className="font-bold text-center">WELCOME</h2>
-                    <h2 className="font-bold text-center">TO</h2>
+                    <h2 className="font-bold text-center text-3xl">WELCOME TO</h2>
+                    {/* <h2 className="font-bold text-center text-3xl">TO</h2> */}
                     
                     <div className="position-relative text-center w-full">
                         <span className='font-bold text-blue-700 hover:text-blue-800 lg:pr-10 md:pr-8 sm:pr-6 pr-4 shrink sm:text-4xl md:text-6xl lg:text-9xl text-xl'>R</span>
@@ -49,10 +49,7 @@ export default function Home() {
 
                     </div>
                 </div>
-                
-
             
-
                 <div className="flex items-center justify-center">
                     <div className='bg-white w-1/3 border p-4 rounded-lg'>
             
@@ -67,7 +64,6 @@ export default function Home() {
                 </div>
             </div>
         </div>
-        
         
     </div>
   );
