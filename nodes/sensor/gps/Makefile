@@ -13,6 +13,11 @@ FEATURES_OPTIONAL += periph_uart_rxstart_irq
 USEPKG += minmea
 
 USEMODULE += fmt
+USEMODULE += shell
+USEMODULE += xtimer
+
+# avoid running Kconfig by default
+SHOULD_RUN_KCONFIG ?=
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../../RIOT

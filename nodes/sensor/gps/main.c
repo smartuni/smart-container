@@ -23,30 +23,20 @@
 #include "fmt.h"
 #include "minmea.h"
 #include "periph/uart.h"
-#ifdef MODULE_STDIO_UART
-#include "stdio_uart.h"
-#endif
 #include "ringbuffer.h"
 #include "msg.h"
 #include "thread_config.h"
 #include "board.h"
+#include "xtimer.h"
+#include "shell.h"
+#include "gps.h"
 
-void minmea_demo(void) {
-    const char *_gll = "$GNGLL,5229.0178,N,01326.7605,E,114350.000,A,A*45";
-    struct minmea_sentence_gll frame;
+mutex_t mutex; 
 
-    int res = minmea_parse_gll(&frame, _gll);
-    if (!res) {
-        print_str("FAILURE: error parsing GPS sentence\n");
-    }
-    else {
-        print_str("parsed coordinates: lat=");
-        print_float(minmea_tocoord(&frame.latitude), 6);
-        print_str(" lon=");
-        print_float(minmea_tocoord(&frame.longitude), 6);
-    }
-}
+// SHELL
+#define SHELL_BUFSIZE       (128U)
 
+// UART
 #define UART_BUFSIZE        (128U)
 #define STDIO_UART_DEV      (UART_UNDEF)
 
@@ -56,10 +46,17 @@ typedef struct {
 } uart_ctx_t;
 static uart_ctx_t ctx[UART_NUMOF];
 
+// UART device ID of GPS module
+#define GPS_UART_DEV 0
+
+// Printer
 #define PRINTER_PRIO        (THREAD_PRIORITY_MAIN - 1)
 static kernel_pid_t printer_pid;
 static char printer_stack[THREAD_STACKSIZE_MAIN];
 
+/**
+ * Callback for receiving data from UART
+*/
 static void rx_cb(void *arg, uint8_t data) {
     uart_t dev = (uart_t)(uintptr_t)arg;
 
@@ -72,6 +69,10 @@ static void rx_cb(void *arg, uint8_t data) {
     }
 }
 
+/**
+ * Thread function for printing out received characters to the shell.
+ * When a whole sentence is received, it tries to parse it as a result from the GPS module.
+*/
 static void *printer(void *arg) {
     (void)arg;
     msg_t msg;
@@ -82,10 +83,24 @@ static void *printer(void *arg) {
         msg_receive(&msg);
         uart_t dev = (uart_t)msg.content.value;
         char c;
+        char *result = NULL;
+        size_t result_len = 0;
+        size_t i = 0;
 
-        printf("Success: UART_DEV(%i) RX: [", dev);
+        //printf("Success: UART_DEV(%i) RX: [", dev);
         do {
+            mutex_lock(&mutex);
             c = (int)ringbuffer_get_one(&(ctx[dev].rx_buf));
+            result_len++; // increase length of the string
+            char* temp = realloc(result, (result_len+1) * sizeof(char));
+            if(temp == NULL) {
+                printf("Memory allocation failed.\n");
+                free(result);
+                exit(EXIT_FAILURE);
+            }
+            result = temp;
+            result[i++] = c;
+
             if (c == '\n') {
                 puts("]\\n");
             }
@@ -95,21 +110,25 @@ static void *printer(void *arg) {
             else {
                 printf("0x%02x", (unsigned char)c);
             }
+            mutex_unlock(&mutex);
         } while (c != '\n');
+        parse_gps_string(result);
     }
 
     /* this should never be reached */
     return NULL;
 }
 
+/**
+ * Initializes the GPS module
+*/
 static int init_gps_module(void) {
     int res;
 
-    int dev = 0;
     uint32_t baud = 9600;
 
     /* initialize UART */
-    res = uart_init(UART_DEV(dev), baud, rx_cb, (void *)dev);
+    res = uart_init(UART_DEV(GPS_UART_DEV), baud, rx_cb, (void *)GPS_UART_DEV);
     if (res == UART_NOBAUD) {
         printf("Error: Given baudrate (%u) not possible\n", (unsigned int)baud);
         return 1;
@@ -118,7 +137,7 @@ static int init_gps_module(void) {
         puts("Error: Unable to initialize UART device");
         return 1;
     }
-    printf("Success: Initialized UART_DEV(%i) at BAUD %"PRIu32"\n", dev, baud);
+    printf("Success: Initialized UART_DEV(%i) at %"PRIu32" baud\n", GPS_UART_DEV, baud);
 
     /* also test if poweron() and poweroff() work (or at least don't break
      * anything) */
@@ -127,13 +146,50 @@ static int init_gps_module(void) {
     return 0;
 }
 
+/**
+ * Sends a command to the GPS module
+*/
+static int cmd_send(int argc, char **argv) {
+    (void) argc;
+    (void) argv;
+    uint8_t endline = (uint8_t)'\n';
+
+    if (argc < 2) {
+        printf("usage: %s <data (string)>\n", argv[0]);
+        return 1;
+    }
+
+    printf("UART_DEV(%i) TX: %s\n", GPS_UART_DEV, argv[1]);
+    uart_write(UART_DEV(GPS_UART_DEV), (uint8_t *)argv[1], strlen(argv[1]));
+    uart_write(UART_DEV(GPS_UART_DEV), &endline, 1);
+    return 0;
+}
+
+static const shell_command_t shell_commands[] = {
+    { "send", "Send a command to the GPS module", cmd_send },
+    { NULL, NULL, NULL }
+};
+
 int main(void) {
-    puts("Hello from RIOT GPS Sensor!");
-    minmea_demo();
+    xtimer_msleep(3000);
+
+    puts("===================================");
+    puts("SMARTCONTAINER GPS SENSOR");
+    puts("===================================");
+
+    /* initialize ringbuffers */
+    for (unsigned i = 0; i < UART_NUMOF; i++) {
+        ringbuffer_init(&(ctx[i].rx_buf), ctx[i].rx_mem, UART_BUFSIZE);
+    }
+
     init_gps_module();
 
     /* start the printer thread */
     printer_pid = thread_create(printer_stack, sizeof(printer_stack), PRINTER_PRIO, 0, printer, NULL, "printer");
+
+    /* run the shell */
+    char line_buf[SHELL_BUFSIZE];
+    shell_run(shell_commands, line_buf, SHELL_BUFSIZE);
 
     return 0;
 }
