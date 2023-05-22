@@ -19,10 +19,6 @@
  /home/guest/smart-container/nodes/RIOT/core/include/sched.h \
  /usr/include/newlib/inttypes.h /usr/include/newlib/sys/_intsup.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
  /home/guest/smart-container/nodes/RIOT/core/include/native_sched.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/clist.h \
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h \
@@ -31,8 +27,6 @@
  /home/guest/smart-container/nodes/RIOT/sys/include/auto_init_utils.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/xfa.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/macros/xtstr.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
- /home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/preprocessor/preprocessor_successor.h \
  /home/guest/smart-container/nodes/RIOT/sys/auto_init/include/auto_init_priorities.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/debug.h \
  /home/guest/smart-container/nodes/RIOT/core/include/thread.h \
@@ -110,14 +104,6 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
 
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
-
 /home/guest/smart-container/nodes/RIOT/core/include/native_sched.h:
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/clist.h:
@@ -133,10 +119,6 @@
 /home/guest/smart-container/nodes/RIOT/core/lib/include/xfa.h:
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/macros/xtstr.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
-/home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/preprocessor/preprocessor_successor.h:
 
 /home/guest/smart-container/nodes/RIOT/sys/auto_init/include/auto_init_priorities.h:
 

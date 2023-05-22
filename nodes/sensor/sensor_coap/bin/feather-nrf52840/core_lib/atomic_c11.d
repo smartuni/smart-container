@@ -11,8 +11,8 @@
  /usr/include/newlib/machine/_default_types.h \
  /usr/include/newlib/sys/lock.h \
  /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h \
- /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/include/newlib/sys/cdefs.h /usr/include/newlib/machine/stdlib.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h \
  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdatomic.h \
  /usr/include/newlib/string.h /usr/include/newlib/sys/string.h \
@@ -27,13 +27,7 @@
  /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/vendor/mpu_armv7.h \
  /home/guest/smart-container/nodes/RIOT/cpu/nrf52/include/vendor/nrf52840_bitfields.h \
  /home/guest/smart-container/nodes/RIOT/cpu/nrf52/include/vendor/nrf52840_peripherals.h \
- /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h \
- /home/guest/smart-container/nodes/RIOT/core/lib/include/container.h \
- /home/guest/smart-container/nodes/RIOT/sys/include/debug_irq_disable.h
+ /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h
 
 /home/guest/smart-container/nodes/sensor/sensor_coap/bin/feather-nrf52840/riotbuild/riotbuild.h:
 
@@ -67,11 +61,11 @@
 
 /home/guest/smart-container/nodes/RIOT/core/lib/include/assert.h:
 
-/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
-
 /usr/include/newlib/sys/cdefs.h:
 
 /usr/include/newlib/machine/stdlib.h:
+
+/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
 /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h:
 
@@ -104,15 +98,3 @@
 /home/guest/smart-container/nodes/RIOT/cpu/nrf52/include/vendor/nrf52840_peripherals.h:
 
 /home/guest/smart-container/nodes/RIOT/cpu/cortexm_common/include/irq_arch.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/kernel_defines.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/modules.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/riot_version.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/compiler_hints.h:
-
-/home/guest/smart-container/nodes/RIOT/core/lib/include/container.h:
-
-/home/guest/smart-container/nodes/RIOT/sys/include/debug_irq_disable.h:
