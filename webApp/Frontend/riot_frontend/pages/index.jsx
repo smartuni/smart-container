@@ -16,9 +16,9 @@ export default function Home() {
 
 
   return (
-    <div class="bg-scroll bg-sky-gif h-screen">
-        <div className=' p-60'>
-            <div className='w-full rounded-lg bg-white h-auto items-center justify-center'>
+    <div class="bg-scroll bg-sky-gif h-full">
+        <div className=' p-80'>
+            <div className='w-full rounded-lg bg-white h-screen -mt-48'>
                 <div className=""> 
                 
                 {/*Welcome and RIOT -------------------------------------------- */}
@@ -40,21 +40,27 @@ export default function Home() {
                 </div>
                 {/*-------------------------------------------- */}
                 {/*Sign in and Sign up Buttons-------------------------------------------- */}
-                <div className='bg-white w-full border p-4 rounded-lg '>
-        
-                    <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
-                        <p className="font-bold">Sign In</p>
-                    </Link>
+                <div className="flex items-center justify-center">
+                    <div className='bg-white w-1/3 border p-4 rounded-lg'>
+            
+                        <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
+                            <p className="font-bold">Sign In</p>
+                        </Link>
 
+                    </div>
                 </div>
+                
 
             
 
-                <div className='bg-white w-full border p-4 rounded-lg'>
-                
-                    <Link href = '/contact' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer">
-                        <p className="font-bold">Sign Up</p>
-                    </Link>
+                <div className="flex items-center justify-center">
+                    <div className='bg-white w-1/3 border p-4 rounded-lg'>
+            
+                        <Link href = '/signup' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
+                            <p className="font-bold">Sign Up</p>
+                        </Link>
+
+                    </div>
                 </div>
                 {/*-------------------------------------- */}
 
