@@ -2,7 +2,9 @@ import React from "react";
 import Link from "next/link";
 import styles from '../styles/map.module.css'
 import Image from "next/image";
-import img from "/public/Map2.png";
+import { useEffect } from 'react';
+import Leaflet from 'leaflet';
+import * as ReactLeaflet from 'react-leaflet';
 
 export default function Map() {
   return (
