@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "mutex.h"
 
 int parse_gps_string(const char *_str);
 

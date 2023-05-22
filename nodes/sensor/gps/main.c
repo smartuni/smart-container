@@ -102,17 +102,20 @@ static void *printer(void *arg) {
             result[i++] = c;
 
             if (c == '\n') {
-                puts("]\\n");
+                //puts("]\\n");
             }
             else if (c >= ' ' && c <= '~') {
-                printf("%c", c);
+                //printf("%c", c);
             }
             else {
-                printf("0x%02x", (unsigned char)c);
+                //printf("0x%02x", (unsigned char)c);
             }
             mutex_unlock(&mutex);
         } while (c != '\n');
-        parse_gps_string(result);
+        printf("\nReceived ==> %s", result);
+        if(parse_gps_string(result) == EXIT_FAILURE) {
+            printf("Error parsing GPS string: %s\n", result);
+        }
     }
 
     /* this should never be reached */
@@ -165,17 +168,34 @@ static int cmd_send(int argc, char **argv) {
     return 0;
 }
 
+static int cmd_test(int argc, char **argv) {
+    (void) argc;
+    (void) argv;
+    printf("$GPGGA: %d\n", parse_gps_string("$GPGGA,064951.000,2307.1256,N,12016.4438,E,1,8,0.95,39.9,M,17.8,M,,*65"));
+    printf("$GPGSA: %d\n", parse_gps_string("$GPGSA,A,3,29,21,26,15,18,09,06,10,,,,,2.32,0.95,2.11*00"));
+    printf("$GPGSV: %d\n", parse_gps_string("$GPGSV,3,1,09,29,36,029,42,21,46,314,43,26,44,020,43,15,21,321,39*7D"));
+    printf("$GPRMC: %d\n", parse_gps_string("$GPRMC,064951.000,A,2307.1256,N,12016.4438,E,0.03,165.48,260406,3.05,W,A*2C"));
+    printf("$GPVTG: %d\n", parse_gps_string("$GPVTG,165.48,T,,M,0.03,N,0.06,K,A*37"));
+
+    return 0;
+}
+
 static const shell_command_t shell_commands[] = {
     { "send", "Send a command to the GPS module", cmd_send },
+    { "test", "Test the program with GPS module", cmd_test },
     { NULL, NULL, NULL }
 };
 
-int main(void) {
+int main(int argc, char **argv) {
+    (void) argc;
+    (void) argv;
     xtimer_msleep(3000);
 
     puts("===================================");
     puts("SMARTCONTAINER GPS SENSOR");
     puts("===================================");
+/*     cmd_test(argc, argv);
+    return 0; */
 
     /* initialize ringbuffers */
     for (unsigned i = 0; i < UART_NUMOF; i++) {
