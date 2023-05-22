@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import Image from 'next/image'
 import { Bar } from 'react-chartjs-2'
+import boatGif from '../assets/hhla-container.gif'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -56,9 +58,13 @@ const BarChart = () => {
 
     return (
         <>
-            <div className='w-full md:col-span-2 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white'>
-                <Bar data={chartData} options = {chartOptions}/>
+        <h1 className=''>Map goes here</h1>
+            <div>
+                <Image src={boatGif} class="mx-auto"/>
             </div>
+            {/* <div className='w-full md:col-span-2 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white'>
+                <Bar data={chartData} options = {chartOptions}/>
+            </div> */}
         </>
     )
 }
