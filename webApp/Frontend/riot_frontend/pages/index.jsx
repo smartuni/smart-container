@@ -17,9 +17,10 @@ export default function Home() {
 
   return (
     <div class="bg-scroll bg-sky-gif h-auto">
-        <div className=' p-40'>
-            <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto h-screen items-center justify-center'>
-
+        <div className=' p-72'>
+            <div className='w-full m-auto border rounded-lg bg-white overflow-y-auto h-screen items-center justify-center'>
+                <div className="mt-44"> 
+                
                 {/*Welcome and RIOT -------------------------------------------- */}
                 <div className='px-4 pt-4'>
                     <h2 className="font-bold text-center">WELCOME</h2>
@@ -57,7 +58,7 @@ export default function Home() {
                 </div>
                 {/*-------------------------------------- */}
 
-
+                </div>
             </div>
         </div>
         
