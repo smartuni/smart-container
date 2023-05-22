@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaShoppingBag } from 'react-icons/fa';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { data } from '../data/data.js';
+import { data } from '../data/container.js';
 
 const orders = () => {
   return (
