@@ -16,21 +16,21 @@ export default function Home() {
 
 
   return (
-    <div class="bg-scroll bg-sky-gif h-auto">
-        <div className=' p-72'>
-            <div className='w-full m-auto border rounded-lg bg-white overflow-y-auto h-screen items-center justify-center'>
-                <div className="mt-44"> 
+    <div class="bg-scroll bg-sky-gif h-screen">
+        <div className=' p-60'>
+            <div className='w-full rounded-lg bg-white h-auto items-center justify-center'>
+                <div className=""> 
                 
                 {/*Welcome and RIOT -------------------------------------------- */}
-                <div className='px-4 pt-4'>
+                <div className='pt-4 w-full h-full'>
                     <h2 className="font-bold text-center">WELCOME</h2>
                     <h2 className="font-bold text-center">TO</h2>
                     
-                    <div className="position-relative text-center">
-                        <span className='font-bold text-blue-700 hover:text-blue-800 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>R</span>
-                        <span className='font-bold text-blue-600  hover:text-blue-800 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>I</span>
-                        <span className='font-bold text-blue-500  hover:text-blue-800 pr-10  sm:text-4xl md:text-6xl lg:text-9xl text-6xl'>O</span>
-                        <span className='font-bold text-blue-400  hover:text-blue-800 sm:text-4xl md:text-6xl lg:text-9xl text-6xl' >T</span>
+                    <div className="position-relative text-center w-full">
+                        <span className='font-bold text-blue-700 hover:text-blue-800 lg:pr-10 md:pr-8 sm:pr-6 pr-4 shrink sm:text-4xl md:text-6xl lg:text-9xl text-xl'>R</span>
+                        <span className='font-bold text-blue-600  hover:text-blue-800 lg:pr-10 md:pr-8 sm:pr-6 pr-4 shrink sm:text-4xl md:text-6xl lg:text-9xl text-xl'>I</span>
+                        <span className='font-bold text-blue-500  hover:text-blue-800 lg:pr-10 md:pr-8 sm:pr-6 pr-4  shrink sm:text-4xl md:text-6xl lg:text-9xl text-xl'>O</span>
+                        <span className='font-bold text-blue-400  hover:text-blue-800 shrink sm:text-4xl md:text-6xl lg:text-9xl text-xl' >T</span>
                     </div>  
                 </div>
                 {/*-------------------------------------------- */}
@@ -40,9 +40,9 @@ export default function Home() {
                 </div>
                 {/*-------------------------------------------- */}
                 {/*Sign in and Sign up Buttons-------------------------------------------- */}
-                <div className='bg-white w-96 border p-4 rounded-lg mx-auto'>
+                <div className='bg-white w-full border p-4 rounded-lg '>
         
-                    <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center p-2 rounded-lg cursor-pointer">
+                    <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
                         <p className="font-bold">Sign In</p>
                     </Link>
 
@@ -50,9 +50,9 @@ export default function Home() {
 
             
 
-                <div className='bg-white w-96 border p-4 rounded-lg mx-auto'>
+                <div className='bg-white w-full border p-4 rounded-lg'>
                 
-                    <Link href = '/contact' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center p-2 rounded-lg cursor-pointer">
+                    <Link href = '/contact' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer">
                         <p className="font-bold">Sign Up</p>
                     </Link>
                 </div>
