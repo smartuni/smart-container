@@ -9,7 +9,7 @@ import img3 from '../public/contact_address_icon.png';
 
 export default function Contact() {
   return (
-    <div>
+    <div className="bg-malibu-500 min-h-screen">
         <nav>
           <ul>
             <li><a href="/">Home</a></li>
