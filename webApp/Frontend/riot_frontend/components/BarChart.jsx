@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Image from 'next/image'
 import { Bar } from 'react-chartjs-2'
-import boatGif from '../assets/hhla-container.gif'
+
 import {
     Chart as ChartJS,
     CategoryScale,
