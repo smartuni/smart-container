@@ -45,7 +45,7 @@ const RecentOrders = () => {
                         />
                         </div>
                         <div className='pl-4'>
-                            <p className='text-gray-800 font-bold'>Container id: {con.id} Contents: {con.content}</p>
+                            <p className='text-gray-800 font-bold'>Container id: {con.id}</p>
                             <span className='text-gray-500 text-sm'>{con.start}---</span>
                             <span className='text-gray-500 text-sm'>{con.dest}</span>
                         </div>
