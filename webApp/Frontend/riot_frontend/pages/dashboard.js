@@ -28,28 +28,25 @@ export default function Home() {
     <main className=' bg-malibu-500 min-h-screen'>
       <Header/>
       <TopCards/>
-      <div className="p-4 grid md:grid-cols-3 grid-cols-1 gap-4">
+      <div className="p-4 grid md:grid-cols-2 grid-cols-1 gap-4">
+        <Map  width="100%" height="400" center={DEFAULT_CENTER} zoom={12}>
+          {({ TileLayer, Marker, Popup }) => (
+            <>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+              />
+              {markers.map((marker, index) => (
+                <Marker key={index} position={marker.location}>
+                  <Popup>
+                    {marker.name}
+                  </Popup>
+                </Marker>
+              ))}
 
-
-      <Map  width="800" height="400" center={DEFAULT_CENTER} zoom={12}>
-        {({ TileLayer, Marker, Popup }) => (
-          <>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-            />
-            {markers.map((marker, index) => (
-              <Marker key={index} position={marker.location}>
-                <Popup>
-                  {marker.name}
-                </Popup>
-              </Marker>
-            ))}
-
-          </>
-        )}
-      </Map>
-
+            </>
+          )}
+        </Map>
         <RecentOrders/>
       </div>
     </main>
