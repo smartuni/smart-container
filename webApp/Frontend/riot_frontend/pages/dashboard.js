@@ -8,7 +8,11 @@ import RecentOrders from "@/components/RecentOrders";
 import Map from "@/components/Map/Map";
 
 const DEFAULT_CENTER = [53.5511, 9.9937];
-const MARKER_1 = [53.55587, 10.02439];
+const markers = [
+  { name: 'Container 1', location: [53.55587, 10.02439] },
+  { name: 'Container 2', location: [53.55513463677272, 9.992930792175889] },
+  { name: 'Container 3', location: [53.53952514227034, 10.0049117958243] },
+];
 
 export default function Home() {
 
@@ -34,11 +38,14 @@ export default function Home() {
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 />
-                <Marker position={MARKER_1}>
-                  <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                  </Popup>
-                </Marker>
+                {markers.map((marker, index) => (
+                  <Marker key={index} position={marker.location}>
+                    <Popup>
+                      {marker.name}
+                    </Popup>
+                  </Marker>
+                ))}
+
               </>
             )}
           </Map>
