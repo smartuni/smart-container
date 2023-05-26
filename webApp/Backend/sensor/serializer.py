@@ -3,12 +3,20 @@ from .models import SensorData, User, Container
 
 
 class SensorSerializer(serializers.ModelSerializer):
+    """
+    Serializer class for the SensorData model
+    """
+
     class Meta:
         model = SensorData
         fields = ["id", "sensor_type", "sensor_data", "sensor_time", "owner"]
 
 
 class ContainerSerializer(serializers.ModelSerializer):
+    """
+    Serializer class for the Container model
+    """
+
     sensor_data = serializers.PrimaryKeyRelatedField(
         many=True, queryset=SensorData.objects.all()
     )
@@ -27,6 +35,10 @@ class ContainerSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializer class for the User model
+    """
+
     class Meta:
         model = User
         fields = [

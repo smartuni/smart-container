@@ -44,3 +44,23 @@ A sensor detail contains just the information of the single sensor data instance
 An example output of a GET request to this API:
 
 
+## SensorByType
+
+> Get all sensor data with a certain type and/or owner
+
+Get all sensor data with a certain type and/or owner. This API endpoint requires a POST request with the sensor type and/or owner as a parameter.
+The owner is an optional parameter, but the sensor type is required.
+
+
+```js
+async function fetchLocationOfContainer(content){
+const containerLocationResponse = await fetch("http://127.0.0.1:8000/api/container_location/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        "content": content,
+    }),
+})};
+```
