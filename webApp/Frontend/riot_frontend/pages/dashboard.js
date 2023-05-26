@@ -7,7 +7,8 @@ import BarChart from "@/components/BarChart";
 import RecentOrders from "@/components/RecentOrders";
 import Map from "@/components/Map/Map";
 
-const DEFAULT_CENTER = [38.907132, -77.036546]
+const DEFAULT_CENTER = [53.5511, 9.9937];
+const MARKER_1 = [53.55587, 10.02439];
 
 export default function Home() {
 
@@ -33,7 +34,7 @@ export default function Home() {
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 />
-                <Marker position={DEFAULT_CENTER}>
+                <Marker position={MARKER_1}>
                   <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                   </Popup>
