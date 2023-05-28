@@ -1,6 +1,14 @@
+import uuid
 import paho.mqtt.client as mqtt
 import json
+import models
+#from .models import SensorData
+#from .models import Container
+#from .serializer import SensorSerializer
+#from django.db.utils import IntegrityError
+#from django.core.exceptions import ValidationError
 import base64
+
 
 # Confiugure as needed
 USERNAME="mqtest2@thingsnet"
@@ -24,7 +32,33 @@ def on_connect(client, userdata, flags, rc):
 # reconnect then subscriptions will be renewed.
     client.subscribe("#")
 
-
+def postToDatabase(time, data, dataType, owner):
+    """
+    The function then creates a new SensorData object using the SensorData.objects.create() method.
+    The SensorData object has five fields: id, sensor_type, sensor_data, sensor_time, and owner.
+    The id field is a UUID field that serves as the primary key for the table.
+    The sensor_type field is a character field that stores the type of sensor. The sensor_data field is a character field that stores the data from the sensor.
+    The sensor_time field is a date-time field that stores the time the data was recorded.
+    The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
+    """
+    owner_instance = Container.objects.get(container_id=owner)
+    if time is None or data is None or dataType is None or owner_instance is None:
+        raise (ValueError("One or more parameters are None"))
+    try:
+        entry = SensorData.objects.create(
+        id=uuid.uuid4(),
+        sensor_type=dataType,
+        sensor_data=data,
+        sensor_time=time,
+        owner=owner_instance,
+    )
+        entry.save()
+    except ValueError as e:
+        print(e)
+    except IntegrityError as e:
+        print(e)
+    except ValidationError as e:
+        print(e)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
