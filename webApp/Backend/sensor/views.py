@@ -9,6 +9,12 @@ from rest_framework.views import APIView
 from .models import SensorData, Container, User
 from .serializer import SensorSerializer, ContainerSerializer, UserSerializer
 
+from rest_framework.parsers import JSONParser
+from .models import SensorData, User
+from .serializer import SensorSerializer, SignInSerializer, UserSerializer
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -121,33 +127,51 @@ class ContainerByContent(APIView):
 
 
 @csrf_exempt
+def signUp(request):
+    try:
+        data = JSONParser().parse(request)
+    except:
+        responseObj = ResponseModel()
+        responseObj.errorMsg = "Missing valid JSON in body."
+        return JsonResponse(responseObj.__dict__, status=400)
+
+    serializer = UserSerializer(data=data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data)
+
+    return JsonResponse(serializer.errors, status=400)
+
+
+@csrf_exempt
 def signIn(request):
-    userSignInObj = json.loads(request.body or "{}")
-    responseObj = ResponseModel()
+    try:
+        data = JSONParser().parse(request)
+    except:
+        responseObj = ResponseModel()
+        responseObj.errorMsg = "Missing valid JSON in body."
+        return JsonResponse(responseObj.__dict__, status=400)
 
-    username = userSignInObj["username"] or None
-    password = userSignInObj["password"] or None
+    serializer = SignInSerializer(data=data)
 
-    if username == None or not (1 <= len(username) <= 128):
-        responseObj.errorMsg = (
-            "Username has to be a String with length of 1 - 128 characters."
+    if serializer.is_valid():
+        user = authenticate(
+            request,
+            username=serializer.data.get("email", None),
+            password=serializer.data.get("password", None),
         )
-        return HttpResponse(json.dumps(responseObj.__dict__))
-    if password == None or not (8 <= len(password) <= 128):
-        responseObj.errorMsg = (
-            "Password has to be a String with length of 8 - 128 characters."
-        )
-        return HttpResponse(json.dumps(responseObj.__dict__))
+        if user is not None:
+            login(request, user)
+            return JsonResponse({"email": serializer.data["email"]})
+        else:
+            responseObj = ResponseModel()
+            responseObj.errorMsg = (
+                "Sorry but there is a mismatch with your credentials."
+            )
+            return JsonResponse(responseObj.__dict__, status=400)
 
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        login(request, user)
-        responseObj.data = "You are logged in"
-        return HttpResponse(json.dumps(responseObj.__dict__))
-    else:
-        responseObj.errorMsg = "Sorry but there is a mismatch with your credentials."
-        return HttpResponse(json.dumps(responseObj.__dict__))
+    return JsonResponse(serializer.errors, status=400)
 
 
 class ResponseModel:
@@ -190,20 +214,22 @@ def signUp(request):
 
 
 @csrf_exempt
-@login_required
 def signOut(request):
-    responseObj = ResponseModel()
-
     logout(request)
 
+    responseObj = ResponseModel()
     responseObj.data = "Successfully signed out."
-    return HttpResponse(json.dumps(responseObj.__dict__))
+    return JsonResponse(responseObj.__dict__)
 
 
-# TODO: Change the Response type to JSON
+# * Testing
 @csrf_exempt
-def checkSignedIn(request):
+def signedInUser(request):
+    responseObj = ResponseModel()
+
     if request.user.is_authenticated:
-        return HttpResponse("You are currently signed in.")
+        responseObj.data = f"You are currently signed is as {request.user}."
     else:
-        return HttpResponse("You are currently NOT signed in.")
+        responseObj.errorMsg = "You are currently NOT signed in."
+
+    return JsonResponse(responseObj.__dict__)

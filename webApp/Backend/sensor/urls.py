@@ -22,4 +22,5 @@ urlpatterns = [
     path("signIn/", views.signIn),
     path("signOut/", views.signOut),
     path("checkSignedIn/", views.checkSignedIn),
+    path("signedInUser/", views.signedInUser),
 ]

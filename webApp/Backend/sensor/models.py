@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 # Create your models here.
@@ -55,25 +56,14 @@ class Container(models.Model):
         ordering = ["container_id"]
 
 
-class User(models.Model):
-    """
-    Model class for the storing of user data
-    user_id: the id of the user
-    firstName: the first name of the user
-    lastName: the last name of the user
-    email: the email of the user
-    password: the password of the user
-    company: the company the user works for
-    role: the role of the user
-    """
-
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    firstName = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    company = models.CharField(max_length=100)
-    role = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ["user_id"]
+class User(AbstractBaseUser):
+    id = models.UUIDField
+    firstName = models.CharField(max_length=256)
+    lastName = models.CharField(max_length=256)
+    email = models.CharField(max_length=256, unique=True)
+    password = models.CharField(max_length=128)
+    company = models.CharField(max_length=128)
+    role = models.CharField(max_length=32)
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["firstName", "lastName", "company"]
+    objects = BaseUserManager()

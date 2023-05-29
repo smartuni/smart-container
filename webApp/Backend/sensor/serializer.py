@@ -2,6 +2,9 @@ from rest_framework import serializers
 from .models import SensorData, User, Container
 
 
+from django.contrib.auth.hashers import make_password
+
+
 class SensorSerializer(serializers.ModelSerializer):
     """
     Serializer class for the SensorData model
@@ -35,18 +38,16 @@ class ContainerSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializer class for the User model
-    """
-
     class Meta:
         model = User
-        fields = [
-            "user_id",
-            "firstName",
-            "lastName",
-            "email",
-            "password",
-            "company",
-            "role",
-        ]
+        fields = ["firstName", "lastName", "email", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        validated_data["password"] = make_password(validated_data["password"])
+        return super(UserSerializer, self).create(validated_data)
+
+
+class SignInSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    password = serializers.CharField()
