@@ -44,14 +44,14 @@ const updateCon = (conID) => setCurrentContainer(conID);
 
 const isProblem = (con) => {
   var error = false
-  if(con.doorStatus == "open")
-  {
-    error = true;
-  }
-  if (con.crashed == "crashed")
-  {
-    error = true;
-  }
+  // if(con.doorStatus == "open")
+  // {
+  //   error = true;
+  // }
+  // if (con.crashed == "crashed")
+  // {
+  //   error = true;
+  // }
   return error;
 }
 
