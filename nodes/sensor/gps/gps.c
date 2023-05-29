@@ -42,14 +42,13 @@ int parse_gga(const char *_gga) {
         return EXIT_FAILURE;
     }
 
-    print_str("\n=== GGA RESULT ===\n");
     float latitude = minmea_tocoord(&(frame.latitude));
     float longitude = minmea_tocoord(&(frame.longitude));
     char buf_latitude[9];
     char buf_longitude[9];
     fmt_float(buf_latitude, latitude, 6);
     fmt_float(buf_longitude, longitude, 6);
-    printf("latitude=%s; longitude=%s\n", buf_latitude, buf_longitude);
+    printf("[GPCGA] latitude=%s; longitude=%s\n", buf_latitude, buf_longitude);
     return EXIT_SUCCESS;
 }
 
@@ -60,8 +59,7 @@ int parse_gsa(const char *_gsa) {
         return EXIT_FAILURE;
     }
     
-    print_str("\n=== GSA RESULT ===\n");
-    printf("sats=%d; mode=%c; fix_type=%d\n", *frame.sats, frame.mode, frame.fix_type);
+    printf("[GPGSA] sats=%d; mode=%c; fix_type=%d\n", *frame.sats, frame.mode, frame.fix_type);
     return EXIT_SUCCESS;
 }
 
@@ -72,8 +70,7 @@ int parse_gsv(const char *_gsv) {
         return EXIT_FAILURE;
     }
     
-    print_str("\n=== GSV RESULT ===\n");
-    printf("total_sats=%d; total_msgs=%d; msg_nr=%d\n", frame.total_sats, frame.total_msgs, frame.msg_nr);
+    printf("[GPGSV] total_sats=%d; total_msgs=%d; msg_nr=%d\n", frame.total_sats, frame.total_msgs, frame.msg_nr);
     return EXIT_SUCCESS;
 }
 
@@ -84,7 +81,6 @@ int parse_rmc(const char *_rmc) {
         return EXIT_FAILURE;
     }
 
-    print_str("\n=== RMC RESULT ===\n");
     float latitude = minmea_tocoord(&(frame.latitude));
     float longitude = minmea_tocoord(&(frame.longitude));
     float speed = minmea_tofloat(&frame.speed);
@@ -94,7 +90,7 @@ int parse_rmc(const char *_rmc) {
     fmt_float(buf_latitude, latitude, 6);
     fmt_float(buf_longitude, longitude, 6);
     fmt_float(buf_speed, speed, 2);
-    printf("valid=%s; latitude=%s; longitude=%s; speed=%s; date: %02d.%02d.20%02d\n", frame.valid ? "true" : "false", buf_latitude, buf_longitude, buf_speed, frame.date.day, frame.date.month, frame.date.year);
+    printf("[GPRMC] valid=%s; latitude=%s; longitude=%s; speed=%s; date: %02d.%02d.20%02d\n", frame.valid ? "true" : "false", buf_latitude, buf_longitude, buf_speed, frame.date.day, frame.date.month, frame.date.year);
 
     return EXIT_SUCCESS;
 }
@@ -106,8 +102,7 @@ int parse_vtg(const char *_vtg) {
         return EXIT_FAILURE;
     }
     
-    print_str("\n=== VTG RESULT ===\n");
-    printf("faa_mode=%d; magnetic_track_degrees=%f; true_track_degrees=%f\n", frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
+    printf("[GPVTG] faa_mode=%d; magnetic_track_degrees=%f; true_track_degrees=%f\n", frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
     return EXIT_SUCCESS;
 }
 
