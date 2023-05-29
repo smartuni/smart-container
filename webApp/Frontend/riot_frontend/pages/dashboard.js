@@ -51,7 +51,10 @@ const updateCon = (conID) => setCurrentContainer(conID);
   
 const isProblem = (con) => {
   var error = false
-  
+  if(con.doorStatus="closed")
+  {
+    error = True
+  }
   
   return error
 }
