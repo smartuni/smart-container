@@ -176,7 +176,7 @@ function getCurrentContainer() {
       <div className="p-4 grid md:grid-cols-3 grid-cols-1 gap-4">
 
 
-      <Map  width="100%" height="400" center={DEFAULT_CENTER} zoom={12}>
+      {/* <Map  width="100%" height="400" center={DEFAULT_CENTER} zoom={12}>
           {({ TileLayer, Marker, Popup }) => (
             <>
               <TileLayer
@@ -193,7 +193,7 @@ function getCurrentContainer() {
 
             </>
           )}
-        </Map>
+        </Map> */}
 
       <div className='w-full col-span-1 static lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
                   <h1>RecentOrders</h1>
