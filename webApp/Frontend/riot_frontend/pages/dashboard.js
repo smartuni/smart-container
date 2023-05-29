@@ -79,14 +79,6 @@ function getCurrentContainer() {
 }
   
 
-  // function getContainer(conID) 
-  // {
-  //   return containers[conID]
-  // }
-
-  
-  
-
   return (
     <>
     <Head>
