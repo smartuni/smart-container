@@ -1,10 +1,13 @@
 import uuid
+import datetime
 import paho.mqtt.client as mqtt
 import json
-from .models import SensorData
-from .serializer import SensorSerializer
+from sensor.models import SensorData
+from sensor.serializer import SensorSerializer
 from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
+from server.wsgi import *
+from sensor.models import Container
 
 # Confiugure as needed
 USERNAME = "mqtt@thingsnet"
@@ -21,15 +24,23 @@ TTN_MQTT_SERVER = "mobi35.inet.haw-hamburg.de"
 
 def postToDatabase(time, data, dataType, owner):
     """
-    Post the data to the database
+    The function then creates a new SensorData object using the SensorData.objects.create() method.
+    The SensorData object has five fields: id, sensor_type, sensor_data, sensor_time, and owner.
+    The id field is a UUID field that serves as the primary key for the table.
+    The sensor_type field is a character field that stores the type of sensor. The sensor_data field is a character field that stores the data from the sensor.
+    The sensor_time field is a date-time field that stores the time the data was recorded.
+    The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
     """
+    owner_instance = Container.objects.get(container_id=owner)
+    if time is None or data is None or dataType is None or owner_instance is None:
+        raise (ValueError("One or more parameters are None"))
     try:
         entry = SensorData.objects.create(
-            sensor_id=uuid.uuid4(),
+            id=uuid.uuid4(),
             sensor_type=dataType,
             sensor_data=data,
             sensor_time=time,
-            owner=owner,
+            owner=owner_instance,
         )
         entry.save()
     except ValueError as e:
@@ -77,17 +88,20 @@ def process_message(msg):
     return time, temperature_str, humidity_str
 
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
+# client = mqtt.Client()
+# client.on_connect = on_connect
+# client.on_message = on_message
 
 
-client.username_pw_set(USERNAME, API_KEY)
-client.connect(TTN_MQTT_SERVER, 80, 60)
+# client.username_pw_set(USERNAME, API_KEY)
+# client.connect(TTN_MQTT_SERVER, 80, 60)
 
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-client.loop_forever()
+# client.loop_forever()
+if __name__ == "__main__":
+    print("Test")
+    postToDatabase("time", "data", "dataType", "owner")

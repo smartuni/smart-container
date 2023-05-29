@@ -16,7 +16,14 @@ class SensorData(models.Model):
     owner = models.ForeignKey(
         "Container", related_name="sensor_data", on_delete=models.CASCADE
     )
-    sensor_type = models.CharField(max_length=10)
+    SENSOR_TYPES = [
+        ("GPS", "GPS"),
+        ("TEMP", "Temperature"),
+        ("HUM", "Humidity"),
+        ("DOOR", "Door"),
+        ("ACCEL", "Acceleration"),
+    ]
+    sensor_type = models.CharField(max_length=100, choices=SENSOR_TYPES)
     sensor_data = models.CharField(max_length=100)
     sensor_time = models.DateTimeField()
 
