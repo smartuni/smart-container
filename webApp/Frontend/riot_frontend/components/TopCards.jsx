@@ -1,6 +1,9 @@
-import React from 'react'
+
+import React from 'react';
 import BarChart from "./barchart";
-import TempChart from "../pages/temperature"; 
+import TempChart from "../pages/temperature";
+import mc from './TopCards.module.css';
+import Container from '@mui/material/Container';
 
 const tempData = [
     { time: '12:00', temperature: 23 },
@@ -8,66 +11,65 @@ const tempData = [
     { time: '13:00', temperature: 26 },
     { time: '13:30', temperature: 25 },
     { time: '14:00', temperature: 23 },
-  ];
-
+];
 
 const TopCards = () => {
     return (
-        <div className='grid lg:grid-cols-5 gap-4 p-4'>       
-            <div className='bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full'>
-                    <div className='flex flex-col w-full'>
-                        <p className='text-2xl font-bold'>Current Temp:</p>                  
+        <div className={mc.Temp}>
+            <div className={mc.card}>
+                <div>
+                    <div>
+                        <div>
+                            <p className={mc.cardTitle}>Current Temp:</p>
+                        </div>
+                        <div style={{ width: '80%' }}>
+                            <TempChart data={tempData} />
+                        </div>
                     </div>
-                    <div className='flex justify-center items-center' style={{ width: '80%' }}>
-                        <TempChart data={tempData} />
+                    <span className={mc.temperature}>20,1C</span>
+                </div>
+            </div>
+
+            <div className={mc.card}>
+                <div>
+                    <div>
+                        <p className={mc.cardTitle}>Current Humidity:</p>
                     </div>
+                    <p className={mc.cardValue}>
+                        <span>50%</span>
+                    </p>
                 </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg' style={{ position: "relative", left:"-60px" }}>
-                    <span className='text-green-700 text-lg'>20,1C</span>
-                </p>
             </div>
 
-            <div className=' bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Current Humidity:</p>
-                    
+            <div className={mc.card}>
+                <div>
+                    <div>
+                        <p className={mc.cardTitle}>Acceleration:</p>
+                    </div>
+                    <p className={mc.cardValue}>
+                        <span>10km/h</span>
+                    </p>
                 </div>
-                <p className='bg-green-200 flex justify-center items-center p-1 rounded-lg'>
-                    <span className='text-green-700 text-lg'>50%</span>
-                </p>
             </div>
 
-            <div className='bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Acceleration:</p>
-                    
+            <div className={mc.card}>
+                <div className={mc.status}>
+                    <p className={mc.cardTitle}>Door Status:</p>
+                    <p className={mc.doorStatus}>Closed</p>
+                    <p className={mc.cardTitle}>Last Opened:</p>
+                    <p className={mc.lastOpened}>23/02/23 12pm</p>
                 </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>10km/h</span>
-                </p>
             </div>
 
-            <div className='bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Door Status:</p>
-                    <p className='text-green-600 text-2xl'>Closed</p>
-                    <p className='text-2xl font-bold'>Last Opened:</p>
-                    <p className='text-2xl'>23/02/23 12pm</p>
+            <div className={mc.card}>
+                <div>
+                    <p className={mc.cardTitle}>No water leak detected</p>
                 </div>
-                
             </div>
-
-            <div className='bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold text-green-600'>No water leak detected</p>
-                    
-                </div>
-                
-            </div>
-
         </div>
-    )
+    );
 }
 
-export default TopCards
+export default TopCards;
+
+
