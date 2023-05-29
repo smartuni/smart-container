@@ -14,31 +14,7 @@ import Document, { Html, Main, NextScript } from 'next/document'
 
 
 const DEFAULT_CENTER = [38.907132, -77.036546]
-function isProblem(con) {
-  var error = false
-  if(con.doorStatus == "open") {
-      error = true
-  } if(con.crashed == "True") {
-      error = true
-  } 
-  return error
-}
 
-function getConById(Id) {
-  var result = containers.find(item => item.id === Id);
-  return result
-}
-
-
-function getProblem(con) {
-  var error_message = ""
-  if(con.doorStatus == "open") {
-      error_message = "Door is open!"
-  } else if(con.crashed == "True") {
-      error_message = "Ship has Crashed!"
-  } 
-  return error_message
-}
 
 // function isOpen(Id) {
 //   var open = false
@@ -61,7 +37,35 @@ function toggle() {
 
 const updateCon = (conID) => setCurrentContainer(conID);
   
+const isProblem = (con) => {
+  var error = false
+  if(con.doorStatus == "open") 
+  {
+    error = true
+  } else if(con.crashed == "True")
+  {
+    error = true
+  }
   
+  return error
+}
+
+
+const getConById = (Id) => {
+  var result = containers.find(item => item.id == Id);
+  return result
+}
+
+
+const getProblem = (container) => {
+  var error_message = ""
+  if(container.doorStatus == "open") {
+      error_message = "Door is open!"
+  } else if(container.crashed == "True") {
+      error_message = "Ship has Crashed!"
+  } 
+  return error_message
+}
 
 
 function bundle(conID) {
