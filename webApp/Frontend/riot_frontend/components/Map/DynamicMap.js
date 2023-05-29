@@ -32,4 +32,3 @@ const Map = ({ children, className, width, height, ...rest }) => {
 }
 
 export default Map;
-

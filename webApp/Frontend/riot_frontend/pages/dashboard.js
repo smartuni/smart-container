@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png';
 import Document, { Html, Main, NextScript } from 'next/document'
 import TempChart from "../pages/temperature"; 
-import Map from "@/components/Map/Map.js"
+import Map from "@/components/Map/Map";
 
 
 
