@@ -1,4 +1,4 @@
-import TempChart from "./temperature";
+
 import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
@@ -10,7 +10,9 @@ import {FaShoppingBag} from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png';
 import Document, { Html, Main, NextScript } from 'next/document'
-import Map from "@/components//Map/Map.js"
+import TempChart from "../pages/temperature"; 
+import Map from "@/components/Map/Map.js"
+
 
 
 const DEFAULT_CENTER = [53.5511, 9.9937];
@@ -19,6 +21,14 @@ const markers = [
   { name: 'Container 2', location: [53.55513463677272, 9.992930792175889] },
   { name: 'Container 3', location: [53.53952514227034, 10.0049117958243] },
 ];
+
+const tempData = [
+    { time: '12:00', temperature: 23 },
+    { time: '12:30', temperature: 24 },
+    { time: '13:00', temperature: 26 },
+    { time: '13:30', temperature: 25 },
+    { time: '14:00', temperature: 23 },
+  ];
 
 
 
@@ -41,13 +51,7 @@ const updateCon = (conID) => setCurrentContainer(conID);
   
 const isProblem = (con) => {
   var error = false
-  if(con.doorStatus == "open") 
-  {
-    error = true
-  } else if(con.crashed == "True")
-  {
-    error = true
-  }
+  
   
   return error
 }
@@ -96,9 +100,9 @@ function getCurrentContainer() {
       <div>
         
       
-        <div className='grid lg:grid-cols-6 lg:grid-rows-2 gap-4 p-4'>
+        <div className='grid lg:grid-cols-6  gap-4 p-4'>
         
-              <div className='lg:col-span-6 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
+              <div className='lg:col-span-6 col-span-1 bg-white flex justify-between w-full h-min border p-4 rounded-lg'>
                   <div className='flex justify-center items-center flex-col w-full pb-4'>
                   
                     <div>
@@ -110,7 +114,7 @@ function getCurrentContainer() {
                   
               </div>
 
-              <div className=' bg-white flex justify-between w-full border p-4 rounded-lg'>
+              <div className=' bg-white flex justify-between w-full border h-min p-4 rounded-lg'>
                   <div className='flex flex-col w-full pb-4'>
                       <p className='text-2xl font-bold'>Current Humidity:</p>
                       
@@ -141,14 +145,19 @@ function getCurrentContainer() {
               </div>
 
               <div className='bg-white flex justify-between w-full border p-4 rounded-lg'>
-                  <div className='flex flex-col w-full pb-4'>
-                      <p className='text-2xl font-bold'>Temperature:</p>
-                      
-                  </div>
-                  <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                      <span className='text-green-700 text-lg' id="tempLabel"></span>
-                  </p>
-              </div>
+                <div className='flex flex-col w-full'>
+                    <div className='flex flex-col w-full'>
+                        <p className='text-2xl font-bold'>Current Temp:</p>                  
+                    </div>
+                    <div className='flex justify-center items-center' style={{ width: '80%' }}>
+                        <TempChart data={tempData} />
+                    </div>
+                </div>
+                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'
+style={{ position: "relative", left:"-60px" }}>
+                    <span className='text-green-700 text-lg' id="tempLabel"></span>
+                </p>
+            </div>
 
               <div className={'flex justify-between w-full p-4 rounded-lg' + (isProblem(getConById(currentContainer)) ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
                   <div className='flex flex-col w-full pb-4'>
