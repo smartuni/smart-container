@@ -1,0 +1,6 @@
+FROM python:3.9-alpine
+ENV PROJECT_ROOT=/home/user/projects/coding/smart-containers/webApp
+WORKDIR $PROJECT_ROOT/Backend
+COPY requirements.yml ./
+RUN apk add --no-cache bash
+RUN pip install --no-cache-dir -r requirements.yml
