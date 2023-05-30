@@ -27,6 +27,8 @@ USEMODULE += auto_init_gnrc_netif
 USEMODULE += gnrc_ipv6_default
 USEMODULE += gnrc_icmpv6_echo
 USEMODULE += gcoap
+USEMODULE += netutils
+USEMODULE += od
 
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap

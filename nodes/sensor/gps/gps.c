@@ -124,7 +124,8 @@ int parse_rmc(const char *_rmc) {
     printf("[GPRMC] (lat,long,course,speed,valid) %s\n", sensor_data);
 
     // send sensor_data via COAP to /gps/rmc
-    send_to_concentrator(sensor_data);
+    send_req("fe80::fcb2:9130:a6fa:74b3", "5683", "/gps", sensor_data, COAP_POST);
+    //send_to_concentrator(sensor_data);
 
     return EXIT_SUCCESS;
 }
@@ -140,8 +141,6 @@ int parse_vtg(const char *_vtg) {
         frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
     return EXIT_SUCCESS;
 }
-
-mutex_t mutex_gps;
 
 void handle_gps_msg(const char *_str) {
     const char* prefix_gga = "$GPGGA"; // Global Positioning System Fixed Data. Time, Position and fix related data
