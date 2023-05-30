@@ -1,0 +1,33 @@
+.contact {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+  }
+
+  .contact img {
+    margin-bottom: 15px;
+  }
+
+  .contact h3 {
+    font-weight: 700;
+  }
+  
+  .section {
+    width: 170px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 120px;
+  }
+  
+  .icon {
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(191, 216, 236);
+  }

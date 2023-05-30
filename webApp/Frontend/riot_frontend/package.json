@@ -9,13 +9,34 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "autoprefixer": "10.4.14",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.3",
+    "@react-google-maps/api": "^2.18.1",
+    "@zeit/next-css": "^1.0.1",
+    "axios": "^1.4.0",
+    "chart.js": "^4.3.0",
+    "classnames": "^2.3.2",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
-    "next": "13.3.0",
-    "postcss": "8.4.22",
+    "ethers": "^5.7.2",
+    "leaflet": "^1.9.4",
+    "next": "^13.3.0",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.1"
+    "react-icons": "^4.8.0",
+    "react-leaflet": "^4.2.1",
+    "run": "^1.4.0",
+    "sass": "^1.62.1"
+  },
+  "optionalDependencies": {
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.35"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
   }
 }

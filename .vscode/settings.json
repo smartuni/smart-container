@@ -9,4 +9,7 @@
         "--load-plugins=pylint_django",
         "--django_settings_module=webapp.backend.settings"
     ],
+    "files.associations": {
+        "gcoap_example.h": "c"
+    }
 }

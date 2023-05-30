@@ -1,0 +1,51 @@
+.mapTitleDiv p{
+    position: relative;
+    left: 400px;
+    color: rgb(217, 228, 233);
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0px;
+  }
+
+  .map {
+    float: left;
+    width: 85%;
+  }
+
+  /* Media query for zoom levels 80% to 100% */
+  @media screen and (min-width: 768px) and (max-width: 1600px){
+    .map {
+      width: 80%;
+    }
+  }
+  
+  .mainMap {
+    height: 514px;
+    width: 95%;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+  
+  .mapHint {
+    color: rgb(217, 228, 233);
+    font-weight: 700;
+    font-size: 20px;
+  }
+  
+  .containersInfo{
+    width: 250px;
+    flex-direction: column;
+    float: left;
+  }
+  
+  .containersInfo div{
+    width: 250px;
+    height: 65px;
+    margin-bottom: 15px;
+    padding-top: 35px;
+    background-color: #c6ccdc;
+    color: #0f285a;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 15px;
+  }
