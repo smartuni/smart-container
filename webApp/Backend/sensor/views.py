@@ -180,38 +180,6 @@ class ResponseModel:
         self.data = data
 
 
-@csrf_exempt
-def signUp(request):
-    userSignUpObj = json.loads(request.body or "{}")
-    responseObj = ResponseModel()
-
-    username = userSignUpObj["username"] or None
-    email = userSignUpObj["email"] or None
-    password = userSignUpObj["password"] or None
-
-    if username == None or not (1 <= len(username) <= 128):
-        responseObj.errorMsg = (
-            "Username has to be a String with length of 1 - 128 characters."
-        )
-        return HttpResponse(json.dumps(responseObj.__dict__))
-    if email == None or not (5 <= len(email) <= 128) or not "@" in email:
-        responseObj.errorMsg = "Email has to be a String with length of 5 - 128 characters and containing '@'."
-        return HttpResponse(json.dumps(responseObj.__dict__))
-    if password == None or not (8 <= len(password) <= 128):
-        responseObj.errorMsg = (
-            "Password has to be a String with length of 8 - 128 characters."
-        )
-        return HttpResponse(json.dumps(responseObj.__dict__))
-
-    try:
-        user = User.objects.create_user(username, email, password)
-    except:
-        responseObj.errorMsg = "The user seems to be already exists."
-        return HttpResponse(json.dumps(responseObj.__dict__))
-
-    responseObj.data = f"You are singed up as: {user}"
-    return HttpResponse(json.dumps(responseObj.__dict__))
-
 
 @csrf_exempt
 def signOut(request):
