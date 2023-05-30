@@ -1,7 +1,7 @@
 import React from 'react';
 import TempChart from "../pages/temperature";
 import mc from './TopCards.module.css';
-import Container from '@mui/material/Container';
+
 
 const tempData = [
   { time: '12:00', temperature: 23 },
