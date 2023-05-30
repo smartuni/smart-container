@@ -9,7 +9,8 @@ import  ContainerProblem from "./containerProblem";
 
 export default function Home() {
 
-//const data  = axios.get(`/localhost/${}`)
+
+
 
   return (
     <>
@@ -23,10 +24,10 @@ export default function Home() {
     <main className=' bg-malibu-500 min-h-screen'>
       <Header/>
       <TopCards/>
-      <div className="p-4 grid md:grid-cols-2 grid-cols-1 gap-4">
+     <div className="p-4 grid md:grid-cols-2 grid-cols-1 gap-4">
         <ContainersMap />
         <RecentOrders/>
-        <ContainerProblem/>
+        {/* <ContainerProblem/> */}
       </div>
     </main>
     </>
