@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'sensor.User'
+#AUTH_USER_MODEL = 'sensor.User'
 
 
 # Internationalization

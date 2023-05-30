@@ -21,6 +21,7 @@ async function fetchContainerLocation() {
     "Doing fetch for container location",
     containerData[0].container_id
   );
+  
   const response = await fetch(
     "http://127.0.0.1:8000/api/container_location/",
     {
@@ -34,5 +35,13 @@ async function fetchContainerLocation() {
   const data = await response.json();
   console.log(data);
 }
+async function fetchUserData() {
+  const userResponse = await fetch(
+    "http://127.0.0.1:8000/api/user_list"
+  );
+  const containerData = await userResponse.json();
 
-fetchContainerLocation();
+  console.log(containerData);
+}
+
+fetchUserData();

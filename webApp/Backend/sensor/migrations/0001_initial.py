@@ -33,29 +33,7 @@ class Migration(migrations.Migration):
                 "ordering": ["container_id"],
             },
         ),
-        migrations.CreateModel(
-            name="User",
-            fields=[
-                (
-                    "user_id",
-                    models.UUIDField(
-                        default=uuid.uuid4,
-                        editable=False,
-                        primary_key=True,
-                        serialize=False,
-                    ),
-                ),
-                ("firstName", models.CharField(max_length=100)),
-                ("lastName", models.CharField(max_length=100)),
-                ("email", models.CharField(max_length=100)),
-                ("password", models.CharField(max_length=100)),
-                ("company", models.CharField(max_length=100)),
-                ("role", models.CharField(max_length=100)),
-            ],
-            options={
-                "ordering": ["user_id"],
-            },
-        ),
+        
         migrations.CreateModel(
             name="SensorData",
             fields=[
