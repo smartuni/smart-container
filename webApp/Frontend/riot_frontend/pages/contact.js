@@ -9,7 +9,7 @@ import img3 from '../public/contact_address_icon.png';
 
 export default function Contact() {
   return (
-    <div>
+    <div className='bg-malibu-500 h-screen'>
       <div className='flex justify-between px-4 pt-4'>
         <h2></h2>
         <h2>Welcome back, Team!
