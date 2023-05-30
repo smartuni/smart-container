@@ -1,6 +1,7 @@
 #include "gps.h"
 #include "net/gcoap.h"
 #include "net/utils.h"
+#include "coap.h"
 
 // Prototypes for functions used for parsing GPS infos from received UART string
 
@@ -44,19 +45,25 @@ int parse_gga(const char *_gga) {
         return EXIT_FAILURE;
     }
 
+    char sensor_data[80];
+
     float latitude = minmea_tocoord(&(frame.latitude));
     float longitude = minmea_tocoord(&(frame.longitude));
     char buf_latitude[9];
     char buf_longitude[9];
-    fmt_float(buf_latitude, latitude, 6);
-    fmt_float(buf_longitude, longitude, 6);
 
-    printf("[GPGGA] latitude=%s; longitude=%s; fix_quality=%d; satellites_tracked=%d\n", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+    if(isnan(latitude) || isnan(longitude)) {
+        sprintf(sensor_data, "0.0,0.0,%d,%d", frame.fix_quality, frame.satellites_tracked);
+    } else {
+        fmt_float(buf_latitude, latitude, 6);
+        fmt_float(buf_longitude, longitude, 6);
+        sprintf(sensor_data, "%s,%s,%d,%d", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+    }
 
-    char sensor_data[80];
-    sprintf(sensor_data, "%s,%s,%d,%d\n", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+    printf("[GPGGA] (lat,long,fix_quality,sats_tracked) %s\n", sensor_data);
 
     // send sensor_data via COAP to /gps/gga
+    send_to_concentrator(sensor_data);
 
     return EXIT_SUCCESS;
 }
@@ -82,6 +89,8 @@ int parse_gsv(const char *_gsv) {
     return EXIT_SUCCESS;
 }
 
+#include "math.h"
+
 int parse_rmc(const char *_rmc) {
     struct minmea_sentence_rmc frame;
     bool res = minmea_parse_rmc(&frame, _rmc);
@@ -89,28 +98,33 @@ int parse_rmc(const char *_rmc) {
         return EXIT_FAILURE;
     }
     
+    char sensor_data[80];
+
     float latitude = minmea_tocoord(&(frame.latitude));
     float longitude = minmea_tocoord(&(frame.longitude));
     float speed = minmea_tofloat(&frame.speed);
     float course = minmea_tofloat(&frame.course);
     char buf_latitude[9];
-    char buf_longitude[9];
+    char buf_longitude[10];
     char buf_speed[5];
-    char buf_course[5];
-    fmt_float(buf_latitude, latitude, 6);
-    fmt_float(buf_longitude, longitude, 6);
-    fmt_float(buf_speed, speed, 2);
-    fmt_float(buf_course, course, 2);
+    char buf_course[6];
 
-    printf("[GPRMC] latitude=%s, longitude=%s, course=%s, speed=%s, valid=%s\n", 
-        buf_latitude, buf_longitude, buf_course, buf_speed, 
-        frame.valid ? "true" : "false");
+    if(frame.valid) {
+        fmt_float(buf_longitude, longitude, 6);
+        fmt_float(buf_speed, speed, 2);
+        fmt_float(buf_course, course, 2);
+        sprintf(sensor_data, "%s,%s,%s,%s,%s", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+    } else {
+        fmt_float(buf_latitude, latitude, 6);
+        fmt_float(buf_longitude, longitude, 6);
+        sprintf(sensor_data, "0.0,0.0,0.0,0.0,%s", frame.valid ? "true" : "false");
+    }
 
-    char sensor_data[80];
-    sprintf(sensor_data, "%s,%s,%s,%s,%s\n", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+    //printf("[GPRMC] latitude=%s, longitude=%s, course=%s, speed=%s, valid=%s\n", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+    printf("[GPRMC] (lat,long,course,speed,valid) %s\n", sensor_data);
 
     // send sensor_data via COAP to /gps/rmc
-    //send_req("fe80::fcb2:9130:a6fa:74b3", "5683", coap_path, sensor_data, COAP_POST);
+    send_to_concentrator(sensor_data);
 
     return EXIT_SUCCESS;
 }
