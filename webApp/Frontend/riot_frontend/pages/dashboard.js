@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import TopCards from "@/components/TopCards";
 import RecentOrders from "@/components/RecentOrders";
 import {ContainersMap} from "@/components/Map/ContainersMap";
-import  ContainerProblem from "./containerProblem";
+//import  ContainerProblem from "./containerProblem";
 
 export default function Home() {
 
