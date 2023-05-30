@@ -14,6 +14,11 @@ USEPKG += minmea
 
 USEMODULE += fmt
 USEMODULE += xtimer
+USEMODULE += netdev_default
+USEMODULE += auto_init_gnrc_netif
+USEMODULE += gnrc_ipv6_default
+USEMODULE += gnrc_icmpv6_echo
+USEMODULE += gcoap
 
 # avoid running Kconfig by default
 SHOULD_RUN_KCONFIG ?=

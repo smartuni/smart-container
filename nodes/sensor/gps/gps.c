@@ -1,4 +1,6 @@
 #include "gps.h"
+#include "net/gcoap.h"
+#include "net/utils.h"
 
 // Prototypes for functions used for parsing GPS infos from received UART string
 
@@ -48,7 +50,14 @@ int parse_gga(const char *_gga) {
     char buf_longitude[9];
     fmt_float(buf_latitude, latitude, 6);
     fmt_float(buf_longitude, longitude, 6);
-    printf("[GPCGA] latitude=%s; longitude=%s\n", buf_latitude, buf_longitude);
+
+    printf("[GPGGA] latitude=%s; longitude=%s; fix_quality=%d; satellites_tracked=%d\n", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+
+    char sensor_data[80];
+    sprintf(sensor_data, "%s,%s,%d,%d\n", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+
+    // send sensor_data via COAP to /gps/gga
+
     return EXIT_SUCCESS;
 }
 
@@ -58,7 +67,6 @@ int parse_gsa(const char *_gsa) {
     if(!res) {
         return EXIT_FAILURE;
     }
-    
     printf("[GPGSA] sats=%d; mode=%c; fix_type=%d\n", *frame.sats, frame.mode, frame.fix_type);
     return EXIT_SUCCESS;
 }
@@ -80,17 +88,29 @@ int parse_rmc(const char *_rmc) {
     if(!res) {
         return EXIT_FAILURE;
     }
-
+    
     float latitude = minmea_tocoord(&(frame.latitude));
     float longitude = minmea_tocoord(&(frame.longitude));
     float speed = minmea_tofloat(&frame.speed);
+    float course = minmea_tofloat(&frame.course);
     char buf_latitude[9];
     char buf_longitude[9];
-    char buf_speed[8];
+    char buf_speed[5];
+    char buf_course[5];
     fmt_float(buf_latitude, latitude, 6);
     fmt_float(buf_longitude, longitude, 6);
     fmt_float(buf_speed, speed, 2);
-    printf("[GPRMC] valid=%s; latitude=%s; longitude=%s; speed=%s; date: %02d.%02d.20%02d\n", frame.valid ? "true" : "false", buf_latitude, buf_longitude, buf_speed, frame.date.day, frame.date.month, frame.date.year);
+    fmt_float(buf_course, course, 2);
+
+    printf("[GPRMC] latitude=%s, longitude=%s, course=%s, speed=%s, valid=%s\n", 
+        buf_latitude, buf_longitude, buf_course, buf_speed, 
+        frame.valid ? "true" : "false");
+
+    char sensor_data[80];
+    sprintf(sensor_data, "%s,%s,%s,%s,%s\n", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+
+    // send sensor_data via COAP to /gps/rmc
+    //send_req("fe80::fcb2:9130:a6fa:74b3", "5683", coap_path, sensor_data, COAP_POST);
 
     return EXIT_SUCCESS;
 }
@@ -102,75 +122,48 @@ int parse_vtg(const char *_vtg) {
         return EXIT_FAILURE;
     }
     
-    printf("[GPVTG] faa_mode=%d; magnetic_track_degrees=%f; true_track_degrees=%f\n", frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
+    printf("[GPVTG] faa_mode=%d; magnetic_track_degrees=%f; true_track_degrees=%f\n", 
+        frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
     return EXIT_SUCCESS;
 }
 
 mutex_t mutex_gps;
 
-int parse_gps_string(const char *_str) {
-/*     
-    enum minmea_sentence_id sentence = minmea_sentence_id(_str, false);
-    printf("%s -> minmea sentence %d\n", _str, sentence);
-
-    int res;
-    switch (sentence) {
-        case MINMEA_SENTENCE_GGA: {
-            res = parse_gga(_str);
-        } break;
-        case MINMEA_SENTENCE_GSA: {
-            res = parse_gsa(_str);
-        } break;
-        case MINMEA_SENTENCE_GSV: {
-            res = parse_gsv(_str);
-        } break;
-        case MINMEA_SENTENCE_RMC: {
-            res = parse_rmc(_str);
-        } break;
-        case MINMEA_SENTENCE_VTG: {
-            res = parse_vtg(_str);
-        } break;
-        default: {
-            //print_str("FAILURE: error parsing GPS sentence\n");
-            res = EXIT_FAILURE;
-        }
-    }
-
-    return res; */
-
+void handle_gps_msg(const char *_str) {
     const char* prefix_gga = "$GPGGA"; // Global Positioning System Fixed Data. Time, Position and fix related data
-    const char* prefix_gsa = "$GPGSA"; // GNSS DOP and Active Satellites
-    const char* prefix_gsv = "$GPGSV"; // GNSS Satellites in View
+    //const char* prefix_gsa = "$GPGSA"; // GNSS DOP and Active Satellites
+    //const char* prefix_gsv = "$GPGSV"; // GNSS Satellites in View
     const char* prefix_rmc = "$GPRMC"; // Recommended Minimum Navigation Information
-    const char* prefix_vtg = "$GPVTG"; // Course and speed information relative to the ground
+    //const char* prefix_vtg = "$GPVTG"; // Course and speed information relative to the ground
     int cmp_result;
+    int handle_result = EXIT_SUCCESS;
 
     cmp_result = strncmp(_str, prefix_gga, strlen(prefix_gga));
     if(cmp_result == 0) {
-        return parse_gga(_str);
+        handle_result = parse_gga(_str);
     }
 
-    cmp_result = strncmp(_str, prefix_gsa, strlen(prefix_gsa));
+/*     cmp_result = strncmp(_str, prefix_gsa, strlen(prefix_gsa));
     if(cmp_result == 0) {
         return parse_gsa(_str);
-    }
+    } */
 
-    cmp_result = strncmp(_str, prefix_gsv, strlen(prefix_gsv));
+/*     cmp_result = strncmp(_str, prefix_gsv, strlen(prefix_gsv));
     if(cmp_result == 0) {
         return parse_gsv(_str);
-    }
+    } */
 
     cmp_result = strncmp(_str, prefix_rmc, strlen(prefix_rmc));
     if(cmp_result == 0) {
-        return parse_rmc(_str);
+        handle_result = parse_rmc(_str);
     }
 
-    cmp_result = strncmp(_str, prefix_vtg, strlen(prefix_vtg));
+/*     cmp_result = strncmp(_str, prefix_vtg, strlen(prefix_vtg));
     if(cmp_result == 0) {
         return parse_vtg(_str);
+    } */
+
+    if(handle_result == EXIT_FAILURE) {
+        print_str("FAILURE: error parsing GPS sentence\n");
     }
-
-    print_str("FAILURE: error parsing GPS sentence\n");
-
-    return EXIT_FAILURE;
 }

@@ -8,6 +8,6 @@
 #include <string.h>
 #include "mutex.h"
 
-int parse_gps_string(const char *_str);
+void handle_gps_msg(const char *_str);
 
 #endif
