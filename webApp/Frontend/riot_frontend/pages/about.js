@@ -4,8 +4,8 @@ import styles from '../styles/about.module.css'
 
 export default function About() {
   return (
-    <>
-      <div className='flex justify-between px-4 pt-4'>
+    <div className='bg-malibu-500 h-screen'>
+      <div className='bg-malibu-500 flex justify-between px-4 pt-4'>
         <h2></h2>
         <h2>Welcome back, Team!
             <span> |  
@@ -27,6 +27,6 @@ export default function About() {
           <img src="/supply_chain.png" alt="Image" />
         </div>
     </div>
-    </>
+    </div>
   )
 }
