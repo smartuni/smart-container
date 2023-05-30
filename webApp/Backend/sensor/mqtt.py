@@ -1,18 +1,18 @@
 import uuid
 import paho.mqtt.client as mqtt
 import json
-import models
-#from .models import SensorData
-#from .models import Container
-#from .serializer import SensorSerializer
-#from django.db.utils import IntegrityError
-#from django.core.exceptions import ValidationError
+from sensor.models import SensorData
+from sensor.serializer import SensorSerializer
+from django.db.utils import IntegrityError
+from django.core.exceptions import ValidationError
+from server.wsgi import *
+from sensor.models import Container
 import base64
 
 
 # Confiugure as needed
 USERNAME="mqtest2@thingsnet"
-API_KEY="NNSXS.6ECU4JWA34XHEA5MEU52KFJPKBRVBLJTYU5JLUY.3QZHHDPDTVUT7F6EZ5DFFQ6FGSRCMQ3FL57CAMTOAWXIDOLYBZDA"
+API_KEY="NNSXS.XRUFJXG4EUJSKMVW4ZJPODPDVS5FPUXGCUQNM3I.ZAV6KJZIBBVSOJEEBPFRC253WY7RZL4RGCG674H4L7U4V7B27KYQ"
 
 
 # Subscribe to the uplink topic of all devices
@@ -26,7 +26,6 @@ TTN_MQTT_SERVER = "mobi35.inet.haw-hamburg.de"
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-
 
 # Subscribing in on_connect() means that if we lose the connection and
 # reconnect then subscriptions will be renewed.
@@ -90,8 +89,10 @@ def process_message(msg):
     # humidity_str = str(humidity) + " " + humidity_unit
 
     return time, decoded_message
-    
 
+own = '9d3cce5a-0009-4d5f-a985-d2fe7d114304'
+postToDatabase("time", "data", "datatype", own)
+print('posted to Database')   
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
