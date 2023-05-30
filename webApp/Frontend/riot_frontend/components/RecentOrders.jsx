@@ -27,7 +27,7 @@ function getProblem(con) {
 const RecentOrders = () => {
     return (
         <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
-            <h1>RecentOrders</h1>
+            <h1>Container List</h1>
             <ul>
                 {containers.map((con, id) => (
                     <li 
