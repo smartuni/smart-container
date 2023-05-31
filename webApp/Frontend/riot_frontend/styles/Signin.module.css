@@ -1,16 +1,31 @@
+.signinnew {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  top: 200px;
+  font-family: monospace;
+}
+
+.signin_header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
 .form-signin {
   width: 100%;
   max-width: 600px;
   padding: 15px;
   margin: auto;
-  /* border: 1px solid gray; */
 }
 
-.signin-nav {
-  border: 1px solid #fff;
-  border-radius: 5px;
-  margin: 20px;
-  padding: 20px;
+.signinnew input[type="loginEmail"],
+.signinnew input[type="password"]{
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .form-signin .checkbox {
@@ -21,26 +36,6 @@
   z-index: 2;
 }
 
-
-.form-signin input[type="email"] {
-  margin-bottom: 0px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 50px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.signin-new {
-  border: 1px solid #fff;
-  border-radius: 5px;
-  margin: 20px;
-  padding: 20px;
-}
-
 .signinBody {
   width: 100px;
   height: 100px;
@@ -48,22 +43,72 @@
 }
 
 .form-group {
-  display: block;
-  margin-bottom: 20px;
-  color: #444;
-  font-size: 16px;
-}
-
-.error {
-  color: red;
-  font-size: 0.8em;
-  margin-bottom: -36px;
-  position: absolute;
+  margin-bottom: 10px;
 }
 
 .label {
   display: block;
-  margin-bottom: 20px;
-  color: #5196d6;
-  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 15px;
+  text-align: left;
 }
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+.signinnew button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signinnew button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.signinnew button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  background-color: #a7a5a5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signinnew button:hover {
+  background-color: #999999;
+}
+
+.signinnew footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signinnew footer p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.signinnew footer a {
+  color: #2537c1;
+  text-decoration: none;
+}
+
+.signinnew footer a:hover {
+  text-decoration: underline;
+}
+

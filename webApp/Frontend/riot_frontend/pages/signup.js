@@ -57,11 +57,12 @@ export default function SignUp() {
                 <h1 className={styles.signup_header}>Sign Up</h1>
                 <div className={styles.signup_body}>
                     <form onSubmit={handleSubmit}>
-                    <div className={styles['form-group']}>
+                        <div className={styles['form-group']}>
                             <label className={styles.label}>
                                 First name:
                                 <input
                                     type="text"
+                                    placeholder="first name"
                                     value={firstname}
                                     onChange={(e) => setFirstname(e.target.value)}
                                 /> 
@@ -73,6 +74,7 @@ export default function SignUp() {
                                 Last name:
                                 <input
                                     type="text"
+                                    placeholder="last name"
                                     value={lastname}
                                     onChange={(e) => setLastname(e.target.value)}
                                 /> 
@@ -84,6 +86,7 @@ export default function SignUp() {
                                 Email:
                                 <input
                                     type="email"
+                                    placeholder="name@example.com" 
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 /> 
@@ -95,6 +98,7 @@ export default function SignUp() {
                                 Password:
                                 <input
                                     type="password"
+                                    placeholder="Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -104,7 +108,7 @@ export default function SignUp() {
                         <button type="submit">Sign up</button>
                         <button>Cancel</button>
                         <footer>
-                            <p>If you already have an account,<br/>please <a href="/signin">log in here</a>.</p>
+                            <p>If you already have an account, please<br/> <a href="/signin">log in here</a>.</p>
                         </footer>
                     </form>
                 </div>
