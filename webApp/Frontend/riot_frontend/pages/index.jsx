@@ -6,11 +6,7 @@ import { FiMenu } from "react-icons/fi";
 import css from '../styles/index.module.css'
 import boatGif from '../assets/hhla-container-nobg.gif'
 import cloudsGif from '../assets/sky-clouds.gif'
-
-
-
-
-
+import { signIn } from "next-auth/react";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,8 +16,6 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(true)
 
   const handleNavIcon = () => setShowMenu((prev) => !prev)
-
-
 
   return (
     <div class="bg-scroll bg-sky-gif min-h-screen">
@@ -51,10 +45,12 @@ export default function Home() {
                     {/*Sign in and Sign up Buttons-------------------------------------------- */}
                     <div className="flex items-center justify-center">
                         <div className='bg-malibu-500 w-1/3 p-4 rounded-lg'>
-                
-                            <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
+                            <button className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg" onClick={() => signIn()}>
+                                Sign In
+                            </button>
+                            {/* <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
                                 <p className="font-bold">Sign In</p>
-                            </Link>
+                            </Link> */}
 
                         </div>
                     </div>

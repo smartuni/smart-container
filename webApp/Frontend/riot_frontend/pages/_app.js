@@ -10,15 +10,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      {isExcludedPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <>
-          <Sidebar >
+      <Sidebar >
           <Component {...pageProps} />
           </Sidebar>
-        </>
-      )}
     </>
   )
 }
