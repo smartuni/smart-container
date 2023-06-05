@@ -26,6 +26,9 @@ USEMODULE += gnrc_ipv6_default
 # add CoAP module
 USEMODULE += gcoap
 
+# add ztimer module
+USEMODULE += ztimer
+
 # The default size of GCOAP_PDU_BUF_SIZE can be too small for the response
 # from the RD server. Use a larger value if the client drops response packet
 # from RD server.
