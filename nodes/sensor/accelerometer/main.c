@@ -68,10 +68,10 @@ int main(void){
     initDevice(&sensorDev, &sensorParams);
 
     while(1){
-
         // Wait for interrupt, function uses mutex
         if(lis2dh12_wait_event(&sensorDev, LIS2DH12_INT1, false) < 0){
             printf("Interrupt error\n");
         }
+        puts("Interrupt occured.");
     }  
 }
