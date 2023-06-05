@@ -43,29 +43,6 @@ const TopCards = () => {
         error = true
       }
     }
-    // var con1 = containers[0].doorStatus
-    // var con2 = containers[0].crashed
-    // if (parseInt(props.test, 10) - 1 != undefined) {
-
-    //   if (typeof containers[0].doorStatus === undefined || typeof containers[0].crashed === undefined) {
-    //     console.log("2nd if reached")
-    //     if (con1 === "open" || con2 === "True") {
-    //       console.log("3rd if reached")
-    //       error = true
-    //       return error
-    //     }
-    //   }
-    //   else {
-    //     console.log("else reached")
-    //     con1 = containers[parseInt(props.test, 10) - 1]
-    //     if (currentContainerObj.doorStatus === "open" || currentContainerObj.crashed === "True") {
-    //       console.log("4th if reached")
-    //       error = true
-    //       return error
-    //     }
-    //   }
-    // }
-
 
     return error
 
@@ -120,7 +97,7 @@ const TopCards = () => {
         <div className={'border-1 p-4 rounded-lg mb-4' + (isProblem() ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
           <div className={mc.status}>
             <p className={mc.cardTitle}>Door Status:</p>
-            <p className={mc.doorStatus}>Closed</p>
+            <p className={mc.doorStatus} id="doorStatus"></p>
             <p className={mc.cardTitle}>Last Opened:</p>
             <p className={mc.lastOpened}>23/02/23 12pm</p>
           </div>

@@ -107,6 +107,7 @@ const RecentOrders = () => {
                         key={id}
                         onClick={() => {
                             document.getElementById("containerTracker").innerHTML = con.id;
+                            document.getElementById("doorStatus").innerHTML = con.doorStatus;
                             setCurrentContainer(con.id)
                             sendProps()
                         }}
