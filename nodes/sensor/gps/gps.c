@@ -2,6 +2,7 @@
 #include "net/gcoap.h"
 #include "net/utils.h"
 #include "coap.h"
+#include "math.h"
 
 // Prototypes for functions used for parsing GPS infos from received UART string
 
@@ -38,6 +39,20 @@ int parse_rmc(const char *_rmc);
 */
 int parse_vtg(const char *_vtg);
 
+/**
+ * Convert a raw coordinate to a floating point DD.DDD... value.
+ * This function is a wrapper around the function minmea_tocoord,
+ * but instead of returning NaN it will return 0.0 if the value is "unknown".
+*/
+static float minmea_tocoord_or_0(struct minmea_float* coord) {
+    float result = minmea_tocoord(coord);
+    if(isnan(result)) {
+        return 0.0;
+    } else {
+        return result;
+    }
+}
+
 int parse_gga(const char *_gga) {
     struct minmea_sentence_gga frame;
     bool res = minmea_parse_gga(&frame, _gga);
@@ -47,23 +62,16 @@ int parse_gga(const char *_gga) {
 
     char sensor_data[80];
 
-    float latitude = minmea_tocoord(&(frame.latitude));
-    float longitude = minmea_tocoord(&(frame.longitude));
+    float latitude = minmea_tocoord_or_0(&frame.latitude);
+    float longitude = minmea_tocoord_or_0(&frame.longitude);
+
     char buf_latitude[9];
     char buf_longitude[9];
-
-    if(isnan(latitude) || isnan(longitude)) {
-        sprintf(sensor_data, "0.0,0.0,%d,%d", frame.fix_quality, frame.satellites_tracked);
-    } else {
-        fmt_float(buf_latitude, latitude, 6);
-        fmt_float(buf_longitude, longitude, 6);
-        sprintf(sensor_data, "%s,%s,%d,%d", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
-    }
-
-    printf("[GPGGA] (lat,long,fix_quality,sats_tracked) %s\n", sensor_data);
-
-    // send sensor_data via COAP to /gps/gga
-    send_to_concentrator(sensor_data);
+    fmt_float(buf_latitude, latitude, 6);
+    fmt_float(buf_longitude, longitude, 6);
+    sprintf(sensor_data, "%s,%s,%d,%d", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+    printf("[GPGGA] lat=%s, long=%s, quality=%d, sats_tracked=%d\n", buf_latitude, buf_longitude, frame.fix_quality, frame.satellites_tracked);
+    printf("[GPGGA] Time: %d:%d:%d.%d\n", frame.time.hours, frame.time.minutes, frame.time.seconds, frame.time.microseconds);
 
     return EXIT_SUCCESS;
 }
@@ -89,8 +97,6 @@ int parse_gsv(const char *_gsv) {
     return EXIT_SUCCESS;
 }
 
-#include "math.h"
-
 int parse_rmc(const char *_rmc) {
     struct minmea_sentence_rmc frame;
     bool res = minmea_parse_rmc(&frame, _rmc);
@@ -100,32 +106,32 @@ int parse_rmc(const char *_rmc) {
     
     char sensor_data[80];
 
-    float latitude = minmea_tocoord(&(frame.latitude));
-    float longitude = minmea_tocoord(&(frame.longitude));
-    float speed = minmea_tofloat(&frame.speed);
-    float course = minmea_tofloat(&frame.course);
-    char buf_latitude[9];
-    char buf_longitude[10];
-    char buf_speed[5];
-    char buf_course[6];
+    printf("[GPRMC] Date & Time: %02d.%02d.20%02d %d:%d:%d.%d\n", 
+        frame.date.day, frame.date.month, frame.date.year, frame.time.hours, frame.time.minutes, frame.time.seconds, frame.time.microseconds);
 
     if(frame.valid) {
+        float latitude = minmea_tocoord_or_0(&frame.latitude);
+        float longitude = minmea_tocoord_or_0(&frame.longitude);
+        float speed = minmea_tocoord_or_0(&frame.speed);
+        float course = minmea_tocoord_or_0(&frame.course);
+        char buf_latitude[9];
+        char buf_longitude[9];
+        char buf_speed[4];
+        char buf_course[4];
+        fmt_float(buf_latitude, latitude, 6);
         fmt_float(buf_longitude, longitude, 6);
         fmt_float(buf_speed, speed, 2);
         fmt_float(buf_course, course, 2);
-        sprintf(sensor_data, "%s,%s,%s,%s,%s", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+        printf("[GPRMC] latitude=%s, longitude=%s, course=%s, speed=%s, valid=%s\n", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+
+        // Send data to concentrator: [latitude],[longitude],[date],[time]
+        sprintf(sensor_data, "%s,%s,%02d.%02d.20%02d,%02d:%02d", buf_latitude, buf_longitude, frame.date.day, frame.date.month, frame.date.year, frame.time.hours, frame.time.minutes);
+        send_to_concentrator(sensor_data);
+        printf("Current GPS coordinates, date and time were sent to concentrator\n");
     } else {
-        fmt_float(buf_latitude, latitude, 6);
-        fmt_float(buf_longitude, longitude, 6);
-        sprintf(sensor_data, "0.0,0.0,0.0,0.0,%s", frame.valid ? "true" : "false");
+        printf("[GPRMC] Data not valid yet...\n");
+        sprintf(sensor_data, "0.0,0.0");
     }
-
-    //printf("[GPRMC] latitude=%s, longitude=%s, course=%s, speed=%s, valid=%s\n", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
-    printf("[GPRMC] (lat,long,course,speed,valid) %s\n", sensor_data);
-
-    // send sensor_data via COAP to /gps/rmc
-    send_req("fe80::fcb2:9130:a6fa:74b3", "5683", "/gps", sensor_data, COAP_POST);
-    //send_to_concentrator(sensor_data);
 
     return EXIT_SUCCESS;
 }
@@ -137,17 +143,22 @@ int parse_vtg(const char *_vtg) {
         return EXIT_FAILURE;
     }
     
+    float mag_deg = minmea_tocoord_or_0(&frame.magnetic_track_degrees);
+    float true_deg = minmea_tocoord_or_0(&frame.true_track_degrees);
+
     printf("[GPVTG] faa_mode=%d; magnetic_track_degrees=%f; true_track_degrees=%f\n", 
-        frame.faa_mode, minmea_tofloat(&frame.magnetic_track_degrees), minmea_tofloat(&frame.true_track_degrees));
+        frame.faa_mode, mag_deg, true_deg);
+
     return EXIT_SUCCESS;
 }
 
 void handle_gps_msg(const char *_str) {
     const char* prefix_gga = "$GPGGA"; // Global Positioning System Fixed Data. Time, Position and fix related data
-    //const char* prefix_gsa = "$GPGSA"; // GNSS DOP and Active Satellites
-    //const char* prefix_gsv = "$GPGSV"; // GNSS Satellites in View
+    const char* prefix_gsa = "$GPGSA"; // GNSS DOP and Active Satellites
+    const char* prefix_gsv = "$GPGSV"; // GNSS Satellites in View
     const char* prefix_rmc = "$GPRMC"; // Recommended Minimum Navigation Information
-    //const char* prefix_vtg = "$GPVTG"; // Course and speed information relative to the ground
+    const char* prefix_vtg = "$GPVTG"; // Course and speed information relative to the ground
+    
     int cmp_result;
     int handle_result = EXIT_SUCCESS;
 
@@ -156,25 +167,25 @@ void handle_gps_msg(const char *_str) {
         handle_result = parse_gga(_str);
     }
 
-/*     cmp_result = strncmp(_str, prefix_gsa, strlen(prefix_gsa));
+    cmp_result = strncmp(_str, prefix_gsa, strlen(prefix_gsa));
     if(cmp_result == 0) {
-        return parse_gsa(_str);
-    } */
+        handle_result = parse_gsa(_str);
+    }
 
-/*     cmp_result = strncmp(_str, prefix_gsv, strlen(prefix_gsv));
+    cmp_result = strncmp(_str, prefix_gsv, strlen(prefix_gsv));
     if(cmp_result == 0) {
-        return parse_gsv(_str);
-    } */
+        handle_result = parse_gsv(_str);
+    }
 
     cmp_result = strncmp(_str, prefix_rmc, strlen(prefix_rmc));
     if(cmp_result == 0) {
         handle_result = parse_rmc(_str);
     }
 
-/*     cmp_result = strncmp(_str, prefix_vtg, strlen(prefix_vtg));
+   cmp_result = strncmp(_str, prefix_vtg, strlen(prefix_vtg));
     if(cmp_result == 0) {
-        return parse_vtg(_str);
-    } */
+        handle_result = parse_vtg(_str);
+    }
 
     if(handle_result == EXIT_FAILURE) {
         print_str("FAILURE: error parsing GPS sentence\n");

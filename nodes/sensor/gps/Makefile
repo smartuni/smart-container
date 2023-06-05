@@ -11,6 +11,7 @@ FEATURES_OPTIONAL += periph_uart_modecfg
 FEATURES_OPTIONAL += periph_uart_rxstart_irq
 
 USEPKG += minmea
+USEPKG += nanocbor
 
 # nodes team base directory
 PROJECT_BASE ?= $(CURDIR)/../..
@@ -29,6 +30,7 @@ USEMODULE += gnrc_icmpv6_echo
 USEMODULE += gcoap
 USEMODULE += netutils
 USEMODULE += od
+USEMODULE += senml
 
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
