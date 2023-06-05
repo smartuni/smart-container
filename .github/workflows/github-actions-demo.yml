@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --no-cache-dir -r requirements.yml
+          pip install --no-cache-dir -r ../webApp/Backend/requirements.yml
       - name: Test with django
         run: |
           python manage.py test
