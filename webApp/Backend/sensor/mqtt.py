@@ -12,7 +12,7 @@ import base64
 
 # Confiugure as needed
 USERNAME="mqtest2@thingsnet"
-API_KEY="NNSXS.XRUFJXG4EUJSKMVW4ZJPODPDVS5FPUXGCUQNM3I.ZAV6KJZIBBVSOJEEBPFRC253WY7RZL4RGCG674H4L7U4V7B27KYQ"
+API_KEY="NNSXS.K2TY66DR7XTMNWRGFQIC6H2MJSWDH2L4JHLKT6Q.IMEQNYYILH24PW5NSOYSEKMG6XLYKKI6G2JSEZBNJ2GGB2OYTODQ"
 
 
 # Subscribe to the uplink topic of all devices
@@ -80,19 +80,21 @@ def process_message(msg):
     # Convert bytes to string
     decoded_message = bytes_data.decode('utf-8')
 
-    # temperature = payload['uplink_message']['decoded_payload']['temperature']['value']
-    # temperature_unit = payload['uplink_message']['decoded_payload']['temperature']['unit']
+    # temperature = payload['uplink_message']['frm_payload']['temperature']['value']
+    # temperature_unit = payload['uplink_message']['frm_payload']['temperature']['unit']
     # temperature_str = str(temperature) + " " + temperature_unit
 
-    # humidity = payload['uplink_message']['decoded_payload']['humidity']['value']
-    # humidity_unit = payload['uplink_message']['decoded_payload']['humidity']['unit']
+    # humidity = payload['uplink_message']['frm_payload']['humidity']['value']
+    # humidity_unit = payload['uplink_message']['frm_payload']['humidity']['unit']
     # humidity_str = str(humidity) + " " + humidity_unit
 
     return time, decoded_message
 
-own = '9d3cce5a-0009-4d5f-a985-d2fe7d114304'
-postToDatabase("time", "data", "datatype", own)
-print('posted to Database')   
+## Mock Data to test posting to database
+# time = '2023-05-30T10:41:48.756867903Z'
+# own = '9d3cce5a-0009-4d5f-a985-d2fe7d114304'
+# postToDatabase(time, "data", "msg", own)
+# print('posted to Database')   
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
