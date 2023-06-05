@@ -29,6 +29,7 @@
 #include "board.h"
 #include "xtimer.h"
 #include "gps.h"
+#include "coap.h"
 
 mutex_t mutex; 
 

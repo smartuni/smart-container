@@ -179,7 +179,7 @@ static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_requ
     }
 }
 
-void send_to_concentrator(const char* msg) {
-    //send_req("fe80::fcb2:9130:a6fa:74b3", "5683", coap_path, sensor_data, COAP_POST);
-    printf("send msg to %s: %s\n", CONCENTRATOR_IP, msg);
+void send_to_concentrator(char* msg) {
+    char* ip = CONCENTRATOR_IP;
+    send_req(ip, "5683", "/gps", msg, COAP_POST);
 }
