@@ -1,0 +1,134 @@
+➜  gps git:(gps_sensor) ✗ sudo make term PORT=/dev/ttyACM1
+/home/maik/Projects/HAW/smart-container/nodes/RIOT/dist/tools/pyterm/pyterm -p "/dev/ttyACM1" -b "115200"  
+Twisted not available, please install it if you want to use pyterm's JSON capabilities
+2023-05-29 21:14:12,966 # Connect to serial port /dev/ttyACM1
+Welcome to pyterm!
+Type '/exit' to exit.
+2023-05-29 21:14:13,970 # main(): This is RIOT! (Version: 2023.07-devel-325-g2863d-HEAD)
+2023-05-29 21:14:14,588 # ===================================
+2023-05-29 21:14:14,589 # SMARTCONTAINER GPS SENSOR
+2023-05-29 21:14:14,591 # ===================================
+2023-05-29 21:14:14,592 # Success: Initialized UART_DEV(0) at 9600 baud
+2023-05-29 21:14:15,377 # [GPCGA] latitude=53.572063; longitude=10.085766
+2023-05-29 21:14:15,430 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:15,507 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085766; speed=0.14; date: 29.05.2023
+2023-05-29 21:14:15,547 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:16,389 # [GPCGA] latitude=53.572063; longitude=10.085766
+2023-05-29 21:14:16,442 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:16,516 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=1
+2023-05-29 21:14:16,571 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=2
+2023-05-29 21:14:16,647 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085766; speed=0.19; date: 29.05.2023
+2023-05-29 21:14:16,688 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:17,356 # [GPCGA] latitude=53.572063; longitude=10.085764
+2023-05-29 21:14:17,408 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:17,485 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085764; speed=0.15; date: 29.05.2023
+2023-05-29 21:14:17,526 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:18,437 # [GPCGA] latitude=53.572063; longitude=10.085762
+2023-05-29 21:14:18,490 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:18,567 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085762; speed=0.04; date: 29.05.2023
+2023-05-29 21:14:18,607 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:19,391 # [GPCGA] latitude=53.572063; longitude=10.085762
+2023-05-29 21:14:19,444 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:19,521 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085762; speed=0.11; date: 29.05.2023
+2023-05-29 21:14:19,562 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:20,405 # [GPCGA] latitude=53.572063; longitude=10.085762
+2023-05-29 21:14:20,458 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:20,535 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085762; speed=0.11; date: 29.05.2023
+2023-05-29 21:14:20,575 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:21,386 # [GPCGA] latitude=53.572063; longitude=10.085762
+2023-05-29 21:14:21,440 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:21,514 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=1
+2023-05-29 21:14:21,568 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=2
+2023-05-29 21:14:21,645 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085762; speed=0.18; date: 29.05.2023
+2023-05-29 21:14:21,685 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:22,432 # [GPCGA] latitude=53.572063; longitude=10.085760
+2023-05-29 21:14:22,486 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:22,562 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085760; speed=0.26; date: 29.05.2023
+2023-05-29 21:14:22,602 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:23,347 # [GPCGA] latitude=53.572063; longitude=10.085758
+2023-05-29 21:14:23,401 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:23,479 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085758; speed=0.35; date: 29.05.2023
+2023-05-29 21:14:23,517 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:24,426 # [GPCGA] latitude=53.572059; longitude=10.085756
+2023-05-29 21:14:24,479 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:24,556 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085756; speed=0.44; date: 29.05.2023
+2023-05-29 21:14:24,596 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:25,397 # [GPCGA] latitude=53.572059; longitude=10.085753
+2023-05-29 21:14:25,450 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:25,526 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085753; speed=0.39; date: 29.05.2023
+2023-05-29 21:14:25,567 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:26,360 # [GPCGA] latitude=53.572059; longitude=10.085749
+2023-05-29 21:14:26,413 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:26,486 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=1
+2023-05-29 21:14:26,539 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=2
+2023-05-29 21:14:26,615 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085749; speed=0.36; date: 29.05.2023
+2023-05-29 21:14:26,656 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:27,448 # [GPCGA] latitude=53.572059; longitude=10.085746
+2023-05-29 21:14:27,501 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:27,578 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085746; speed=0.35; date: 29.05.2023
+2023-05-29 21:14:27,618 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:28,369 # [GPCGA] latitude=53.572055; longitude=10.085744
+2023-05-29 21:14:28,422 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:28,498 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085744; speed=0.35; date: 29.05.2023
+2023-05-29 21:14:28,539 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:29,370 # [GPCGA] latitude=53.572055; longitude=10.085742
+2023-05-29 21:14:29,423 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:29,500 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085742; speed=0.32; date: 29.05.2023
+2023-05-29 21:14:29,540 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:30,368 # [GPCGA] latitude=53.572055; longitude=10.085742
+2023-05-29 21:14:30,421 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:30,497 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085742; speed=0.11; date: 29.05.2023
+2023-05-29 21:14:30,538 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:31,451 # [GPCGA] latitude=53.572055; longitude=10.085742
+2023-05-29 21:14:31,504 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:31,578 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=1
+2023-05-29 21:14:31,630 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=2
+2023-05-29 21:14:31,706 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085742; speed=0.19; date: 29.05.2023
+2023-05-29 21:14:31,745 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:32,385 # [GPCGA] latitude=53.572055; longitude=10.085742
+2023-05-29 21:14:32,439 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:32,517 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085742; speed=0.30; date: 29.05.2023
+2023-05-29 21:14:32,552 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:33,426 # [GPCGA] latitude=53.572055; longitude=10.085744
+2023-05-29 21:14:33,479 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:33,555 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085744; speed=0.29; date: 29.05.2023
+2023-05-29 21:14:33,594 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:34,377 # [GPCGA] latitude=53.572055; longitude=10.085746
+2023-05-29 21:14:34,430 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:34,506 # [GPRMC] valid=true; latitude=53.572055; longitude=10.085746; speed=0.31; date: 29.05.2023
+2023-05-29 21:14:34,545 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:35,378 # [GPCGA] latitude=53.572059; longitude=10.085748
+2023-05-29 21:14:35,431 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:35,507 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085748; speed=0.24; date: 29.05.2023
+2023-05-29 21:14:35,546 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:36,386 # [GPCGA] latitude=53.572059; longitude=10.085749
+2023-05-29 21:14:36,441 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:36,515 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=1
+2023-05-29 21:14:36,566 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=2
+2023-05-29 21:14:36,641 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085749; speed=0.21; date: 29.05.2023
+2023-05-29 21:14:36,681 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:37,401 # [GPCGA] latitude=53.572059; longitude=10.085751
+2023-05-29 21:14:37,455 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:37,532 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085751; speed=0.31; date: 29.05.2023
+2023-05-29 21:14:37,569 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:38,383 # [GPCGA] latitude=53.572059; longitude=10.085755
+2023-05-29 21:14:38,436 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:38,512 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085755; speed=0.36; date: 29.05.2023
+2023-05-29 21:14:38,551 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:39,425 # [GPCGA] latitude=53.572059; longitude=10.085756
+2023-05-29 21:14:39,478 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:39,553 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085756; speed=0.25; date: 29.05.2023
+2023-05-29 21:14:39,593 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:40,384 # [GPCGA] latitude=53.572059; longitude=10.085760
+2023-05-29 21:14:40,438 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:40,514 # [GPRMC] valid=true; latitude=53.572059; longitude=10.085760; speed=0.28; date: 29.05.2023
+2023-05-29 21:14:40,553 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:41,383 # [GPCGA] latitude=53.572063; longitude=10.085762
+2023-05-29 21:14:41,437 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:41,511 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=1
+2023-05-29 21:14:41,563 # [GPGSV] total_sats=7; total_msgs=2; msg_nr=2
+2023-05-29 21:14:41,639 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085762; speed=0.39; date: 29.05.2023
+2023-05-29 21:14:41,678 # [GPVTG] faa_mode=65; magnetic_track_degrees=; true_track_degrees=
+2023-05-29 21:14:42,398 # [GPCGA] latitude=53.572063; longitude=10.085764
+2023-05-29 21:14:42,451 # [GPGSA] sats=11; mode=A; fix_type=3
+2023-05-29 21:14:42,526 # [GPRMC] valid=true; latitude=53.572063; longitude=10.085764; speed=0.34; date: 29.05.2023

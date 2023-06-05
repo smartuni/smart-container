@@ -58,3 +58,11 @@ For serial commands see the [PMTK command packet datasheet](https://cdn-shop.ada
 
 ### Data to be sent from the GPS module (to be implemented in code via RIOT)
 - `010 PMTK_SYS_MSG`: Output system message (3 = module is in "Normal" mode)
+
+
+### Notes
+
+- List interfaces: `make list-ttys`
+- Specify used board and serial port from command-line: `sudo make term BOARD=feather-nrf52840 PORT=/dev/ttyACM1`
+- Example program for UART: *tests/periph/uart*
+- Example program for parsing GPS coordinated: *tests/pkg/minmea*
