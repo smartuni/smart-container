@@ -47,7 +47,7 @@ const TopCards = () => {
     return error
 
   }
-  console.log(typeof (parseInt(props.test, 10)));
+  // console.log(typeof (parseInt(props.test, 10)));
 
   // console.log(isProblem(containers[parseInt(props.test, 10) - 1]))
 

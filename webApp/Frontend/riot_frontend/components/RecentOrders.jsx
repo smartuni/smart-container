@@ -2,7 +2,7 @@ import React from 'react'
 import Router from "next/router"
 import { Button } from "@nextui-org/react"
 import { containers } from '../data/container.js'
-import { FaShoppingBag } from 'react-icons/fa'
+
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
 import { Checkbox } from "@nextui-org/react";
@@ -40,7 +40,7 @@ function reverseProblemSort(a, b) {
 
 // containers.sort(reverseProblemSort)
 
-containers.sort(problemSort)
+// containers.sort(problemSort)
 
 
 
