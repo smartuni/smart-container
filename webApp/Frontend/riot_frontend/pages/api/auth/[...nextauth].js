@@ -6,7 +6,7 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text", placeholder: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
@@ -23,14 +23,16 @@ export default NextAuth({
         // Simulate a delay to mimic an asynchronous operation
         await new Promise((resolve) => setTimeout(resolve, 1000));
         if (
-          credentials.username === "jsmith" &&
-          credentials.password === "password123"
+          credentials.username === "john@example.com" &&
+          credentials.password === "123"
         ) {
           return mockUser;
         } else {
           throw new Error("Invalid credentials");
         }
 
+        console.log("message!");
+        
         const res = await fetch("http://127.0.0.1:8000/api/signIn", {
           method: "POST",
           headers: {
