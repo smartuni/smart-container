@@ -119,13 +119,13 @@ static void *printer(void *arg) {
 /**
  * Initializes the GPS module
 */
-static int init_gps_module(void) {
+static int init_gps_module(uart_t dev) {
     int res;
 
     uint32_t baud = 9600;
 
     /* initialize UART */
-    res = uart_init(UART_DEV(GPS_UART_DEV), baud, rx_cb, (void *)GPS_UART_DEV);
+    res = uart_init(dev, baud, rx_cb, (void *)dev);
     if (res == UART_NOBAUD) {
         printf("Error: Given baudrate (%u) not possible\n", (unsigned int)baud);
         return 1;
@@ -134,7 +134,7 @@ static int init_gps_module(void) {
         puts("Error: Unable to initialize UART device");
         return 1;
     }
-    printf("Success: Initialized UART_DEV(%i) at %"PRIu32" baud\n", GPS_UART_DEV, baud);
+    printf("Success: Initialized UART_DEV(%i) at %"PRIu32" baud\n", dev, baud);
 
     /* also test if poweron() and poweroff() work (or at least don't break
      * anything) */
@@ -146,21 +146,14 @@ static int init_gps_module(void) {
 /**
  * Sends a command to the GPS module
 */
-/* static int cmd_send(int argc, char **argv) {
-    (void) argc;
-    (void) argv;
-    uint8_t endline = (uint8_t)'\n';
+static int send_cmd(uart_t dev, const char cmd[]) {
+    printf("send_cmd -> %s\r\n", cmd);
+    uart_write(dev, (uint8_t*)cmd, strlen(cmd));
+    const char crlf[2] = "\r\n";
+    uart_write(dev, (uint8_t*)crlf, 2);
 
-    if (argc < 2) {
-        printf("usage: %s <data (string)>\n", argv[0]);
-        return 1;
-    }
-
-    printf("UART_DEV(%i) TX: %s\n", GPS_UART_DEV, argv[1]);
-    uart_write(UART_DEV(GPS_UART_DEV), (uint8_t *)argv[1], strlen(argv[1]));
-    uart_write(UART_DEV(GPS_UART_DEV), &endline, 1);
     return 0;
-} */
+}
 
 int main(int argc, char **argv) {
     (void) argc;
@@ -176,10 +169,34 @@ int main(int argc, char **argv) {
         ringbuffer_init(&(ctx[i].rx_buf), ctx[i].rx_mem, UART_BUFSIZE);
     }
 
-    init_gps_module();
+    uart_t uart_gps = UART_DEV(GPS_UART_DEV);
+    init_gps_module(uart_gps);
 
     /* start the printer thread */
     printer_pid = thread_create(printer_stack, sizeof(printer_stack), PRINTER_PRIO, 0, printer, NULL, "printer");
+
+    while(true) {
+        // While GPS data not available, check every second if valid
+        while(!gpsDataValid) {
+            xtimer_sleep(GPS_POLL_INTERVAL_SEC);
+            printf("Has not received valid GPS data yet - check again...\n");
+        }
+        // Send to Sleep mode if valid
+        printf("GPS data valid - send to sleep mode...\n");
+        send_cmd(uart_gps, "$PMTK161,0*28");
+        // Wait for 10 sec. and then wake up
+        xtimer_sleep(GPS_SEND_INTERVAL_SEC);
+        gpsDataValid = false;
+        printf("Wake up GPS module and wait for new data...\n");
+        send_cmd(uart_gps, "$PMTK161,0*28");
+    }
+
+/*  TEST COMMANDS:
+    send_cmd(uart_gps, "$PMTK605*31");
+    xtimer_msleep(1000);
+    send_cmd(uart_gps, "$PMTK010,001*2E");
+    xtimer_msleep(1000);
+    send_cmd(uart_gps, "$PMTK220,10000*1F"); */
 
     return 0;
 }

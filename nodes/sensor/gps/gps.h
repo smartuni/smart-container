@@ -9,7 +9,10 @@
 #include "mutex.h"
 
 #define GPS_SEND_INTERVAL_SEC 10
+#define GPS_POLL_INTERVAL_SEC 1
 
-void handle_gps_msg(const char *_str);
+extern bool gpsDataValid;
+
+void handle_gps_msg(char *_str);
 
 #endif
