@@ -1,23 +1,22 @@
 # name of application
-APPLICATION = bme280Test
+APPLICATION = bme280SPItest
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= pba-d-01-kw2x
+BOARD ?= nucleo-f103rb
 
 # Absolute Path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../RIOT
+RIOTBASE ?= $(CURDIR)/../../../RIOT
 
 # Use saul
 USEMODULE += saul
 USEMODULE += saul_default
 
 # Include BME280 via I2C
-USEMODULE += bme280_i2c
+USEMODULE += bme280_spi
 
-# Specify default I2C device and address
-# Address is 0x76 or 0x77
-CFLAGS += -DBMX280_PARAM_I2C_DEV=I2C_DEV\(0\)
-CFLAGS += -DBMX280_PARAM_i2C_ADDR=0x77
+# Specify default SPI Device and CS Pin
+CFLAGS += -DBMX280_PARAM_SPI_DEV=SPI_DEV\(0\)
+CFLAGS += -DBMX280_PARAM_CS=GPIO_PIN\(PORT_B,6\)
 
 # Use timer to read periodically
 USEMODULE += ztimer
