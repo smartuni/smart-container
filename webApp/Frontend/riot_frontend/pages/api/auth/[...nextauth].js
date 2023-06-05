@@ -31,7 +31,7 @@ export default NextAuth({
           throw new Error("Invalid credentials");
         }
 
-        const res = await fetch("http://127.0.0.1:8000/user_list", {
+        const res = await fetch("http://127.0.0.1:8000/api/signIn", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
