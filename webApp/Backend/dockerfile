@@ -1,6 +1,17 @@
 FROM python:3.9-alpine
 ENV PROJECT_ROOT=/home/user/projects/coding/smart-containers/webApp
-WORKDIR $PROJECT_ROOT/Backend
-COPY requirements.yml ./
+
+RUN mkdir -p /code
+WORKDIR /code
+COPY . /code
+
 RUN apk add --no-cache bash
+RUN apk add --no-cache postgresql
 RUN pip install --no-cache-dir -r requirements.yml
+
+
+COPY init.sh /usr/local/bin/
+
+RUN chmod u+x /usr/local/bin/init.sh
+ENTRYPOINT ["init.sh"]
+EXPOSE 8000
