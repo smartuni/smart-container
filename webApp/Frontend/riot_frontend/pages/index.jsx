@@ -45,13 +45,9 @@ export default function Home() {
                     {/*Sign in and Sign up Buttons-------------------------------------------- */}
                     <div className="flex items-center justify-center">
                         <div className='bg-malibu-500 w-1/3 p-4 rounded-lg'>
-                            <button className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg" onClick={() => signIn()}>
+                            <button className="bg-blue-200 w-full hover:bg-blue-300 flex justify-center font-bold items-center lg:p-4 p-2 rounded-lg" onClick={() => signIn()}>
                                 Sign In
                             </button>
-                            {/* <Link href = '/signin' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
-                                <p className="font-bold">Sign In</p>
-                            </Link> */}
-
                         </div>
                     </div>
             
