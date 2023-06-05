@@ -20,6 +20,13 @@
     border-radius: 0.5rem;
     margin-bottom: 1rem;
   }
+  .card-error {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
   
   .cardTitle {
     font-size: 1.5rem;
