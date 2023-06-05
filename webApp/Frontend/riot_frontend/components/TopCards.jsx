@@ -87,10 +87,10 @@ const TopCards = () => {
 
         <div className={mc.card}>
           <div>
-            <p className={mc.cardTitle}>Acceleration:</p>
+            <p className={mc.cardTitle}>Removed</p>
           </div>
           <p className={mc.cardValue}>
-            <span>10km/h</span>
+            <span>Removed</span>
           </p>
         </div>
 
