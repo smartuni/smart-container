@@ -5,7 +5,7 @@ import { containers } from '../data/container.js'
 import { FaShoppingBag } from 'react-icons/fa'
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
-import Checkbox from "@/components/Checkbox";
+import { Checkbox } from "@nextui-org/react";
 import { useState, useEffect } from 'react';
 function isProblem(con) {
     var error = false
@@ -77,7 +77,7 @@ const RecentOrders = () => {
             <div className='items-center'>
                 <div className='grid grid-cols-4 gap-4"'>
 
-                    <Checkbox label="Sort by errors" id="Error checkbox id" />
+                    <Checkbox defaultSelected>Sort By Errors</Checkbox>
                     <input
                         className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
                         placeholder="Start/destination"
