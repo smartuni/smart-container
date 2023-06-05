@@ -40,7 +40,7 @@ function reverseProblemSort(a, b) {
 
 // containers.sort(reverseProblemSort)
 
-
+containers.sort(problemSort)
 
 
 
