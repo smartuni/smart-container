@@ -48,8 +48,8 @@ function reverseProblemSort(a, b) {
 const RecentOrders = () => {
     const [currentContainer, setCurrentContainer] = useState(0);
     const updateCon = (conID) => setCurrentContainer(conID);
-    const [isError, setIsError] = useState(false);
-    const updateError = () => setIsError(!isError)
+    const [IsChecked, setIsChecked] = useState(false);
+    const updateChecked = (IsChecked) => setIsChecked(!IsChecked);
     const test = currentContainer
     function sendProps() {
         Router.push({
@@ -59,7 +59,13 @@ const RecentOrders = () => {
             }
         });
     }
-
+    function testfunc() {
+        if (IsChecked) { // change to whenever IsChecked is incremented/changed
+            return containers.sort(problemSort)
+        } else {
+            return containers
+        }
+    }
     function getProblem(con) {
         var con = currentContainer;
         var error_message = ""
@@ -70,14 +76,19 @@ const RecentOrders = () => {
         // }
         return error_message
     }
-
+    var testArray;
     return (
         <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold'>Container List</h1>
             <div className='items-center'>
                 <div className='grid grid-cols-4 gap-4"'>
 
-                    <Checkbox defaultSelected>Sort By Errors</Checkbox>
+                    <input className="h-5 w-5" placeholder='Sort By Error' type='checkbox' onClick={() => {
+                        updateChecked(IsChecked),
+                            console.log(IsChecked),
+                            testArray = testfunc()
+                    }}
+                    />
                     <input
                         className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
                         placeholder="Start/destination"
@@ -94,6 +105,7 @@ const RecentOrders = () => {
             </div>
 
             <ul>
+
                 {containers.map((con, id) => (
                     <li
                         key={id}
