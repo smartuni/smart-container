@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from "next/router"
 import { Button } from "@nextui-org/react"
-import { containers } from '../data/container.js'
+// import { containers } from '../data/container.js'
 import { FaShoppingBag } from 'react-icons/fa'
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 function isProblem(con) {
     var error = false
     if (con != undefined) {
-        if (con.doorStatus == "open") {
+        if (con.container_door_closed == "open") {
             error = true
         } else if (con.crashed == "True") {
             error = true
@@ -45,7 +45,7 @@ function reverseProblemSort(a, b) {
 
 
 
-const RecentOrders = () => {
+const RecentOrders = ({ containers }) => {
     const [currentContainer, setCurrentContainer] = useState(0);
     const updateCon = (conID) => setCurrentContainer(conID);
     const [isError, setIsError] = useState(false);
@@ -94,13 +94,14 @@ const RecentOrders = () => {
             </div>
 
             <ul>
-                {containers.map((con, id) => (
+                {containers.map((con) => (
+                    // render containers data
                     <li
-                        key={id}
+                        key={con.container_id}
                         onClick={() => {
-                            document.getElementById("containerTracker").innerHTML = con.id;
-                            document.getElementById("doorStatus").innerHTML = con.doorStatus;
-                            setCurrentContainer(con.id)
+                            document.getElementById("containerTracker").innerHTML = con.container_id;
+                            document.getElementById("doorStatus").innerHTML = con.container_door_closed;
+                            setCurrentContainer(con.container_id)
                             sendProps()
                         }}
                         className={"rounded-lg my-3 p-2 flex items-center cursor-pointer " + (isProblem(con) ? 'hover:bg-red-400 bg-red-300' : 'hover:bg-gray-200 bg-gray-100')
@@ -118,9 +119,9 @@ const RecentOrders = () => {
                             />
                         </div>
                         <div className='pl-4'>
-                            <p className='text-gray-800 font-bold'>Container id: {con.id}</p>
-                            <span className='text-gray-500 text-sm'>{con.start}--- </span>
-                            <span className='text-gray-500 text-sm'>{con.dest}</span>
+                            <p className='text-gray-800 font-bold'>Container id: {con.container_id}</p>
+                            <span className='text-gray-500 text-sm'>{con.container_start}--- </span>
+                            <span className='text-gray-500 text-sm'>{con.container_destination}</span>
                         </div>
                         <div className='items-center'>
                             <p className={'text-lg font-bold mx-auto justify-between px-10 pt-4' + (isProblem(con) ? 'hidden' : 'flex')}>

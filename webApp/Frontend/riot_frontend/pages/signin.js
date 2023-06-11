@@ -2,6 +2,7 @@ import cx from 'classnames';
 import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from '../styles/Signin.module.css'
+import { axiosInstance } from '@/utils/axiosInstance';
 
 export default Signin;
 
@@ -35,11 +36,19 @@ function Signin() {
     return isValid;
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (checkSignIn()) {
         console.log({ email, password });
+
+       try {
+        await axiosInstance.post('/api/signIn', { email, password })
+        router.push('/')
+       } catch {
+        alert('Incorrect email or passowrd')
+       }
     }
+
 };
 
 

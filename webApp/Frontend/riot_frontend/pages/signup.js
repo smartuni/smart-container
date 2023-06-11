@@ -44,10 +44,19 @@ export default function SignUp() {
         return isValid;
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkForm()) {
-            console.log({ firstname, lastname, email, password });
+            const payload = { firstname, lastname, email, password }
+
+            console.log(payload);
+
+            try {
+                await axiosInstance.post('/api/signUp', payload)
+                router.push('/')
+               } catch {
+                alert('Email is already registered. login instead')
+               }
         }
     };
 
