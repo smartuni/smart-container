@@ -1,3 +1,6 @@
+/* coap specific code*/
+
+// include libraries
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,11 +11,18 @@
 #include "net/utils.h"
 #include "od.h"
 
-// copied functions from client.c
+// declare variables
+extern char *coap_path;
+extern char concentrator_ip[IPV6_ADDR_MAX_STR_LEN];
+bool coap_response;             //has to be changed, quick and dirty at the moment
+bool found_concentrator;        //has to be changed, quick and dirty at the moment
+
+
 static void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
                           const sock_udp_ep_t *remote)
 {
-    (void)remote;       /* not interested in the source currently */
+    // standard response handler
+    (void)remote;       // not interested in the source currently
 
     if (memo->state == GCOAP_MEMO_TIMEOUT) {
         printf("gcoap: timeout for msg ID %02u\n", coap_get_id(pdu));
@@ -35,7 +45,7 @@ static void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
                 || content_type == COAP_FORMAT_LINK
                 || coap_get_code_class(pdu) == COAP_CLASS_CLIENT_FAILURE
                 || coap_get_code_class(pdu) == COAP_CLASS_SERVER_FAILURE) {
-            /* Expecting diagnostic payload in failure cases */
+            // Expecting diagnostic payload in failure cases 
             printf(", %u bytes\n%.*s\n", pdu->payload_len, pdu->payload_len,
                                                           (char *)pdu->payload);
         }
@@ -47,6 +57,44 @@ static void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
     else {
         printf(", empty payload\n");
     }
+}
+
+static void _discover_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
+                          const sock_udp_ep_t *remote)
+{
+    // specific response handler to discover the concentrator node
+     if (memo->state == GCOAP_MEMO_TIMEOUT) {
+        printf("Message timeout, trying again\n");
+        coap_response = true;
+        return;
+    }
+    else if (memo->state != GCOAP_MEMO_RESP) {
+        printf("Error in response, trying again\n");
+        coap_response = true;
+        return;
+    }
+    else {
+        char ip[IPV6_ADDR_MAX_STR_LEN];
+        ipv6_addr_to_str(ip, (ipv6_addr_t *) &remote->addr.ipv6, IPV6_ADDR_MAX_STR_LEN);
+        printf("receiver ipv6: %s\n", ip);
+        
+        if (pdu->payload_len) {
+            printf("payload: %s\n", (char *)pdu->payload);
+            if (strstr((char *)pdu->payload, coap_path)) {  // found concentrator
+                printf("Found device is concentrator!\n");
+                found_concentrator = true;
+                strcpy( concentrator_ip, ip);
+
+            } else {
+                printf("Found device is not concentrator, trying again\n");
+                coap_response = true;
+            }
+        } else {
+            printf("Empty payload, trying again\n");
+            coap_response = true;
+        }
+    }
+    printf("\n\n");
 }
 
 static bool _parse_endpoint(sock_udp_ep_t *remote,
@@ -72,7 +120,7 @@ static bool _parse_endpoint(sock_udp_ep_t *remote,
     return true;
 }
 
-static size_t _send(uint8_t *buf, size_t len, char *addr_str, char *port_str)
+static size_t _send(uint8_t *buf, size_t len, char *addr_str, char *port_str, gcoap_resp_handler_t resp_handler)
 {
     size_t bytes_sent;
     sock_udp_ep_t remote;
@@ -80,15 +128,14 @@ static size_t _send(uint8_t *buf, size_t len, char *addr_str, char *port_str)
     if (!_parse_endpoint(&remote, addr_str, port_str)) {
         return 0;
     }
-
-    bytes_sent = gcoap_req_send(buf, len, &remote, _resp_handler, NULL);
+    bytes_sent = gcoap_req_send(buf, len, &remote, resp_handler, NULL);
     if (bytes_sent > 0) {
         //req_count++;
     }
     return bytes_sent;
 }
 
-static size_t send_req(char *addr, char *port, char *path, char *data, unsigned method)
+static size_t send_req(char *addr, char *port, char *path, char *data, unsigned method, gcoap_resp_handler_t resp_handler)
 {
     uint8_t buf[CONFIG_GCOAP_PDU_BUF_SIZE];
     coap_pkt_t pdu;
@@ -117,7 +164,7 @@ static size_t send_req(char *addr, char *port, char *path, char *data, unsigned 
         }
 
         printf("gcoap_cli: sending msg ID %u, %u bytes\n", coap_get_id(&pdu), (unsigned) len);
-        if (!_send(buf, len, addr, port)) {
+        if (!_send(buf, len, addr, port, resp_handler)) {
             puts("gcoap_cli: msg send failed");
             return -1;
         }

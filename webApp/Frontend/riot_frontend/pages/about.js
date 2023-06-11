@@ -5,14 +5,14 @@ import styles from '../styles/about.module.css'
 export default function About() {
   return (
     <>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/map">To Map Page</a></li>
-          <li><a href="#">Log out</a></li>
-        </ul>
-      </nav>
+      <div className='flex justify-between px-4 pt-4'>
+        <h2></h2>
+        <h2>Welcome back, Team!
+            <span> |  
+                <Link className="text-blue-500 hover:underline ml-1" href="/#">Log out</Link>
+            </span>
+        </h2>
+      </div>
       <div className={styles.container}>
         <div className={styles.left}>
           <h2>Secure Smart Supply Chain</h2>

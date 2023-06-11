@@ -35,6 +35,13 @@ const TempChart = ({ data }) => {
                         },
                     },
                 },
+                plugins: {
+                    legend: {
+                      labels: {
+                         filter: (l) => (l.text !== 'Temperature in °C')
+                      }
+                    }
+                }
             },
         });
 
@@ -44,10 +51,12 @@ const TempChart = ({ data }) => {
     }, [data]);
 
     return (
-        <div style={{ width: '500px', height: '300px', position: 'relative' }}>
-            <canvas id="temp-chart" style={{ position: 'absolute', left: 50, top: 0, width: '100%', height: '100%' }}/>
+        <div style={{ width: '300px', height: '180px', position: 'relative' }}>
+            <canvas id="temp-chart" style={{ position: "relative", top:"10px", left:"-10px", width: '100%', height: '100%' }}/>
         </div>
-    );
+      );
+      
+      
 };
 
 export default TempChart;

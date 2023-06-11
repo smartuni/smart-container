@@ -1,18 +1,41 @@
-# name of the application
+# Set the name of your application:
 APPLICATION = gps
+ 
+# If no BOARD is found in the environment, use this default:
+BOARD ?= feather-nrf52840
+ 
+FEATURES_REQUIRED += periph_uart
+FEATURES_OPTIONAL += periph_lpuart  # STM32 L0 and L4 provides lpuart support
+FEATURES_OPTIONAL += periph_uart_collision
+FEATURES_OPTIONAL += periph_uart_modecfg
+FEATURES_OPTIONAL += periph_uart_rxstart_irq
+
+USEPKG += minmea
+USEPKG += nanocbor
+
+# nodes team base directory
+PROJECT_BASE ?= $(CURDIR)/../..
+# This has to be the absolute path to the RIOT base directory:
+RIOTBASE ?= $(CURDIR)/../../RIOT
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= nucleo-f103rb
+BOARD ?= feather-nrf52840
 
-# This has to be the absolute path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../RIOT
+USEMODULE += fmt
+USEMODULE += xtimer
+USEMODULE += netdev_default
+USEMODULE += auto_init_gnrc_netif
+USEMODULE += gnrc_ipv6_default
+USEMODULE += gnrc_icmpv6_echo
+USEMODULE += gcoap
+USEMODULE += netutils
+USEMODULE += od
+USEMODULE += senml
 
-# Comment this out to disable code in RIOT that does safety checking
-# which is not needed in a production environment but helps in the
-# development process:
-DEVELHELP ?= 1
+EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
+USEMODULE += coap
 
-# Change this to 0 show compiler invocation lines by default:
-QUIET ?= 1
-
+# avoid running Kconfig by default
+SHOULD_RUN_KCONFIG ?=
+ 
 include $(RIOTBASE)/Makefile.include

@@ -10,14 +10,14 @@ import img3 from '../public/contact_address_icon.png';
 export default function Contact() {
   return (
     <div>
-        <nav>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/map">To Map Page</a></li>
-            <li><a href="#">Log out</a></li>
-          </ul>
-        </nav>
+      <div className='flex justify-between px-4 pt-4'>
+        <h2></h2>
+        <h2>Welcome back, Team!
+            <span> |  
+                <Link className="text-blue-500 hover:underline ml-1" href="/#">Log out</Link>
+            </span>
+        </h2>
+      </div>
         <div className={styles.contact}>
           <div className={styles.section}>
             <Image src={img1} alt="Email Address Icon" className={styles.icon}/>
