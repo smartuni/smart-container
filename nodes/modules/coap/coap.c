@@ -181,5 +181,6 @@ static ssize_t _gps_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coap_requ
 
 void send_to_concentrator(char* msg) {
     char* ip = CONCENTRATOR_IP;
+    printf("sent to concentrator -> %s\n", msg);
     send_req(ip, "5683", "/gps", msg, COAP_POST);
 }

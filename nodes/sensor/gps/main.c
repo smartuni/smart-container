@@ -177,26 +177,19 @@ int main(int argc, char **argv) {
 
     while(true) {
         // While GPS data not available, check every second if valid
+        printf("Waiting for valid GPS data...\n");
         while(!gpsDataValid) {
             xtimer_sleep(GPS_POLL_INTERVAL_SEC);
-            printf("Has not received valid GPS data yet - check again...\n");
         }
         // Send to Sleep mode if valid
-        printf("GPS data valid - send to sleep mode...\n");
         send_cmd(uart_gps, "$PMTK161,0*28");
+        printf("GPS module was sent to sleep mode\n");
         // Wait for 10 sec. and then wake up
         xtimer_sleep(GPS_SEND_INTERVAL_SEC);
         gpsDataValid = false;
-        printf("Wake up GPS module and wait for new data...\n");
         send_cmd(uart_gps, "$PMTK161,0*28");
+        printf("GPS module woke up from sleep mode\n");
     }
-
-/*  TEST COMMANDS:
-    send_cmd(uart_gps, "$PMTK605*31");
-    xtimer_msleep(1000);
-    send_cmd(uart_gps, "$PMTK010,001*2E");
-    xtimer_msleep(1000);
-    send_cmd(uart_gps, "$PMTK220,10000*1F"); */
 
     return 0;
 }
