@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from rest_framework_simplejwt import views as JwtViews
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path("sensor_list/", views.SensorList.as_view(), name="sensor_list"),
@@ -23,8 +25,8 @@ urlpatterns = [
         views.ContainerLocation.as_view(),
         name="container_location",
     ),
-    path("signUp/", views.signUp),
-    path("signIn/", views.signIn),
-    path("signOut/", views.signOut),
-    path("signedInUser/", views.signedInUser),
+    path("signUp/", views.RegisterView.as_view()),
+    path('signIn/', views.MyObtainTokenPairView.as_view()),
+    path('signIn/refresh/', TokenRefreshView.as_view()),
+    # path("signInWebJwt/", JwtViews.token_obtain_pair.as_view()),
 ]
