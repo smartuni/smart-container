@@ -11,19 +11,19 @@
 #include "od.h"
 
 // declare variables
-char *coap_path = "/temperature";
-char concentrator_ip[IPV6_ADDR_MAX_STR_LEN] = "fe80::ec5d:86f9:88fd:a1dc";
 bool coap_response_ok;             //has to be changed, quick and dirty at the moment
 bool found_concentrator;        //has to be changed, quick and dirty at the moment
+char *coap_path;
+char concentrator_ip[IPV6_ADDR_MAX_STR_LEN];
 
+static void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu, const sock_udp_ep_t *remote);
 static void _discover_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu, const sock_udp_ep_t *remote);
 static size_t send_req(char *addr, char *port, char *path, char *data, unsigned method, gcoap_resp_handler_t resp_handler);
 static size_t _send(uint8_t *buf, size_t len, char *addr_str, char *port_str, gcoap_resp_handler_t resp_handler);
 static bool _parse_endpoint(sock_udp_ep_t *remote, const char *addr_str, const char *port_str);
 
 void send_to_concentrator(char* msg) {
-    (void) msg;
-    printf("test");
+    send_req(concentrator_ip, "5683", coap_path, msg, COAP_POST, _resp_handler);
 }
 
 size_t discover_concentrator(void){
@@ -31,26 +31,21 @@ size_t discover_concentrator(void){
 
     ztimer_now_t last_wakeup = ztimer_now(ZTIMER_MSEC);
 
-    puts("Send multicast to discover concentrator");
-
-    // call multicast address via COAP_GET
-    if (!send_req("ff02::1", "5683", "/.well-known/core", "0", COAP_GET, _discover_resp_handler)) {//ff02::1 //fe80::fcb2:9130:a6fa:74b3
-        puts("multicast send, waiting for response");
-    } else {
-        puts("multicast failed");
-        return 1;
-    }
+    found_concentrator = false;
+    coap_response_ok = false;
     while(1) {
         puts("Send multicast to discover concentrator");
         // call multicast address via COAP_GET
         if (!send_req("ff02::1", "5683", "/.well-known/core", "0", COAP_GET, _discover_resp_handler)) {//ff02::1 //fe80::fcb2:9130:a6fa:74b3
             puts("multicast send, waiting for response");
-
         } else {
             puts("multicast failed");
             coap_response_ok = true;
         }
-        while(!found_concentrator && !coap_response_ok)                        // has to be changed, quick and dirty at the moment
+        while(!found_concentrator && !coap_response_ok) {
+            // has to be changed, quick and dirty at the moment
+            printf("found: %d, coap_resp: %d\n", found_concentrator, coap_response_ok);
+        }
         coap_response_ok = false;
 
         if(found_concentrator){
@@ -61,6 +56,46 @@ size_t discover_concentrator(void){
         }
     }
     return 0;
+}
+
+void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu, const sock_udp_ep_t *remote)
+{
+    // standard response handler
+    (void)remote;       // not interested in the source currently
+
+    if (memo->state == GCOAP_MEMO_TIMEOUT) {
+        printf("gcoap: timeout for msg ID %02u\n", coap_get_id(pdu));
+        return;
+    }
+    else if (memo->state != GCOAP_MEMO_RESP) {
+        printf("gcoap: error in response\n");
+        printf("state: %d\n", memo->state);
+        return;
+    }
+
+    char *class_str = (coap_get_code_class(pdu) == COAP_CLASS_SUCCESS) ? "Success" : "Error";
+
+    printf("gcoap: response %s, code %1u.%02u", class_str,
+                                                coap_get_code_class(pdu),
+                                                coap_get_code_detail(pdu));
+    if (pdu->payload_len) {
+        unsigned content_type = coap_get_content_type(pdu);
+        if (content_type == COAP_FORMAT_TEXT
+                || content_type == COAP_FORMAT_LINK
+                || coap_get_code_class(pdu) == COAP_CLASS_CLIENT_FAILURE
+                || coap_get_code_class(pdu) == COAP_CLASS_SERVER_FAILURE) {
+            // Expecting diagnostic payload in failure cases 
+            printf(", %u bytes\n%.*s\n", pdu->payload_len, pdu->payload_len,
+                                                          (char *)pdu->payload);
+        }
+        else {
+            printf(", %u bytes\n", pdu->payload_len);
+            od_hex_dump(pdu->payload, pdu->payload_len, OD_WIDTH_DEFAULT);
+        }
+    }
+    else {
+        printf(", empty payload\n");
+    }
 }
 
 void _discover_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu, const sock_udp_ep_t *remote)
@@ -87,7 +122,6 @@ void _discover_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu, c
                 printf("Found device is concentrator!\n");
                 found_concentrator = true;
                 strcpy( concentrator_ip, ip);
-
             } else {
                 printf("Found device is not concentrator, trying again\n");
                 coap_response_ok = true;

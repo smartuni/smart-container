@@ -155,6 +155,8 @@ static int send_cmd(uart_t dev, const char cmd[]) {
     return 0;
 }
 
+//char *coap_path = "/gps";
+
 int main(int argc, char **argv) {
     (void) argc;
     (void) argv;
@@ -164,6 +166,9 @@ int main(int argc, char **argv) {
     puts("SMART-CONTAINER GPS SENSOR");
     puts("===================================");
 
+    coap_path = "/gps";
+    discover_concentrator();
+
     /* initialize ringbuffers */
     for (unsigned i = 0; i < UART_NUMOF; i++) {
         ringbuffer_init(&(ctx[i].rx_buf), ctx[i].rx_mem, UART_BUFSIZE);
@@ -172,7 +177,6 @@ int main(int argc, char **argv) {
     uart_t uart_gps = UART_DEV(GPS_UART_DEV);
     init_gps_module(uart_gps);
 
-    discover_concentrator();
 
     /* start the printer thread */
     printer_pid = thread_create(printer_stack, sizeof(printer_stack), PRINTER_PRIO, 0, printer, NULL, "printer");

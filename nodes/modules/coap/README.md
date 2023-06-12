@@ -9,3 +9,14 @@ PROJECT_BASE ?= $(CURDIR)/../..
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
 ```
+
+Then include the module's header file in your code:
+```c
+#include "coap.h"
+```
+
+Example: Use common CoAP functions of the module:
+```c
+discover_concentrator();
+send_to_concentrator("Hello, RIOT!");
+```

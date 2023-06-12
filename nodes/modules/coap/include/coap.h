@@ -6,7 +6,10 @@
 #include "net/utils.h"
 #include "od.h"
 
-#define CONCENTRATOR_IP "fe80::ec5d:86f9:88fd:a1dc" // "fe80::fcb2:9130:a6fa:74b3"
+//#define CONCENTRATOR_IP "fe80::ec5d:86f9:88fd:a1dc" // "fe80::fcb2:9130:a6fa:74b3"
+
+extern char *coap_path;
+extern char concentrator_ip[IPV6_ADDR_MAX_STR_LEN];
 
 size_t discover_concentrator(void);
 void send_to_concentrator(char* msg);
