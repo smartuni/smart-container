@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # "rest_framework.authtoken",
     "sensor",
-    "rest_framework"
+    "rest_framework",
     "corsheaders"
 ]
 
