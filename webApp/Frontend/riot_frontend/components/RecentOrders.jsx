@@ -127,7 +127,7 @@ const RecentOrders = () => {
         <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold'>Container List</h1>
             <div className='items-center'>
-                <div className='grid grid-cols-4 gap-4"'>
+                <div className='grid grid-cols-4"'>
 
                     <input type='checkbox' className="h-8 w-8" placeholder="Sort By Error" id="checkbox" checked={IsChecked} onClick={() => {
                         updateChecked(),
@@ -135,26 +135,74 @@ const RecentOrders = () => {
                             testArray = testfunc()
                     }}
                     />
+                    <div class="relative text-gray-600 focus-within:text-gray-400">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                            <button
+                                type="submit"
+                                class=" focus:outline-none focus:shadow-outline">
+                                <svg
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                    class="w-6 h-6">
+                                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </span>
+                        <input
+                            type="search"
+                            name="q" class="py-2 text-sm text-white bg-malibu-300 rounded-md pl-10 focus:outline-none focus:bg-gray-200 focus:text-gray-900"
+                            placeholder="Search Start/Dest..."
+                            autocomplete="off"
+                            onChange={handleChange}
+                            value={message} />
+                    </div>
+                    {/* <div>
+                        <span class="flex items-center pl-2">
+                            <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </button>
+                        </span>
+                        <input
+                            type="search"
+                            name="q"
+                            class="py-2 text-sm text-white bg-gray-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
+                            placeholder="Search..."
+                            autocomplete="off"
+                            onChange={handleChange}
+                            value={message} />
+                        <Image src={myLogo} class="absolute mr-2 w-10" alt="Search Icon" />
+                    </div> */}
 
-                    <input
-                        className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black text-red-700"
-                        placeholder="Start/destination"
 
-                        type='text'
-                        id="start/dest"
-                        name="start/dest"
-                        onChange={handleChange}
-                        value={message}
-                    />
-                    <input
-                        className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
-                        placeholder="Content"
-                    />
-                    <input
-                        className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
-
-                        placeholder="Search IDs"
-                    />
+                    <div class="relative text-gray-600 focus-within:text-gray-400">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                            <button
+                                type="submit"
+                                class="focus:outline-none focus:shadow-outline">
+                                <svg
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                    class="w-6 h-6">
+                                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </span>
+                        <input
+                            type="search"
+                            name="q" class="py-2 text-sm text-white bg-malibu-300 rounded-md pl-10 focus:outline-none focus:bg-gray-200 focus:text-gray-900"
+                            placeholder="Search IDs"
+                            autocomplete="off"
+                            onChange={handleChange}
+                            value={message} />
+                    </div>
                     <Button className='col-span-4 mt-6' bordered color="primary" auto type='submit'
                         onPress={() => {
                             handleClick()
