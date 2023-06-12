@@ -2,10 +2,10 @@
 APPLICATION = bme280Test
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= nucleo-l152re
+BOARD ?= feather-nrf52840
 
 # Absolute Path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../../RIOT
+RIOTBASE ?= $(CURDIR)/../../../RIOT
 
 # Use saul
 USEMODULE += saul
