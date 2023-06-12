@@ -16,6 +16,9 @@ from .serializer import SensorSerializer, SignInSerializer, UserSerializer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
+from .serializer import MyTokenObtainPairSerializer, RegisterSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
 # Create your views here.
 
 def test_connection(request):
@@ -129,78 +132,11 @@ class ContainerByContent(APIView):
         return JsonResponse(serializer.data["container_id"], safe=False)
 
 
-@csrf_exempt
-def signUp(request):
-    try:
-        data = JSONParser().parse(request)
-    except:
-        responseObj = ResponseModel()
-        responseObj.errorMsg = "Missing valid JSON in body."
-        return JsonResponse(responseObj.__dict__, status=400)
+class MyObtainTokenPairView(TokenObtainPairView):
+    permission_classes = (AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer
 
-    serializer = UserSerializer(data=data)
-
-    if serializer.is_valid():
-        serializer.save()
-        return JsonResponse(serializer.data)
-
-    return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def signIn(request):
-    try:
-        data = JSONParser().parse(request)
-    except:
-        responseObj = ResponseModel()
-        responseObj.errorMsg = "Missing valid JSON in body."
-        return JsonResponse(responseObj.__dict__, status=400)
-
-    serializer = SignInSerializer(data=data)
-
-    if serializer.is_valid():
-        user = authenticate(
-            request,
-            username=serializer.data.get("email", None),
-            password=serializer.data.get("password", None),
-        )
-        if user is not None:
-            login(request, user)
-            return JsonResponse({"email": serializer.data["email"]})
-        else:
-            responseObj = ResponseModel()
-            responseObj.errorMsg = (
-                "Sorry but there is a mismatch with your credentials."
-            )
-            return JsonResponse(responseObj.__dict__, status=400)
-
-    return JsonResponse(serializer.errors, status=400)
-
-
-class ResponseModel:
-    def __init__(self, errorMsg="", data=""):
-        self.errorMsg = errorMsg
-        self.data = data
-
-
-
-@csrf_exempt
-def signOut(request):
-    logout(request)
-
-    responseObj = ResponseModel()
-    responseObj.data = "Successfully signed out."
-    return JsonResponse(responseObj.__dict__)
-
-
-# * Testing
-@csrf_exempt
-def signedInUser(request):
-    responseObj = ResponseModel()
-
-    if request.user.is_authenticated:
-        responseObj.data = f"You are currently signed is as {request.user}."
-    else:
-        responseObj.errorMsg = "You are currently NOT signed in."
-
-    return JsonResponse(responseObj.__dict__)
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
