@@ -44,7 +44,7 @@ size_t discover_concentrator(void){
         }
         while(!found_concentrator && !coap_response_ok) {
             // has to be changed, quick and dirty at the moment
-            printf("found: %d, coap_resp: %d\n", found_concentrator, coap_response_ok);
+            xtimer_msleep(100);
         }
         coap_response_ok = false;
 
