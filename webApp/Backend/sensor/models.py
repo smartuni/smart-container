@@ -23,6 +23,7 @@ class SensorData(models.Model):
         ("HUM", "Humidity"),
         ("DOOR", "Door"),
         ("ACCEL", "Acceleration"),
+        ("LEAK", "Water_Leak")
     ]
     sensor_type = models.CharField(max_length=100, choices=SENSOR_TYPES)
     sensor_data = models.CharField(max_length=100)
