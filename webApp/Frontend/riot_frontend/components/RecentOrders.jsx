@@ -6,7 +6,9 @@ import { containers } from '../data/container.js'
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
 import { Checkbox } from "@nextui-org/react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+
 function isProblem(con) {
     var error = false
     if (con != undefined) {
@@ -47,10 +49,24 @@ function reverseProblemSort(a, b) {
 
 const RecentOrders = () => {
     const [currentContainer, setCurrentContainer] = useState(0);
+    const [list, setList] = useState(containers)
     const updateCon = (conID) => setCurrentContainer(conID);
     const [IsChecked, setIsChecked] = useState(false);
-    const updateChecked = (IsChecked) => setIsChecked(!IsChecked);
+    const updateChecked = () => {
+        setIsChecked(!IsChecked);
+    }
+
+    const [message, setMessage] = useState('')
+    const handleChange = (event) => {
+        setMessage(event.target.value)
+    }
+    const [updated, setUpdated] = useState(message)
+    const handleClick = () => {
+        setUpdated(message)
+    }
+
     const test = currentContainer
+    var newList = containers
     function sendProps() {
         Router.push({
             pathname: "/dashboard",
@@ -61,11 +77,41 @@ const RecentOrders = () => {
     }
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
-            return containers.sort(problemSort)
+            return newList.sort(problemSort)
         } else {
-            return containers
+            return newList
         }
     }
+
+    function handleSortByLocation(updated) {
+        // newList = list.filter((item) => item.start != updated && item.dest != updated);
+        newList = containers
+        // if (newList.length === 0) {
+        //     return containers
+        // } else {
+        //     for (const ele of containers) {
+        //         if (ele.start != updated && ele.dest != updated) {
+        //             newList.pop(ele)
+        //         }
+        //     }
+        // }
+
+
+        return newList
+    }
+
+    const renderAuthButton = () => {
+
+        if (updated === "") {
+            return containers
+        } else {
+
+            var tempList = list.filter((item) => item.start == updated || item.dest == updated);
+            return tempList
+
+        }
+    }
+
     function getProblem(con) {
         var con = currentContainer;
         var error_message = ""
@@ -83,15 +129,22 @@ const RecentOrders = () => {
             <div className='items-center'>
                 <div className='grid grid-cols-4 gap-4"'>
 
-                    <input className="h-5 w-5" placeholder='Sort By Error' type='checkbox' onClick={() => {
-                        updateChecked(IsChecked),
+                    <input type='checkbox' className="h-8 w-8" placeholder="Sort By Error" id="checkbox" checked={IsChecked} onClick={() => {
+                        updateChecked(),
                             console.log(IsChecked),
                             testArray = testfunc()
                     }}
                     />
+
                     <input
-                        className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
+                        className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black text-red-700"
                         placeholder="Start/destination"
+
+                        type='text'
+                        id="start/dest"
+                        name="start/dest"
+                        onChange={handleChange}
+                        value={message}
                     />
                     <input
                         className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
@@ -99,14 +152,22 @@ const RecentOrders = () => {
                     />
                     <input
                         className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-gray-200 focus:bg-gray-400 rounded-full focus:outline-none focus:ring-[1px] focus:ring-white placeholder:text-black"
+
                         placeholder="Search IDs"
                     />
+                    <Button className='col-span-4 mt-6' bordered color="primary" auto type='submit'
+                        onPress={() => {
+                            handleClick()
+                            handleSortByLocation(updated)
+                            console.log(updated)
+                            console.log(typeof updated)
+                        }}>{updated}</Button>
                 </div>
             </div>
 
             <ul>
 
-                {containers.map((con, id) => (
+                {renderAuthButton().map((con, id) => (
                     <li
                         key={id}
                         onClick={() => {
