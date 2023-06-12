@@ -12,13 +12,15 @@
 #include "od.h"
 
 // declare variables
+#define WAIT_TIME 5000
 extern char *coap_path;
-extern char concentrator_ip[IPV6_ADDR_MAX_STR_LEN];
-bool coap_response;             //has to be changed, quick and dirty at the moment
-bool found_concentrator;        //has to be changed, quick and dirty at the moment
+
+char concentrator_ip[IPV6_ADDR_MAX_STR_LEN];
+bool coap_response_ok = false;              //has to be changed, quick and dirty at the moment
+bool found_concentrator = false;            //has to be changed, quick and dirty at the moment
 
 
-static void _resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
+static void _std_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t* pdu,
                           const sock_udp_ep_t *remote)
 {
     // standard response handler
@@ -65,12 +67,12 @@ static void _discover_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t*
     // specific response handler to discover the concentrator node
      if (memo->state == GCOAP_MEMO_TIMEOUT) {
         printf("Message timeout, trying again\n");
-        coap_response = true;
+        coap_response_ok = true;
         return;
     }
     else if (memo->state != GCOAP_MEMO_RESP) {
         printf("Error in response, trying again\n");
-        coap_response = true;
+        coap_response_ok = true;
         return;
     }
     else {
@@ -82,16 +84,16 @@ static void _discover_resp_handler(const gcoap_request_memo_t *memo, coap_pkt_t*
             printf("payload: %s\n", (char *)pdu->payload);
             if (strstr((char *)pdu->payload, coap_path)) {  // found concentrator
                 printf("Found device is concentrator!\n");
-                found_concentrator = true;
                 strcpy( concentrator_ip, ip);
-
+                found_concentrator = true;
+                coap_response_ok = true;
             } else {
                 printf("Found device is not concentrator, trying again\n");
-                coap_response = true;
+                coap_response_ok = true;
             }
         } else {
             printf("Empty payload, trying again\n");
-            coap_response = true;
+            coap_response_ok = true;
         }
     }
     printf("\n\n");
@@ -175,3 +177,32 @@ static size_t send_req(char *addr, char *port, char *path, char *data, unsigned 
     return 0;
 }
 
+static size_t discover_concentrator(void){
+// function discovers concentrator node and saves its ip    
+
+    ztimer_now_t last_wakeup = ztimer_now(ZTIMER_MSEC);
+
+    while(1) {
+        puts("Send multicast to discover concentrator");
+
+        // call multicast address via COAP_GET
+        if (!send_req("ff02::1", "5683", "/.well-known/core", "0", COAP_GET, _discover_resp_handler)) {
+            puts("multicast send, waiting for response");
+        } else {
+            puts("multicast failed");
+            coap_response_ok = true;        // set true to skip loop
+            ztimer_periodic_wakeup(ZTIMER_MSEC, &last_wakeup, WAIT_TIME);
+        }
+        while(!coap_response_ok) {
+            ztimer_periodic_wakeup(ZTIMER_MSEC, &last_wakeup, WAIT_TIME);
+        }
+        coap_response_ok = false;
+
+        if(found_concentrator) {
+            printf("\nFound concentrator with ipv6: %s\n", concentrator_ip);
+            break;
+        }
+        ztimer_periodic_wakeup(ZTIMER_MSEC, &last_wakeup, WAIT_TIME);
+    }
+    return 0;
+}

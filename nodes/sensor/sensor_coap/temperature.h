@@ -1,8 +1,6 @@
 // temperature sensor specific code 
 
-// Not needed when using saul
-//#include "board.h"
-//#include "bmx280.h"
+// include libraries
 #include "saul_reg.h"
 #include "ztimer.h"
 #include "phydat.h"
@@ -13,9 +11,14 @@
 // define variables
 char *coap_path = "/temperature";
 
-//define function
+//define functions
 
- size_t read_sensor(char *sensor_value_string, size_t length){
+size_t init_sensor(void)
+{
+    return 1;
+}
+
+size_t read_sensor(char *sensor_value_string, size_t length){
 
     size_t actual_length;
     phydat_t temperature;
