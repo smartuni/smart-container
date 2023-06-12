@@ -111,34 +111,33 @@ int handle_rmc_msg(const char *_rmc) {
     }
     
     char sensor_data[80];
-
-    printf("[GPRMC] Date & Time: %02d.%02d.20%02d %02d:%02d:%02d\n", 
-        frame.date.day, frame.date.month, frame.date.year, frame.time.hours, frame.time.minutes, frame.time.seconds);
+    int nChars;
 
     if(frame.valid) {
-        gpsDataValid = true;
+        // Format latitude
         float latitude = minmea_tocoord_or_0(&frame.latitude);
-        float longitude = minmea_tocoord_or_0(&frame.longitude);
-        float speed = minmea_tocoord_or_0(&frame.speed);
-        float course = minmea_tocoord_or_0(&frame.course);
-        char buf_latitude[9];
-        char buf_longitude[9];
-        char buf_speed[4];
-        char buf_course[4];
+        nChars = fmt_float(NULL, latitude, 6);
+        char buf_latitude[nChars];
         fmt_float(buf_latitude, latitude, 6);
+
+        // Format longitude
+        float longitude = minmea_tocoord_or_0(&frame.longitude);
+        nChars = fmt_float(NULL, longitude, 6);
+        char buf_longitude[nChars];
         fmt_float(buf_longitude, longitude, 6);
-        fmt_float(buf_speed, speed, 2);
-        fmt_float(buf_course, course, 2);
-        printf("[GPRMC] latitude=%s, longitude=%s, course=%s, speed=%s, valid=%s\n", buf_latitude, buf_longitude, buf_course, buf_speed, frame.valid ? "true" : "false");
+
+        // Print data
+        printf("[GPRMC] latitude=%s, longitude=%s, valid=%s\n", buf_latitude, buf_longitude, frame.valid ? "true" : "false");
+        printf("[GPRMC] Date&Time: %02d.%02d.20%02d,%02d:%02d\n", frame.date.day, frame.date.month, frame.date.year, frame.time.hours, frame.time.minutes);
 
         // Send data to concentrator: [latitude],[longitude],[date],[time]
         sprintf(sensor_data, "%s,%s,%02d.%02d.20%02d,%02d:%02d", buf_latitude, buf_longitude, frame.date.day, frame.date.month, frame.date.year, frame.time.hours, frame.time.minutes);
-        printf("sent -> %s\n", sensor_data);
         send_to_concentrator(sensor_data);
-        printf("Current GPS coordinates, date and time were sent to concentrator\n");
+
+        // Set "data valid" flag so main thread can react to it
+        gpsDataValid = true;
     } else {
         gpsDataValid = false;
-        printf("[GPRMC] Data not valid yet...\n");
         sprintf(sensor_data, "0.0,0.0");
     }
 
@@ -161,36 +160,19 @@ int handle_vtg_msg(const char *_vtg) {
     return EXIT_SUCCESS;
 }
 
-/* static char* split_string(char* str, char c) {
-    int index = -1;
-    int length = strlen(str);
-    for(int i = 0; i < length; i++) {
-        if(str[i] == c) {
-            index = i;
-            break;
-        }
-    }
-
-    char sub[length];
-    if(index != -1) {
-        strncpy(sub, str, index);
-        return sub;
-    } else {
-        strncpy(sub, str, length);
-        return str;
-    }
-} */
-
 void handle_gps_msg(char *_str) {
-    int handle_result = 0;
+    int handle_result = EXIT_SUCCESS;
 
     if(string_starts_with(_str, "$PMTK705")) {
-        printf("Received FW Info: %s", _str);
+        printf("Received FW Info: %s\n", _str);
         handle_result = EXIT_SUCCESS;
     } else if(string_starts_with(_str, "$PMTK001")) {
-        printf("Received ACK: %s", _str);
+        printf("Received ACK\n");
         handle_result = EXIT_SUCCESS;
-    } else if(string_starts_with(_str, "$GPGGA")) {
+    } else if(string_starts_with(_str, "$GPRMC")) {
+        // Recommended Minimum Navigation Information
+        handle_result = handle_rmc_msg(_str);
+    }/* else if(string_starts_with(_str, "$GPGGA")) {
         // Global Positioning System Fixed Data. Time, Position and fix related data
         handle_result = handle_gga_msg(_str);
     } else if(string_starts_with(_str, "$GPGSA")) {
@@ -199,13 +181,11 @@ void handle_gps_msg(char *_str) {
     } else if(string_starts_with(_str, "$GPGSV")) {
         // GNSS Satellites in View
         handle_result = handle_gsv_msg(_str);
-    } else if(string_starts_with(_str, "$GPRMC")) {
-        // Recommended Minimum Navigation Information
-        handle_result = handle_rmc_msg(_str);
     } else if(string_starts_with(_str, "$GPVTG")) {
         // Course and speed information relative to the ground
         handle_result = handle_vtg_msg(_str);
     }
+    */
 
     if(handle_result == EXIT_FAILURE) {
         print_str("FAILURE: error parsing GPS sentence\n");
