@@ -4,7 +4,7 @@ APPLICATION = concentrator
 # This is the target board for the Concentrator
 BOARD ?= nrf52840dk
 # enable this for testing on the small feather board
-BOARD = feather-nrf52840
+# BOARD = feather-nrf52840
 
 # This USEMODULE should be used if LORAWAN Board is connected to nrf52840dk board!!
 ifeq ($(BOARD),nrf52840dk)
@@ -25,6 +25,30 @@ USEMODULE += gnrc_ipv6_default
 
 # add CoAP module
 USEMODULE += gcoap
+
+# Add support for GNRC LoRaWAN (v1.0.3)
+USEMODULE += gnrc_lorawan
+
+# Tell GNRC to encode LoRaWAN port in the GNRC netif header.
+# This allows us to use `gnrc_txtsnd` to send data from the shell using the
+# `txtsnd` command.
+# Note: From Release 22.01 all GNRC LoRaWAN packets will include the netif
+# header. Therefore this flag will be removed after that
+
+CFLAGS += -DCONFIG_GNRC_NETIF_LORAWAN_NETIF_HDR
+
+# We can reduce the size of the packet buffer for LoRaWAN, since there's no IP
+# support. This will reduce RAM consumption.
+# Set GNRC_PKTBUF_SIZE via CFLAGS if not being set via Kconfig.
+ifndef CONFIG_GNRC_PKTBUF_SIZE
+  CFLAGS += -DCONFIG_GNRC_PKTBUF_SIZE=512
+endif
+#
+# Set region
+CFLAGS += -DCONFIG_LORAMAC_REGION_EU_868
+#
+# If commented, the default value (DR0) is used. Note this value is also used for the OTAA.
+CFLAGS += -DCONFIG_LORAMAC_DEFAULT_DR_5
 
 # add ztimer module
 USEMODULE += ztimer

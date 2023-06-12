@@ -15,8 +15,8 @@ The following sensors will be used:
 
 | Sensor Type   | model       | communication  type | Time period  |
 |---------------|-------------|---------------------|--------------|
-| Temperature   | bme280      | SPI                 | periodically |
-| Humidity      | bme280      | SPI                 | periodically |
+| Temperature   | bme280      | I2C                 | periodically |
+| Humidity      | bme280      | I2C                 | periodically |
 | GPS           | MTK3339     | UART                | periodically |
 | Water leak    | resistor    | Digital read        | On event     |
 | Tamper        | reed-switch | Digital read        | On event     |
@@ -27,6 +27,7 @@ Adafruit Feather nRF52840 Express
 
 - power via USB or 4.2/3.7V Lipo/Lipoly or LiIon
 - Measuring battery voltage with internal ADC (A6 already connected)
+- Is able to charge battery when connected via USB
 - I2C, SPI and UART
 - Analog input possible
 - information to power consumption cannot be found, the Cortex ARM-M4 may consume a bit but RF52840 takes less energy than a complete WiFi shield. 
