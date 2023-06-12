@@ -54,7 +54,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ["178.128.192.215:8000"]
+CSRF_TRUSTED_ORIGINS = ["http://178.128.192.215:8000", "http://localhost"]
 
 ROOT_URLCONF = "server.urls"
 
@@ -84,13 +84,15 @@ WSGI_APPLICATION = "server.wsgi.application"
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "HOST": "188.68.38.46",
+#         "HOST": "localhost",
 #         "PORT": "5432",
 #         "USER": "riot_django",
-#         "PASSWORD": "2zX44jaF",
-#         "NAME": "riot_web_app",
+#         "PASSWORD": "riot123",
+#         "NAME": "riot_db",
 #     }
 # }
+
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",

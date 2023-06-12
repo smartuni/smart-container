@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from rest_framework import generics
 from rest_framework.views import APIView
 from .models import SensorData, Container, User
@@ -75,7 +75,7 @@ class ContainerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Container.objects.all()
     serializer_class = ContainerSerializer
 
-
+@csrf_protect
 class ContainerLocation(APIView):
     """
     Retrieve container location
