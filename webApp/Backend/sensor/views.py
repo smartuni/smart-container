@@ -4,9 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.mixins import (
-    CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
-)
+
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import generics, viewsets
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -25,6 +23,7 @@ from django.contrib.auth import authenticate, login, logout
 from .serializer import MyTokenObtainPairSerializer, RegisterSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.decorators import api_view
 # Create your views here.
 
 def test_connection(request):
@@ -40,39 +39,6 @@ class SensorViewset(viewsets.ModelViewSet):
     serializer_class = SensorSerializer
 
 
-# class SensorDetail(CreateModelMixin, # handles CREATEs for 1 Sensor
-#                      GenericViewSet,  # generic view functionality
-#                      RetrieveModelMixin,  # handles GETs for 1 Sensor
-#                      UpdateModelMixin,  # handles PUTs and PATCHes
-#                      ListModelMixin,    # handles GETs for many Sensors
-#                      DestroyModelMixin):  #handles DELETEs for 1 Sensor
-#     """
-#     Create, Retrieve, update or delete a sensor data instance
-#     """
-
-#     queryset = SensorData.objects.all()
-#     serializer_class = SensorSerializer
-
-#     # Specify the allowed actions and their corresponding HTTP methods
-#     action_map = {
-#         'get': 'retrieve',
-#         'put': 'update',
-#         'patch': 'partial_update',
-#         'delete': 'destroy',
-#         'post': 'create',
-#         'list': 'list',
-#     }
-
-#     @classmethod
-#     def get_action_map(cls):
-#         return cls.action_map
-
-#     # Override the `as_view` method to provide the `actions` argument
-#     @classmethod
-#     def as_view(cls, actions=None, **initkwargs):
-#         actions = actions or cls.get_action_map()
-#         return super().as_view(actions=actions, **initkwargs)
-
 class UserViewset(viewsets.ModelViewSet):
     """
     List all container data
@@ -82,39 +48,6 @@ class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-# class UserDetail(CreateModelMixin, # handles CREATEs for 1 User
-#                     GenericViewSet,  # generic view functionality
-#                      RetrieveModelMixin,  # handles GETs for 1 User
-#                      UpdateModelMixin,  # handles PUTs and PATCHes
-#                      ListModelMixin,    # handles GETs for many Users
-#                      DestroyModelMixin):  #handles DELETEs for 1 User
-#     """
-#     Retrieve, update or delete a user data instance
-#     """
-
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-
-#         # Specify the allowed actions and their corresponding HTTP methods
-#     action_map = {
-#         'get': 'retrieve',
-#         'put': 'update',
-#         'patch': 'partial_update',
-#         'delete': 'destroy',
-#         'post': 'create',
-#         'list': 'list',
-#     }
-
-#     @classmethod
-#     def get_action_map(cls):
-#         return cls.action_map
-
-#     # Override the `as_view` method to provide the `actions` argument
-#     @classmethod
-#     def as_view(cls, actions=None, **initkwargs):
-#         actions = actions or cls.get_action_map()
-#         return super().as_view(actions=actions, **initkwargs)
-
 class ContainerViewset(viewsets.ModelViewSet):
     """
     List all container data
@@ -123,19 +56,6 @@ class ContainerViewset(viewsets.ModelViewSet):
     queryset = Container.objects.all()
     serializer_class = ContainerSerializer
 
-
-# class ContainerDetail(CreateModelMixin, # handles CREATEs for 1 Container
-#                     GenericViewSet,  # generic view functionality
-#                      RetrieveModelMixin,  # handles GETs for 1 Container
-#                      UpdateModelMixin,  # handles PUTs and PATCHes
-#                      ListModelMixin,    # handles GETs for many Containers
-#                      DestroyModelMixin):  #handles DELETEs for 1 Container
-
-#     """
-#     Retrieve, update or delete a container data instance
-#     """
-#     queryset = Container.objects.all()
-#     serializer_class = ContainerSerializer
 
 @csrf_protect
 class ContainerLocation(APIView):
@@ -189,7 +109,6 @@ class ContainerByContent(APIView):
         )
         serializer = ContainerSerializer(containerData, many=False)
         return JsonResponse(serializer.data["container_id"], safe=False)
-
 
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)

@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from sensor.views import ContainerViewset, SensorViewset, UserViewset
+from sensor.urls import *
 
 router = DefaultRouter()
 router.register(r'container', ContainerViewset)
@@ -26,4 +27,5 @@ router.register(r'user', UserViewset)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(r'api/', include(router.urls)),
+    path("api/", include("sensor.urls"))
 ]
