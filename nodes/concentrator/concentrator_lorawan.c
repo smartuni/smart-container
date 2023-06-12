@@ -4,11 +4,10 @@
 #include "periph/gpio.h" /* Periph GPIO */
 #include "event.h" /* Event Queues and Event Thread */
 #include "event/thread.h"
-#include "net/lora.h"  /* LoRa defines */ 
 #include "net/gnrc/netif.h" /* GNRC's network interfaces */
 #include "net/gnrc/netif/hdr.h" /* GNRC's network communication interface */
-#include "net/gnrc/netapi.h" /* String formatting */ 
-#include "fmt.h" 
+#include "net/gnrc/netapi.h" 
+#include "fmt.h" /* String formatting */ 
 
 #define JOIN_DELAY (10U * MS_PER_SEC) /* Unit system wait time to complete join procedure in seconds */
 #define LORAWAN_DATARATE LORAMAC_DR_3 /* Delay between transmission in milliseconds */
@@ -26,7 +25,7 @@ static void button_callback(void *arg)
     counter++;
 }
  /* Join the network */
-static void _activate(gnrc_netif_t *netif)
+void activate(gnrc_netif_t *netif)
 { /* All values are shorter than the APPKEY length */
     uint8_t key_holder[LORAMAC_APPKEY_LEN];
     int size;
@@ -70,7 +69,7 @@ gnrc_netif_t *get_lorawan_netif(void)
     return NULL;
 }
 
-static void sendData(uint8_t data){
+void sendData(uint8_t data){
     gnrc_pktsnip_t *pkt, *hdr;
     printf("Counter value is %i\n", data);
     uint8_t port = CONFIG_LORAMAC_DEFAULT_TX_PORT; /* Default: 2 */               /* [TASK 3: Allocate a packet snip for the counter data] */
@@ -81,22 +80,4 @@ static void sendData(uint8_t data){
     puts("Successfully sent packet");
     ztimer_sleep(ZTIMER_MSEC, TRANSMISSION_INTERVAL);
     printf("Die Funktion wurde aufgerufen");
-}
-
-int main(void)
-{
-    puts("LoRaWAN Sensor application"); /* Setup button callback */
-    if (gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, button_callback, NULL) < 0)
-    {
-        puts("[FAILED] init BTN0!");
-        return 1;
-    } /* Try to get a LoRaWAN interface */
-    if (!(lorawan_netif = get_lorawan_netif()))
-    {
-        puts("Couldn't find a LoRaWAN interface");
-        return 1;
-    }
-    _activate(lorawan_netif);
-    sendData(2);
-    return 0;
 }

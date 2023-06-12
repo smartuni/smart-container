@@ -13,6 +13,7 @@
 #include "shell.h"
 
 #include "gcoap_example.h"
+#include "concentrator_lorawan.h"
 
 #define MAIN_QUEUE_SIZE (4)
 static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
@@ -28,6 +29,21 @@ int main(void)
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
     server_init();
     puts("gcoap example app");
+
+    /* init lorawan */
+    puts("LoRaWAN Sensor application"); /* Setup button callback */
+    if (gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, button_callback, NULL) < 0)
+    {
+        puts("[FAILED] init BTN0!");
+        return 1;
+    } /* Try to get a LoRaWAN interface */
+    if (!(lorawan_netif = get_lorawan_netif()))
+    {
+        puts("Couldn't find a LoRaWAN interface");
+        return 1;
+    }
+    _activate(lorawan_netif);
+    sendData(2);
 
     /* start shell */
     puts("All up, running the shell now");
