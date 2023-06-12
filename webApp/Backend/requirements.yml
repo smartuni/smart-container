@@ -1,4 +1,7 @@
 django
 djangorestframework
 paho-mqtt
-psycopg
+psycopg2-binary
+gunicorn
+whitenoise
+django-cors-headers

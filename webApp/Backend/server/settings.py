@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-@_az315dew11f0yn%e(n*6na!dt=vfwec)6lj1ysahoj_bt%e9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '178.128.192.215']
 
 
 # Application definition
@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # "rest_framework.authtoken",
     "sensor",
     "rest_framework"
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
@@ -49,7 +51,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = ["http://178.128.192.215:8000", "http://localhost"]
 
 ROOT_URLCONF = "server.urls"
 
@@ -72,17 +79,30 @@ TEMPLATES = [
 WSGI_APPLICATION = "server.wsgi.application"
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#         "USER": "riot_django",
+#         "PASSWORD": "riot123",
+#         "NAME": "riot_db",
+#     }
+# }
+
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "HOST": "188.68.38.46",
-        "PORT": "5432",
-        "USER": "riot_django",
-        "PASSWORD": "2zX44jaF",
-        "NAME": "riot_web_app",
+        "HOST": "db",
+        "PORT": 5432,
+        "USER": os.environ.get('POSTGRES_USER'),
+        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
+        "NAME": os.environ.get('POSTGRES_NAME'),
     }
 }
 
@@ -105,7 +125,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#AUTH_USER_MODEL = 'sensor.User'
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+AUTH_USER_MODEL = 'sensor.User'
                     
 
 # Internationalization
