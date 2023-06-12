@@ -18,7 +18,7 @@ int main(void)
 {
     puts("BME280 example.");
 
-    saul_reg_t *temp_sensor = saul_reg_find_type(SAUL_SENSE_TEMP);
+    saul_reg_t *temp_sensor = saul_reg_find_type_and_name(SAUL_SENSE_TEMP, "bme280");
     saul_reg_t *humid_sensor = saul_reg_find_type(SAUL_SENSE_HUM);
     saul_reg_t *pressure_sensor = saul_reg_find_type(SAUL_SENSE_PRESS);
 
