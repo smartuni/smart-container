@@ -172,6 +172,8 @@ int main(int argc, char **argv) {
     uart_t uart_gps = UART_DEV(GPS_UART_DEV);
     init_gps_module(uart_gps);
 
+    discover_concentrator();
+
     /* start the printer thread */
     printer_pid = thread_create(printer_stack, sizeof(printer_stack), PRINTER_PRIO, 0, printer, NULL, "printer");
 
