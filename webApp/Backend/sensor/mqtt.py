@@ -2,6 +2,7 @@ import uuid
 import datetime
 import paho.mqtt.client as mqtt
 import json
+import os
 import base64
 
 # Confiugure as needed
@@ -59,7 +60,9 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     # Parse Byte data converted to JSON
     payload = json.loads(msg.payload.decode("utf-8"))
-    print(payload)
+    file = open("mqtt.txt", "a")
+    file.write(str(payload))
+    file.close()
     # print(msg.topic+" "+str(msg.payload))
     print(process_message(msg))
 
@@ -92,10 +95,9 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-
+file = open("mqtt.txt", "w")
+file.write("MQTT started execution.")
+file.close()
 
 client.username_pw_set(USERNAME, API_KEY)
 client.connect(TTN_MQTT_SERVER, 80, 60)
@@ -105,7 +107,7 @@ client.connect(TTN_MQTT_SERVER, 80, 60)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-# client.loop_forever()
+client.loop_forever()
 # if __name__ == "__main__":
 #     print("Test")
 #     postToDatabase("time", "data", "dataType", "owner")
