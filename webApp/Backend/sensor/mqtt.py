@@ -61,6 +61,7 @@ def on_message(client, userdata, msg):
     # Parse Byte data converted to JSON
     payload = json.loads(msg.payload.decode("utf-8"))
     file = open("mqtt.txt", "a")
+    file.write("Creating payload print-out\n")
     file.write(str(payload))
     file.close()
     # print(msg.topic+" "+str(msg.payload))
@@ -96,7 +97,7 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 file = open("mqtt.txt", "w")
-file.write("MQTT started execution.")
+file.write("MQTT started execution....")
 file.close()
 
 client.username_pw_set(USERNAME, API_KEY)
