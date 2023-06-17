@@ -23,18 +23,23 @@ const TopCards = () => {
   const router = useRouter()
 
   const {
-    query: { test },
+    query: { test, error },
   } = router
 
   const props = {
-    test,
+    test, error
   };
 
   const [currentContainerObj, setCurrentContainerObj] = useState(containers[0]);
   const updateConObj = (propCon) => setCurrentContainerObj(propCon);
   useEffect(() => updateConObj(containers[parseInt(props.test, 10) - 1]));
   const isProblem = () => {
-    var con1 = containers[parseInt(props.test, 10) - 1]
+    // Idea: instead of containers[], search through containers till it matches container id,
+    // then call isProblem() on that container
+    //var con1 = containers[parseInt(props.test, 10) - 1]
+    var con1 = getConById(parseInt(props.test, 10))
+
+    //var con1 = props.error
     var error = false
     if (con1 != undefined) {
       if (con1.doorStatus == "open") {
@@ -45,13 +50,12 @@ const TopCards = () => {
     }
 
     return error
-
   }
-  // console.log(typeof (parseInt(props.test, 10)));
-
+  var isTrueSet = (props.error === 'false')
+  // Current TODO: props.error is not yet a useable boolean 
+  console.log(props.error)
+  console.log(isTrueSet)
   // console.log(isProblem(containers[parseInt(props.test, 10) - 1]))
-
-
 
   return (
     <div>

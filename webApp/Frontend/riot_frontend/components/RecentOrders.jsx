@@ -49,6 +49,7 @@ function reverseProblemSort(a, b) {
 
 const RecentOrders = () => {
     const [currentContainer, setCurrentContainer] = useState(0);
+
     const [list, setList] = useState(containers)
     const updateCon = (conID) => setCurrentContainer(conID);
     const [IsChecked, setIsChecked] = useState(false);
@@ -67,14 +68,16 @@ const RecentOrders = () => {
 
     const test = currentContainer
     var newList = containers
+    var error = isProblem(test)
     function sendProps() {
         Router.push({
             pathname: "/dashboard",
             query: {
-                test
+                test, error,
             }
         });
     }
+
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
             return newList.sort(problemSort)
@@ -207,8 +210,8 @@ const RecentOrders = () => {
                         onPress={() => {
                             handleClick()
                             handleSortByLocation(updated)
-                            console.log(updated)
-                            console.log(typeof updated)
+                            //console.log(updated)
+                            //console.log(typeof updated)
                         }}>{updated}</Button>
                 </div>
             </div>
