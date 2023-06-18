@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-#include "net/loramac.h"     /* core loramac definitions */
-#include "semtech_loramac.h" /* package API */
+#include "net/loramac.h"
+#include "semtech_loramac.h"
+#include "net/ieee802154/submac.h"
 #include "periph/uart.h"
 #include "periph/flashpage.h"
 #include "log.h"
+#include "periph/pm.h" // Include power management for reboot
 
 #define FLASH_KEY_PAGE 240
-#define UART_DEV UART_DEV(0)
+#define UART_DEV0 UART_DEV(0)
 #define UART_BUFSIZE  (128U)
+
 
 typedef struct {
     uint8_t device_id;
@@ -18,7 +21,9 @@ typedef struct {
     uint8_t lorawan_app_eui[16];
     uint8_t lorawan_app_key[32];
     uint8_t aes_key[32];
+    //uint8_t ieee802154_key[32];  // IEEE 802.15.4 key
     uint8_t ip[16];
+    //ieee802154_submac_t submac;
 } provisioning_data_t;
 
 provisioning_data_t provision;
@@ -36,26 +41,24 @@ void check_provisioning() {
         if (*provision_ptr == 0xFF) continue;
         if (*key_ptr != *provision_ptr) {
             LOG_ERROR("Device not provisioned. Please provision the device first!\n");
-            panic();
+            pm_reboot();  // Reboot the device or panic();
         }
     }
 }
 
 void provision_device() {
-    if(flashpage_erase(FLASH_KEY_PAGE) < 0){
-        LOG_ERROR("Failed to erase flash page!\n");
-        panic();
-    }
+    flashpage_erase(FLASH_KEY_PAGE);
+    
     if(flashpage_write_raw(FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
         LOG_ERROR("Failed to write to flash page!\n");
-        panic();
+        pm_reboot();  // Reboot the device instead of hanging in panic
     }
 
     provisioning_data_t verify_provision;
     memcpy(&verify_provision, (uint8_t*)flashpage_addr(FLASH_KEY_PAGE), sizeof(provision));
     if (memcmp(&verify_provision, &provision, sizeof(provision)) != 0) {
         LOG_ERROR("Provisioning failed!\n");
-        panic();
+        pm_reboot();  // Reboot the device instead of hanging in panic
     }
 
     LOG_INFO("Provisioning done successfully!\n");
@@ -82,13 +85,14 @@ int main(void)
     check_provisioning();
 
     uint8_t rx_mem[sizeof(provisioning_data_t)];
-
-    if (uart_init(UART_DEV, 115200, rx_cb, rx_mem) < 0) {
+    
+    if (uart_init(UART_DEV0, 115200, rx_cb, rx_mem) < 0) {
         LOG_ERROR("Cannot initialize UART\n");
         return 1;
     }
-
-    printf("Welcome to Device Provisioning\n");
-
     return 0;
+
+    // printf("Welcome to Device Provisioning\n");
 }
+
+

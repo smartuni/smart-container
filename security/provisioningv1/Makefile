@@ -18,7 +18,7 @@ USEMODULE += shell_cmds_default  # Provides reboot command
 USEMODULE += log  # Include the log module
 USEMODULE += fmt
 USEMODULE += fmt_hexdump
-
+USEMODULE += periph_pm
 # Include the Semtech LoRaMAC package
 USEPKG += semtech-loramac
 

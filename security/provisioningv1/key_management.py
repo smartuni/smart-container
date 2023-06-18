@@ -7,6 +7,7 @@ import time
 def provision_device(device_id, ser):
     dtls_psk_key = secrets.token_hex(16)
     aes_key = secrets.token_hex(16)
+    ieee802154_key = secrets.token_hex(16)  # 128-bit key
     ack = ''
 
     try:
