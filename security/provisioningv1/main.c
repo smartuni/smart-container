@@ -7,23 +7,23 @@
 #include "periph/uart.h"
 #include "periph/flashpage.h"
 #include "log.h"
-#include "periph/pm.h" // Include power management for reboot
+#include "periph/pm.h" 
+#include "net/gnrc.h"
+#include "net/gnrc/netif.h"
 
 #define FLASH_KEY_PAGE 240
 #define UART_DEV0 UART_DEV(0)
 #define UART_BUFSIZE  (128U)
 
-
 typedef struct {
-    uint8_t device_id;
-    uint8_t dtls_psk_key[32];
+    uint8_t device_id; // 8-bit device id [0, n]
+    uint8_t ieee802154_key[16]; 
+    uint8_t ipv6_addr_concentrator[16]; 
+    uint8_t dtls_psk_aes_128_key[16];
     uint8_t lorawan_dev_eui[16];
     uint8_t lorawan_app_eui[16];
     uint8_t lorawan_app_key[32];
-    uint8_t aes_key[32];
-    //uint8_t ieee802154_key[32];  // IEEE 802.15.4 key
-    uint8_t ip[16];
-    //ieee802154_submac_t submac;
+    uint8_t sec_save_aes_key[16]; //128-bit AES key for sec_save
 } provisioning_data_t;
 
 provisioning_data_t provision;
@@ -41,7 +41,7 @@ void check_provisioning() {
         if (*provision_ptr == 0xFF) continue;
         if (*key_ptr != *provision_ptr) {
             LOG_ERROR("Device not provisioned. Please provision the device first!\n");
-            pm_reboot();  // Reboot the device or panic();
+            pm_reboot();  //panic()
         }
     }
 }
@@ -51,18 +51,35 @@ void provision_device() {
     
     if(flashpage_write_raw(FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
         LOG_ERROR("Failed to write to flash page!\n");
-        pm_reboot();  // Reboot the device instead of hanging in panic
+        pm_reboot();  
     }
 
     provisioning_data_t verify_provision;
     memcpy(&verify_provision, (uint8_t*)flashpage_addr(FLASH_KEY_PAGE), sizeof(provision));
     if (memcmp(&verify_provision, &provision, sizeof(provision)) != 0) {
         LOG_ERROR("Provisioning failed!\n");
-        pm_reboot();  // Reboot the device instead of hanging in panic
+        pm_reboot();  
     }
 
     LOG_INFO("Provisioning done successfully!\n");
-    printf("ACK\n"); // Send acknowledgment to Python script
+    printf("ACK\n"); 
+}
+
+void store_ipv6_address(kernel_pid_t pid) {
+    gnrc_netif_t* netif = gnrc_netif_get_by_pid(pid);
+    if (netif == NULL) {
+        puts("Error: No network interface found.");
+        return;
+    }
+
+    ipv6_addr_t ipv6_addr;
+    if (gnrc_netif_ipv6_addrs_get(netif, &ipv6_addr, sizeof(ipv6_addr)) < 0) {
+        puts("Error: Failed to get IPv6 address.");
+        return;
+    }
+
+    // Copy the generated IPv6 address to the provisioning data 
+    memcpy(provision.ipv6_addr_concentrator, &ipv6_addr, sizeof(ipv6_addr));
 }
 
 static void rx_cb(void *arg, uint8_t data)
@@ -82,6 +99,7 @@ static void rx_cb(void *arg, uint8_t data)
 
 int main(void)
 {
+    store_ipv6_address(/* PID */);
     check_provisioning();
 
     uint8_t rx_mem[sizeof(provisioning_data_t)];
@@ -91,8 +109,4 @@ int main(void)
         return 1;
     }
     return 0;
-
-    // printf("Welcome to Device Provisioning\n");
 }
-
-
