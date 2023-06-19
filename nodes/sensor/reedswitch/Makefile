@@ -1,29 +1,16 @@
 # name of your application
-APPLICATION = test_waterleak
+APPLICATION = test_reedswitch
 
-BOARD ?= feather-nrf52840
+# If no BOARD is found in the environment, use this default:
+BOARD ?= pba-d-01-kw2x
 
-# nodes team base directory
-PROJECT_BASE ?= $(CURDIR)/../..
+# This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../../RIOT
+PROJECT_BASE ?= $(CURDIR)/../..
 
+# Include external CoAP module
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
-
-# USEMODULE += saul
-# USEMODULE += saul_default
-# USEMODULE += saul_adc
-
-# add coap dependencies
-USEMODULE += netdev_default
-USEMODULE += auto_init_gnrc_netif
-USEMODULE += gnrc_ipv6_default
-USEMODULE += gcoap
-USEMODULE += od
-USEMODULE += netutils
-
-# add ztimer
-USEMODULE += ztimer
 
 USEMODULE += periph_gpio
 USEMODULE += periph_gpio_irq

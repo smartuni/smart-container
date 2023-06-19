@@ -8,8 +8,8 @@
 #include <string.h>
 #include "mutex.h"
 
-#define GPS_SEND_INTERVAL_SEC 10
-#define GPS_POLL_INTERVAL_SEC 1
+#define GPS_SEND_INTERVAL_SEC 300
+#define GPS_POLL_INTERVAL_SEC 5
 
 extern bool gpsDataValid;
 
