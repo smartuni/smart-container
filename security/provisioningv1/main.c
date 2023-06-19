@@ -24,6 +24,8 @@ typedef struct {
     uint8_t lorawan_app_eui[16];
     uint8_t lorawan_app_key[32];
     uint8_t sec_save_aes_key[16]; //128-bit AES key for sec_save
+    uint8_t prev_dtls_psk_aes_128_keys[9*16]; // keys from previous 9 devices
+    uint8_t prev_sec_save_aes_keys[9*16];     // keys from previous 9 devices
 } provisioning_data_t;
 
 provisioning_data_t provision;
