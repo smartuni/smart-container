@@ -60,7 +60,7 @@ size_t discover_concentrator(void){
         }
         while(!found_concentrator && !coap_response_ok) {
             // has to be changed, quick and dirty at the moment
-            xtimer_msleep(100);
+            ztimer_sleep(100);
         }
         coap_response_ok = false;
 
