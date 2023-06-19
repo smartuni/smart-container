@@ -57,13 +57,24 @@ const RecentOrders = () => {
         setIsChecked(!IsChecked);
     }
 
-    const [message, setMessage] = useState('')
-    const handleChange = (event) => {
-        setMessage(event.target.value)
+    const [messageLoc, setMessageLoc] = useState('')
+    const handleChangeLoc = (event) => {
+        setMessageLoc(event.target.value)
     }
-    const [updated, setUpdated] = useState(message)
-    const handleClick = () => {
-        setUpdated(message)
+
+
+    const [updated, setUpdated] = useState(messageLoc)
+    const [messageID, setMessageID] = useState('')
+    const handleChangeID = (event) => {
+        setMessageID(event.target.value)
+    }
+    const [updatedID, setUpdatedID] = useState(messageID)
+    const handleClickLoc = () => {
+        setUpdated(messageLoc)
+    }
+
+    const handleClickID = () => {
+        setUpdatedID(messageID)
     }
 
     const test = currentContainer
@@ -86,34 +97,51 @@ const RecentOrders = () => {
         }
     }
 
-    function handleSortByLocation(updated) {
-        // newList = list.filter((item) => item.start != updated && item.dest != updated);
-        newList = containers
-        // if (newList.length === 0) {
-        //     return containers
-        // } else {
-        //     for (const ele of containers) {
-        //         if (ele.start != updated && ele.dest != updated) {
-        //             newList.pop(ele)
-        //         }
-        //     }
-        // }
+    // function handleSortByLocation(updated) {
+    //     // newList = list.filter((item) => item.start != updated && item.dest != updated);
+    //     newList = containers
+    //     // if (newList.length === 0) {
+    //     //     return containers
+    //     // } else {
+    //     //     for (const ele of containers) {
+    //     //         if (ele.start != updated && ele.dest != updated) {
+    //     //             newList.pop(ele)
+    //     //         }
+    //     //     }
+    //     // }
 
 
-        return newList
-    }
+    //     return newList
+    // }
 
     const renderAuthButton = () => {
 
-        if (updated === "") {
+        if (updated === "" && updatedID === "") {
             return containers
-        } else {
+        } else if (updated != "" && updatedID === "") {
 
-            var tempList = list.filter((item) => item.start == updated || item.dest == updated);
+            var tempList = list.filter((item) => item.start == updated
+                || item.dest.includes(updated)
+                || item.content.includes(updated))
+            // || item.id === updated)
             return tempList
+
+        } else if (updated === "" && updatedID != "") {
+            return list.filter((item) => item.id == updatedID)
+
+        } else {
+            console.log("else reached")
+            var tempList2 = list.filter((item) => item.start == updated
+                && item.id === updatedID
+                || item.dest.includes(updated)
+                && item.id === updatedID
+                || item.content.includes(updated)
+                && item.id === updatedID)
+            return tempList2
 
         }
     }
+
 
     function getProblem(con) {
         var con = currentContainer;
@@ -130,19 +158,19 @@ const RecentOrders = () => {
         <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold'>Container List</h1>
             <div className='items-center'>
-                <div className='grid grid-cols-4"'>
-
-                    <input type='checkbox' className="h-8 w-8" placeholder="Sort By Error" id="checkbox" checked={IsChecked} onClick={() => {
+                <div className='grid grid-rows-2"'>
+                    <span className='col-span-4'>sort by error</span>
+                    <input type='checkbox' className="h-6 w-6 ml-6 col-span-2" placeholder="Sort By Error" checked={IsChecked} onClick={() => {
                         updateChecked(),
                             console.log(IsChecked),
                             testArray = testfunc()
                     }}
                     />
-                    <div class="relative text-gray-600 focus-within:text-gray-400">
+                    <div class="relative text-gray-600 focus-within:text-gray-400 p-4">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                             <button
                                 type="submit"
-                                class=" focus:outline-none focus:shadow-outline">
+                                class=" focus:outline-none focus:shadow-outline p-4">
                                 <svg
                                     fill="none"
                                     stroke="currentColor"
@@ -157,11 +185,11 @@ const RecentOrders = () => {
                         </span>
                         <input
                             type="search"
-                            name="q" class="py-2 text-sm text-white bg-malibu-300 rounded-md pl-10 focus:outline-none focus:bg-gray-200 focus:text-gray-900"
-                            placeholder="Search Start/Dest..."
+                            name="q" class="py-2 text-sm text-black bg-malibu-300 rounded-md pl-10 focus:outline-none focus:bg-gray-200 focus:text-gray-900 w-full h-full"
+                            placeholder="Search Start/Dest & content"
                             autocomplete="off"
-                            onChange={handleChange}
-                            value={message} />
+                            onChange={handleChangeLoc}
+                            value={messageLoc} />
                     </div>
                     {/* <div>
                         <span class="flex items-center pl-2">
@@ -181,11 +209,11 @@ const RecentOrders = () => {
                     </div> */}
 
 
-                    <div class="relative text-gray-600 focus-within:text-gray-400">
+                    <div class="relative text-gray-600 focus-within:text-gray-400 p-4">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                             <button
                                 type="submit"
-                                class="focus:outline-none focus:shadow-outline">
+                                class=" focus:outline-none focus:shadow-outline p-4">
                                 <svg
                                     fill="none"
                                     stroke="currentColor"
@@ -200,19 +228,20 @@ const RecentOrders = () => {
                         </span>
                         <input
                             type="search"
-                            name="q" class="py-2 text-sm text-white bg-malibu-300 rounded-md pl-10 focus:outline-none focus:bg-gray-200 focus:text-gray-900"
-                            placeholder="Search IDs"
+                            name="q" class="py-2 text-sm text-black bg-malibu-300 rounded-md pl-10 focus:outline-none focus:bg-gray-200 focus:text-gray-900 w-full h-full"
+                            placeholder="Search by ID..."
                             autocomplete="off"
-                            onChange={handleChange}
-                            value={message} />
+                            onChange={handleChangeID}
+                            value={messageID} />
                     </div>
-                    <Button className='col-span-4 mt-6' bordered color="primary" auto type='submit'
+                    <Button className='col-span-2 col-start-2 mt-6' bordered color="primary" auto type='submit'
                         onPress={() => {
-                            handleClick()
-                            handleSortByLocation(updated)
+                            handleClickLoc()
+                            handleClickID()
+                            // handleSortByLocation(updatedID)
                             //console.log(updated)
                             //console.log(typeof updated)
-                        }}>{updated}</Button>
+                        }}>Refresh</Button>
                 </div>
             </div>
 
@@ -241,17 +270,20 @@ const RecentOrders = () => {
                             // layout="fill", layout="intrinsic" 
                             />
                         </div>
-                        <div className='pl-4'>
-                            <p className='text-gray-800 font-bold'>Container id: {con.id}</p>
-                            <span className='text-gray-500 text-sm'>{con.start}--- </span>
-                            <span className='text-gray-500 text-sm'>{con.dest}</span>
-                        </div>
-                        <div className='items-center'>
-                            <p className={'text-lg font-bold mx-auto justify-between px-10 pt-4' + (isProblem(con) ? 'hidden' : 'flex')}>
-                                {getProblem(con)}
-                            </p>
-                        </div>
+                        <div className='p-2'>
 
+
+                            <div className=''>
+                                <p className='text-gray-800 font-bold'>Container id: {con.id}</p>
+                                <span className='text-gray-500 text-sm'>{con.start}--- </span>
+                                <span className='text-gray-500 text-sm'>{con.dest}</span>
+                            </div>
+
+                            <div className='text-gray-500 text-sm'>
+                                {con.content}
+                            </div>
+
+                        </div>
                     </li>
 
 
