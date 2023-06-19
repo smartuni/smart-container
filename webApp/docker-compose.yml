@@ -12,8 +12,21 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
 
-  web:
-    build: .
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8000
+
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfile_backend
     ports:
       - "8000:8000"
       - "1883:1883"
