@@ -65,6 +65,8 @@ endif
 
 #possibly useless includes
 
+USEMODULE += periph_gpio
+
 # add ICMPv6 support (ping)
 USEMODULE += gnrc_icmpv6_echo
 

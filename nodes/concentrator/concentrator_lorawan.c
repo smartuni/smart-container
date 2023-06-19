@@ -18,7 +18,7 @@ static uint8_t counter;                                                         
 char deveui_str[] = "70B3D57ED005D96E";
 char appeui_str[] = "848A86E1F3DAD4C8";
 char appkey_str[] = "E336278BE70BFF784DD752DF18231D9B"; /* Button callback */
-static void button_callback(void *arg)
+void button_callback(void* arg)
 {
     (void)arg; /* Not used */
     puts("Button pressed");

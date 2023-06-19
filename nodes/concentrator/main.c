@@ -12,6 +12,7 @@
 #include "net/gcoap.h"
 #include "shell.h"
 
+#include "periph/gpio.h"
 #include "gcoap_example.h"
 #include "concentrator_lorawan.h"
 
@@ -37,12 +38,13 @@ int main(void)
         puts("[FAILED] init BTN0!");
         return 1;
     } /* Try to get a LoRaWAN interface */
+    gnrc_netif_t* lorawan_netif = NULL;
     if (!(lorawan_netif = get_lorawan_netif()))
     {
         puts("Couldn't find a LoRaWAN interface");
         return 1;
     }
-    _activate(lorawan_netif);
+    activate(lorawan_netif);
     sendData(2);
 
     /* start shell */
