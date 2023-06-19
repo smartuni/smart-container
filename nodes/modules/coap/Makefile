@@ -23,3 +23,5 @@ USEMODULE += od
 USEMODULE += fmt
 
 USEMODULE += netutils
+
+USEMODULE += ztimer_msec

@@ -22,7 +22,7 @@ RIOTBASE ?= $(CURDIR)/../../RIOT
 BOARD ?= feather-nrf52840
 
 USEMODULE += fmt
-USEMODULE += xtimer
+USEMODULE += ztimer_sec
 USEMODULE += netdev_default
 USEMODULE += auto_init_gnrc_netif
 USEMODULE += gnrc_ipv6_default
