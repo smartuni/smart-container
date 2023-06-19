@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from "next/router"
 import { Button } from "@nextui-org/react"
-
+import { useRouter } from "next/router"
 
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
@@ -89,6 +89,17 @@ const RecentOrders = ({ containers }) => {
         });
     }
 
+    const router = useRouter()
+
+    const {
+        query: { containers_data },
+    } = router
+
+    const props = {
+        containers_data
+    };
+
+    console.log(typeof containers_data)
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
             return newList.sort(problemSort)
@@ -139,6 +150,9 @@ const RecentOrders = ({ containers }) => {
         return error_message
     }
     var testArray;
+
+
+
     return (
         <div className='w-full relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold'>Container List</h1>

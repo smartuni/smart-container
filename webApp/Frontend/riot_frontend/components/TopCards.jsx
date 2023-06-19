@@ -52,9 +52,9 @@ const TopCards = () => {
     return error
   }
   var isTrueSet = (props.error === 'false')
-  // Current TODO: props.error is not yet a useable boolean 
-  console.log(props.error)
-  console.log(isTrueSet)
+
+  // console.log(props.error)
+  // console.log(isTrueSet)
   // console.log(isProblem(containers[parseInt(props.test, 10) - 1]))
 
   return (
