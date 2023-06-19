@@ -40,7 +40,7 @@ static const coap_resource_t _resources[] = {
 
 const uint8_t resource_count = sizeof(_resources) / sizeof(coap_resource_t);
 
-static msg_t msgs[resource_count];
+// static msg_t msgs[resource_count];
 
 /* a gcoap listener is a collection of resources. Additionally we can specify
  * custom functions to:
@@ -114,10 +114,10 @@ static ssize_t _temperature_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, c
         printf("Temperature: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
 
-    msgs[4].content.value = 4;
-    msgs[4].sender_pid = thread_getpid();
-    msgs[4].type = MESSAGE_TYPE_HEARTBEAT;
-    ztimer_set_msg(ZTIMER_SEC, NULL, TIMING_IN_MINUTES * 60, &msgs[4], main_pid);
+    // msgs[4].content.value = 4;
+    // msgs[4].sender_pid = thread_getpid();
+    // msgs[4].type = MESSAGE_TYPE_HEARTBEAT;
+    // ztimer_set_msg(ZTIMER_SEC, NULL, TIMING_IN_MINUTES * 60, &msgs[4], main_pid);
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }
 
