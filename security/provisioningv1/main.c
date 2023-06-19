@@ -6,14 +6,16 @@
 #include "net/ieee802154/submac.h"
 #include "periph/uart.h"
 #include "periph/flashpage.h"
-#include "log.h"
+//#include "log.h"
 #include "periph/pm.h" 
+#include "mtd_flashpage.h"
 #include "net/gnrc.h"
 #include "net/gnrc/netif.h"
 
 #define FLASH_KEY_PAGE 240
 #define UART_DEV0 UART_DEV(0)
 #define UART_BUFSIZE  (128U)
+#define MTD_NUM_OF_PAGES 1 
 
 typedef struct {
     uint8_t device_id; // 8-bit device id [0, n]
@@ -34,38 +36,31 @@ void panic() {
     while (1) {}
 }
 
-void check_provisioning() {
-    uint8_t* key_ptr = (uint8_t*)flashpage_addr(FLASH_KEY_PAGE);
-    uint8_t* end_ptr = key_ptr + sizeof(provision);
-    uint8_t* provision_ptr = (uint8_t*)&provision;
-
-    for (; key_ptr < end_ptr; key_ptr++, provision_ptr++) {
-        if (*provision_ptr == 0xFF) continue;
-        if (*key_ptr != *provision_ptr) {
-            LOG_ERROR("Device not provisioned. Please provision the device first!\n");
-            pm_reboot();  //panic()
-        }
-    }
-}
-
 void provision_device() {
-    flashpage_erase(FLASH_KEY_PAGE);
+    mtd_flashpage_write(FLASH_KEY_PAGE, &provision);
+    printf("Provisioning done successfully!\n");
+    printf("ACK\n");
+}
+/*
+void provision_device() {
+    mtd_dev->driver->erase_sector(mtd_dev, FLASH_KEY_PAGE, 1);
     
-    if(flashpage_write_raw(FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
-        LOG_ERROR("Failed to write to flash page!\n");
+    if(mtd_dev->driver->write_page(mtd_dev, FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
+        printf("Failed to write to flash page!\n");
         pm_reboot();  
     }
 
     provisioning_data_t verify_provision;
-    memcpy(&verify_provision, (uint8_t*)flashpage_addr(FLASH_KEY_PAGE), sizeof(provision));
+    memcpy(&verify_provision, (uint8_t*)mtd_dev->driver->read_page(mtd_dev, FLASH_KEY_PAGE, NULL, 0), sizeof(provision));
     if (memcmp(&verify_provision, &provision, sizeof(provision)) != 0) {
-        LOG_ERROR("Provisioning failed!\n");
+        printf("Provisioning failed!\n");
         pm_reboot();  
     }
 
-    LOG_INFO("Provisioning done successfully!\n");
+    printf("Provisioning done successfully!\n");
     printf("ACK\n"); 
-}
+}*/
+
 
 void store_ipv6_address(kernel_pid_t pid) {
     gnrc_netif_t* netif = gnrc_netif_get_by_pid(pid);
@@ -80,10 +75,9 @@ void store_ipv6_address(kernel_pid_t pid) {
         return;
     }
 
-    // Copy the generated IPv6 address to the provisioning data 
-    memcpy(provision.ipv6_addr_concentrator, &ipv6_addr, sizeof(ipv6_addr));
+    // Copy the generated IPv6 address to the provisioning data
+   memcpy(provision.ipv6_addr_concentrator, &ipv6_addr, sizeof(ipv6_addr));
 }
-
 static void rx_cb(void *arg, uint8_t data)
 {
     static uint8_t pos = 0;
@@ -107,7 +101,7 @@ int main(void)
     uint8_t rx_mem[sizeof(provisioning_data_t)];
     
     if (uart_init(UART_DEV0, 115200, rx_cb, rx_mem) < 0) {
-        LOG_ERROR("Cannot initialize UART\n");
+        printf("Cannot initialize UART\n");
         return 1;
     }
     return 0;
