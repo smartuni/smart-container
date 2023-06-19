@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from "next/router"
 import { Button } from "@nextui-org/react"
-import { containers } from '../data/container.js'
+
 
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
