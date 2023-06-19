@@ -8,8 +8,8 @@ export const useContainers = () => {
       try {
         // fetch sensors and containers from backend then combine sensors per containers
 
-        const sensorsRes = await axiosInstance.get('/api/sensor_list/')
-        const containersRes = await axiosInstance.get('/api/container_list')
+        const sensorsRes = await axiosInstance.get('http://178.128.192.215:80/api/sensor/')
+        const containersRes = fetch('http://178.128.192.215:80/api/container/')
 
         const sensorsData = sensorsRes.data
 
