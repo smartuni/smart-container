@@ -15,11 +15,11 @@ typedef struct {
 } provisioning_data_t;
 
 provisioning_data_t provision;
-
+sizeof
 void provision_device() {
-    flashpage_erase(FLASH_KEY_PAGE);
+    flashpage_erase(FLASH_KEY_PAGE);s
 
-    if(flashpage_write_raw(FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
+    if(flashpage_write(FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
         LOG_ERROR("Failed to write to flash page!\n");
         pm_reboot();
     }
@@ -52,6 +52,8 @@ static void rx_cb(void *arg, uint8_t data)
 
 int main(void)
 {
+    (void) getchar();
+
     uint8_t rx_mem[sizeof(provisioning_data_t)];
 
     if (uart_init(UART_DEV0, 115200, rx_cb, rx_mem) < 0) {

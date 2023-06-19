@@ -2,11 +2,13 @@
 APPLICATION = provisioning
 
 # If no BOARD is found in the environment, use this default:
-PORT=/dev/ttyS6
+PORT=/dev/tty.usbmodem143101
 BOARD ?= feather-nrf52840
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
+
+CFLAGS += -I.
 
 # Import necessary modules
 USEMODULE += xtimer
