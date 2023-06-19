@@ -15,14 +15,13 @@ const Header = () => {
 
     const signOut = () => {
         // Remove the user token from localStorage
-        localStorage.removeItem("user");
+        localStorage.removeItem("localuser");
         // Redirect to the desired page
         router.push("/");
     };
 
     return (
         <div className='flex justify-between px-4 pt-4'>
-            <h2>Dashboard</h2>
             <div className="ml-auto flex gap-2">
                 {user ? (
                 <p className="text-sky-600">Welcome, {user.firstName}!</p>
