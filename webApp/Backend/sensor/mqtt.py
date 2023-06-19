@@ -3,8 +3,10 @@ import datetime
 import paho.mqtt.client as mqtt
 import json
 import base64
-from .models import Container, owner
-from django.db import IntegrityError, ValidationError
+from .models import Container, SensorData
+from django.db import IntegrityError
+from django.core.exceptions import ValidationError
+
 
 
 # Confiugure as needed
@@ -29,7 +31,7 @@ def postToDatabase(sensorType, sensorData, time):
     The sensor_time field is a date-time field that stores the time the data was recorded.
     The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
     """
-    owner_instance = Container.objects.get(container_id=owner)
+    owner_instance = Container.objects.get(container_id=SensorData.owner)
     if time is None or sensorData is None or sensorType is None or owner_instance is None:
         raise (ValueError("One or more parameters are None"))
     try:
