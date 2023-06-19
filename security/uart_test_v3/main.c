@@ -49,7 +49,7 @@ static void rx_cb(void *arg, uint8_t data)
         pos++;
     }
 }
-
+//tests
 int main(void)
 {
     (void) getchar();
