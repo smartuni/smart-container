@@ -8,6 +8,7 @@ import json
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 API_BASE_URL = 'https://eu1.thethings.network:8094' 
 APP_ID = 'topsecret'  #  TTN application ID
 ACCESS_KEY = 'xxx'  

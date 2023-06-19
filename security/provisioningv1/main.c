@@ -31,10 +31,10 @@ typedef struct {
 } provisioning_data_t;
 
 provisioning_data_t provision;
-
+/*
 void panic() {
     while (1) {}
-}
+}*/
 
 void provision_device() {
     mtd_flashpage_write(FLASH_KEY_PAGE, &provision);
