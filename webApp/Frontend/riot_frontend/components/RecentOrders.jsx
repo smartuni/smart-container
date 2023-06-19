@@ -89,6 +89,7 @@ const RecentOrders = ({ containers }) => {
         });
     }
 
+
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
             return newList.sort(problemSort)
@@ -128,17 +129,7 @@ const RecentOrders = ({ containers }) => {
     }
 
 
-    function getProblem(con) {
-        var con = currentContainer;
-        var error_message = ""
-        // if (con.doorStatus == "open") {
-        //     error_message = "Door is open!"
-        // } else if (con.crashed == "True") {
-        //     error_message = "Ship has Crashed!"
-        // }
-        return error_message
-    }
-    var testArray;
+
     return (
         <div className='w-full relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold'>Container List</h1>

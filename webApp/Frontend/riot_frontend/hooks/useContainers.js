@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-// 178.128.192.215:5342
+import { axiosInstance } from "@/utils/axiosInstance"
 export const useContainers = () => {
   const [containers, setContainers] = useState([])
 
@@ -8,8 +8,8 @@ export const useContainers = () => {
       try {
         // fetch sensors and containers from backend then combine sensors per containers
 
-        const sensorsRes = await axiosInstance.get('http://178.128.192.215:80/api/sensor/')
-        const containersRes = await axiosInstance.get('http://178.128.192.215:80/api/container/')
+        const sensorsRes = await axiosInstance.get('/api/sensor_list/')
+        const containersRes = await axiosInstance.get('/api/container_list')
 
         const sensorsData = sensorsRes.data
 
