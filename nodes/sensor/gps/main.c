@@ -27,7 +27,7 @@
 #include "msg.h"
 #include "thread_config.h"
 #include "board.h"
-#include "xtimer.h"
+#include "ztimer.h"
 #include "gps.h"
 #include "coap.h"
 
@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
     coap_path = "/gps";
     discover_concentrator();
 
-    /* initialize ringbuffers */
+    // initialize ringbuffers
     for (unsigned i = 0; i < UART_NUMOF; i++) {
         ringbuffer_init(&(ctx[i].rx_buf), ctx[i].rx_mem, UART_BUFSIZE);
     }
@@ -177,21 +177,20 @@ int main(int argc, char **argv) {
     uart_t uart_gps = UART_DEV(GPS_UART_DEV);
     init_gps_module(uart_gps);
 
-
-    /* start the printer thread */
+    // start the printer thread
     printer_pid = thread_create(printer_stack, sizeof(printer_stack), PRINTER_PRIO, 0, printer, NULL, "printer");
 
     while(true) {
         // While GPS data not available, check every second if valid
         printf("Waiting for valid GPS data...\n");
         while(!gpsDataValid) {
-            xtimer_sleep(GPS_POLL_INTERVAL_SEC);
+            ztimer_sleep(ZTIMER_SEC, GPS_POLL_INTERVAL_SEC);
         }
         // Send to Sleep mode if valid
         send_cmd(uart_gps, "$PMTK161,0*28");
         printf("GPS module was sent to sleep mode\n");
-        // Wait for 10 sec. and then wake up
-        xtimer_sleep(GPS_SEND_INTERVAL_SEC);
+        // Wait for x sec. and then wake up
+        ztimer_sleep(ZTIMER_SEC, GPS_SEND_INTERVAL_SEC);
         gpsDataValid = false;
         send_cmd(uart_gps, "$PMTK161,0*28");
         printf("GPS module woke up from sleep mode\n");
