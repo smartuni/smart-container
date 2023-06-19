@@ -4,7 +4,7 @@ APPLICATION = concentrator
 # This is the target board for the Concentrator
 BOARD ?= nrf52840dk
 # enable this for testing on the small feather board
-# BOARD = feather-nrf52840
+BOARD = feather-nrf52840
 
 # This USEMODULE should be used if LORAWAN Board is connected to nrf52840dk board!!
 ifeq ($(BOARD),nrf52840dk)
