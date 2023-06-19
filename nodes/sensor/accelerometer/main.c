@@ -5,6 +5,7 @@
 #include "lis2dh12_registers.h"
 #include "periph/gpio.h"
 #include "ztimer.h"
+#include "coap.h"
 
 #define ACCEL_THRESHOLD     10000   // Acceleration threshold in mg
 #define THRESHOLD_TIME_US   0   // Threshold time until interrupt occurs
@@ -63,13 +64,17 @@ int main(void){
     lis2dh12_t sensorDev; // Device descriptor
     lis2dh12_params_t sensorParams;
     sensorParams.i2c = dev;
+    char answerStream[] = "Acceleration exceeded 16G."
 
     // Initialize sensor
     initDevice(&sensorDev, &sensorParams);
 
+    discover_concentrator();
+
     while(1){
         // Wait for interrupt, function uses mutex
         if(lis2dh12_wait_event(&sensorDev, LIS2DH12_INT1, false) < 0){
+            send_to_concentrator(answerStream);
             printf("Interrupt error\n");
         }
         puts("Interrupt occured.");
