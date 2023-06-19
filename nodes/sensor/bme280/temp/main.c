@@ -36,6 +36,7 @@ int main(void)
         printf("Found temperature device: %s\n", temp_sensor->name);
     }
 
+    coap_path = "/temperature";
     discover_concentrator();
 
     while(1)
@@ -48,10 +49,8 @@ int main(void)
         }
         else{
             convertLength = fmt_s16_dfp(valueString, temperature.val[0], temperature.scale);
-            if (convertLength + 2 < STRINGLENGTH){
-                valueString[convertLength] = '°';
-                valueString[convertLength + 1] = 'C';
-                valueString[convertLength + 2] = '\0';
+            if (convertLength < STRINGLENGTH){
+                valueString[convertLength] = '\0';
                 send_to_concentrator(valueString);
                 //puts(valueString);
             }

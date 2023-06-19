@@ -36,6 +36,7 @@ int main(void)
         printf("Found sensor device: %s\n", humid_sensor->name);
     }
 
+    coap_path = "/humidity";
     discover_concentrator();
 
     while(1)
@@ -48,9 +49,8 @@ int main(void)
         }
         else{
             convertLength = fmt_s16_dfp(valueString, humidity.val[0], humidity.scale);
-            if (convertLength + 1 < STRINGLENGTH){
-                valueString[convertLength] = '%';
-                valueString[convertLength + 1] = '\0';
+            if (convertLength < STRINGLENGTH){
+                valueString[convertLength] = '\0';
                 send_to_concentrator(valueString);
                 //puts(valueString);
             }

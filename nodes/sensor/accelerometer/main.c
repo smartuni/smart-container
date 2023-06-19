@@ -69,6 +69,7 @@ int main(void){
     // Initialize sensor
     initDevice(&sensorDev, &sensorParams);
 
+    coap_path = "/acceleration";
     discover_concentrator();
 
     while(1){

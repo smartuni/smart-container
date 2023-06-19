@@ -12,19 +12,20 @@
 #include "ztimer.h"
 #include "coap.h"
 
-gpio_t waterleak = GPIO_PIN(1, 8);    // Feather Pin D5
+gpio_t reedSwitch = GPIO_PIN(PORT_E, 4); 
 
-void waterleak_callback (void *arg){
-    (void) arg; /* the argument is not used*/
-    send_to_concentrator("Water detected.");
+void reedswitch_callback (void *arg)
+{
+    (void) arg; /* the argument is not used */
+    send_to_concentrator("Door opened");
 }
 
 
 int main(void)
 {
-    coap_path = "/waterleak";
+    coap_path = "/door";
     discover_concentrator();
-    gpio_init_int(waterleak, GPIO_IN, GPIO_FALLING, waterleak_callback, NULL);
+    gpio_init_int(reedSwitch, GPIO_IN_PU, GPIO_RISING, reedswitch_callback, NULL);
     puts("GPIOs example.");
 
     return 0;
