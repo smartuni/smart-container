@@ -1,8 +1,10 @@
 import datetime
 import uuid
 from django.urls import reverse
+from rest_framework.routers import DefaultRouter
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, URLPatternsTestCase
+from django.urls import include, path
 
 from .models import Container, SensorData, User
 from sensor.serializer import ContainerSerializer, SensorSerializer, UserSerializer
@@ -10,13 +12,21 @@ from sensor.serializer import ContainerSerializer, SensorSerializer, UserSeriali
 test_id = uuid.uuid4()
 test_date = datetime.datetime.now()
 test_container = Container.objects.create(container_id=uuid.uuid4(), container_start="Berlin", container_destination="Hamburg", container_content="Bananas", container_door_closed=True, container_time=test_date)
+router = DefaultRouter()
 
-class ContainerListTests(APITestCase):
+class ContainerViewSetTests(APITestCase, URLPatternsTestCase):
+    urlpatterns = [
+        path('', include(router.urls)),
+    ]
+
+    def setUp(self):
+        self.container = Container.objects.create(container_id=uuid.uuid4(), container_start="Berlin", container_destination="Hamburg", container_content="Bananas", container_door_closed=True, container_time=datetime.datetime.now())
+
     def test_list_containers(self):
         """
         Ensure we can list all containers
         """
-        url = reverse('container_list')
+        url = reverse('container-list')
         response = self.client.get(url)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -24,20 +34,61 @@ class ContainerListTests(APITestCase):
         serializer = ContainerSerializer(containers, many=True)
         self.assertEqual(data, serializer.data)
 
-
-
-class SensorListTests(APITestCase):
-    def test_list_sensors(self):
+    def test_retrieve_container(self):
         """
-        Ensure we can list all sensor data
+        Ensure we can retrieve a single container
         """
-        url = reverse('sensor_list')
+        url = reverse('container-detail', args=[self.container.container_id])
         response = self.client.get(url)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        sensors = SensorData.objects.all()
-        serializer = SensorSerializer(sensors, many=True)
+        serializer = ContainerSerializer(self.container)
         self.assertEqual(data, serializer.data)
+
+    def test_create_container(self):
+        """
+        Ensure we can create a new container
+        """
+        url = reverse('container-list')
+        data = {
+            'container_id': uuid.uuid4(),
+            'container_start': 'Berlin',
+            'container_destination': 'Hamburg',
+            'container_content': 'Apples',
+            'container_door_closed': True,
+            'container_time': datetime.datetime.now()
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        container = Container.objects.get(container_id=data['container_id'])
+        serializer = ContainerSerializer(container)
+        self.assertEqual(response.json(), serializer.data)
+
+    def test_update_container(self):
+        """
+        Ensure we can update an existing container
+        """
+        url = reverse('container-detail', args=[self.container.id])
+        data = {
+            'container_content': 'Oranges',
+            'container_door_closed': False
+        }
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.container.refresh_from_db()
+        self.assertEqual(self.container.container_content, data['container_content'])
+        self.assertEqual(self.container.container_door_closed, data['container_door_closed'])
+
+    def test_delete_container(self):
+        """
+        Ensure we can delete an existing container
+        """
+        url = reverse('container-detail', args=[self.container.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Container.objects.filter(id=self.container.id).exists())
+
+
 
 
 class SensorDetailTests(APITestCase):

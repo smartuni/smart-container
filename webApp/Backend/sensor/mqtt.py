@@ -1,9 +1,16 @@
 import uuid
 import datetime
+from django.forms import ValidationError
 import paho.mqtt.client as mqtt
 import json
 import os
 import base64
+from django.db import IntegrityError
+from sensor.models import SensorData, Container
+from sensor.models import SensorData, Container
+
+
+
 
 # Confiugure as needed
 USERNAME="mqtest2@thingsnet"
@@ -18,33 +25,33 @@ TOPIC = f"v3/{USERNAME}/devices/+/up"
 TTN_MQTT_SERVER = "mobi35.inet.haw-hamburg.de"
 
 
-# def postToDatabase(time, data, dataType, owner):
-#     """
-#     The function then creates a new SensorData object using the SensorData.objects.create() method.
-#     The SensorData object has five fields: id, sensor_type, sensor_data, sensor_time, and owner.
-#     The id field is a UUID field that serves as the primary key for the table.
-#     The sensor_type field is a character field that stores the type of sensor. The sensor_data field is a character field that stores the data from the sensor.
-#     The sensor_time field is a date-time field that stores the time the data was recorded.
-#     The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
-#     """
-#     owner_instance = Container.objects.get(container_id=owner)
-#     if time is None or data is None or dataType is None or owner_instance is None:
-#         raise (ValueError("One or more parameters are None"))
-#     try:
-#         entry = SensorData.objects.create(
-#             id=uuid.uuid4(),
-#             sensor_type=dataType,
-#             sensor_data=data,
-#             sensor_time=time,
-#             owner=owner_instance,
-#         )
-#         entry.save()
-#     except ValueError as e:
-#         print(e)
-#     except IntegrityError as e:
-#         print(e)
-#     except ValidationError as e:
-#         print(e)
+def postToDatabase(time, data, dataType, owner):
+    """
+    The function then creates a new SensorData object using the SensorData.objects.create() method.
+    The SensorData object has five fields: id, sensor_type, sensor_data, sensor_time, and owner.
+    The id field is a UUID field that serves as the primary key for the table.
+    The sensor_type field is a character field that stores the type of sensor. The sensor_data field is a character field that stores the data from the sensor.
+    The sensor_time field is a date-time field that stores the time the data was recorded.
+    The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
+    """
+    owner_instance = Container.objects.get(container_id=owner)
+    if time is None or data is None or dataType is None or owner_instance is None:
+        raise (ValueError("One or more parameters are None"))
+    try:
+        entry = SensorData.objects.create(
+            id=uuid.uuid4(),
+            sensor_type=dataType,
+            sensor_data=data,
+            sensor_time=time,
+            owner=owner_instance,
+        )
+        entry.save()
+    except ValueError as e:
+        print(e)
+    except IntegrityError as e:
+        print(e)
+    except ValidationError as e:
+        print(e)
 
 
 # The callback for when the client receives a CONNACK response from the server.
