@@ -140,17 +140,18 @@ const RecentOrders = ({ containers }) => {
     }
     var testArray;
     return (
-        <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
+        <div className='w-full relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold'>Container List</h1>
-            <div className='items-center'>
-                <div className='grid grid-rows-2"'>
-                    <span className='col-span-4'>sort by error</span>
-                    <input type='checkbox' className="h-6 w-6 ml-6 col-span-2" placeholder="Sort By Error" checked={IsChecked} onClick={() => {
-                        updateChecked(),
-                            console.log(IsChecked),
-                            testArray = testfunc()
-                    }}
-                    />
+            <div className='items-center '>
+                <span className=''>sort by error</span>
+                <input type='checkbox' className="h-6 w-6 ml-2" placeholder="Sort By Error" checked={IsChecked} onClick={() => {
+                    updateChecked(),
+                        console.log(IsChecked),
+                        testArray = testfunc()
+                }}
+                />
+                <div className='grid grid-rows-2'>
+
                     <div class="relative text-gray-600 focus-within:text-gray-400 p-4">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                             <button
@@ -204,7 +205,7 @@ const RecentOrders = ({ containers }) => {
                             onChange={handleChangeID}
                             value={messageID} />
                     </div>
-                    <Button className='col-span-2 col-start-2 mt-6' bordered color="primary" auto type='submit'
+                    <Button className='col-span-2' bordered color="primary" auto type='submit'
                         onPress={() => {
                             handleClickLoc()
                             handleClickID()
