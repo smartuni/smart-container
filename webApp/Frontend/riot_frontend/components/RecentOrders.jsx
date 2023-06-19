@@ -97,22 +97,7 @@ const RecentOrders = () => {
         }
     }
 
-    // function handleSortByLocation(updated) {
-    //     // newList = list.filter((item) => item.start != updated && item.dest != updated);
-    //     newList = containers
-    //     // if (newList.length === 0) {
-    //     //     return containers
-    //     // } else {
-    //     //     for (const ele of containers) {
-    //     //         if (ele.start != updated && ele.dest != updated) {
-    //     //             newList.pop(ele)
-    //     //         }
-    //     //     }
-    //     // }
 
-
-    //     return newList
-    // }
 
     const renderAuthButton = () => {
 
@@ -191,22 +176,7 @@ const RecentOrders = () => {
                             onChange={handleChangeLoc}
                             value={messageLoc} />
                     </div>
-                    {/* <div>
-                        <span class="flex items-center pl-2">
-                            <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            </button>
-                        </span>
-                        <input
-                            type="search"
-                            name="q"
-                            class="py-2 text-sm text-white bg-gray-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
-                            placeholder="Search..."
-                            autocomplete="off"
-                            onChange={handleChange}
-                            value={message} />
-                        <Image src={myLogo} class="absolute mr-2 w-10" alt="Search Icon" />
-                    </div> */}
+
 
 
                     <div class="relative text-gray-600 focus-within:text-gray-400 p-4">
