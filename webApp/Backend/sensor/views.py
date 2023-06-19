@@ -17,15 +17,13 @@ from rest_framework.parsers import JSONParser
 from .models import SensorData, User
 from .serializer import SensorSerializer, SignInSerializer, UserSerializer
 
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-
 from .serializer import MyTokenObtainPairSerializer, RegisterSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.decorators import api_view
+
 # Create your views here.
 
+@csrf_exempt
 def test_connection(request):
     return HttpResponse("Connection successful")
 
@@ -35,6 +33,7 @@ class SensorViewset(viewsets.ModelViewSet):
     List all sensor data
     """
 
+    permission_classes = [IsAuthenticated]
     queryset = SensorData.objects.all()
     serializer_class = SensorSerializer
 
@@ -44,6 +43,7 @@ class UserViewset(viewsets.ModelViewSet):
     List all container data
     """
 
+    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -53,6 +53,7 @@ class ContainerViewset(viewsets.ModelViewSet):
     List all container data
     """
 
+    permission_classes = [IsAuthenticated]
     queryset = Container.objects.all()
     serializer_class = ContainerSerializer
 
@@ -63,6 +64,7 @@ class ContainerLocation(APIView):
     Retrieve container location
     """
 
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         """
         Return the latest GPS sensor data for a container
@@ -80,6 +82,7 @@ class SensorByType(APIView):
     Retrieve sensor data by type and/or container
     """
 
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         """
         Return the sensor data by type and/or container
@@ -100,6 +103,7 @@ class ContainerByContent(APIView):
     Retrieve container data by content
     """
 
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         """
         Return the container data by content
