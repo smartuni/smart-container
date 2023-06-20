@@ -20,9 +20,13 @@
 
 #include <stdio.h>
 #include "msg.h"
-
+#include "od.h"
 #include "net/gcoap.h"
 #include "shell.h"
+
+#define CREDMAN_CONFIG_CONCENTRATOR 0
+#include "credman_helper.h"
+
 
 #include "gcoap_example.h"
 
@@ -36,6 +40,16 @@ static const shell_command_t shell_commands[] = {
 
 int main(void)
 {
+    getchar(); // Wait till key is pressed, otherwise term on nrf52840 doesn't work
+
+    /* Checking provisioned key */
+    uint8_t psk_id[CREDMAN_FLASH_LEN_DEVICE_ID];
+    uint8_t psk_key[CREDMAN_FLASH_LEN_DTLS_PSK_AES_KEY];
+    read_psk(psk_id, psk_key);
+
+    od_hex_dump(psk_id, CREDMAN_FLASH_LEN_DEVICE_ID, OD_WIDTH_DEFAULT);
+    od_hex_dump(psk_key, CREDMAN_FLASH_LEN_DTLS_PSK_AES_KEY, OD_WIDTH_DEFAULT);
+
     /* for the thread running the shell */
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
     server_init();

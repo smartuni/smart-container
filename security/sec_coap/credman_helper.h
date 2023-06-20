@@ -1,10 +1,15 @@
 #ifndef CREDMAN_HELPER_H
 #define CREDMAN_HELPER_H
 
+#include "mtd.h"
+#include "mtd_flashpage.h"
+
 #define AES_KEY_SIZE 16
 
 /* Provisioning - Flash Page Number */
 #define CREDMAN_FLASH_PAGE_NUMBER 240
+#define CREDMAN_FLASH_PAGE_START_ADDR (uint32_t)((uintptr_t)flashpage_addr(CREDMAN_FLASH_PAGE_NUMBER))
+#define CREDMAN_ADDRESS(addr) ((uint32_t) (CREDMAN_FLASH_PAGE_START_ADDR + addr))
 
 /* Provisioning - Device ID */
 #define CREDMAN_FLASH_ADDRESS_DEVICE_ID 0x00
@@ -19,7 +24,7 @@
 #define CREDMAN_FLASH_LEN_PSK_KEY 16
 
 /* Provisioning - DTLS PSK AES128 Key*/
-#define CREDMAN_FLASH_ADDRESS_SEC_SAVE_AES_KEY 0x21
+#define CREDMAN_FLASH_ADDRESS_DTLS_PSK_AES_KEY 0x21
 #define CREDMAN_FLASH_LEN_DTLS_PSK_AES_KEY 16
 
 /************************************************/
@@ -45,7 +50,8 @@
 
 #endif /* End Concentrator-specific provisioning */
 
-int read_psk(uint8_t *psk_id, uint8_t *psk_key);
+int init_provisioning(mtd_dev_t *mtd_dev);
+int read_psk(mtd_dev_t *mtd_dev, uint8_t *psk_id, uint8_t *psk_key);
 
 #endif /* CREDMAN_HELPER_H */
 /** @} */
