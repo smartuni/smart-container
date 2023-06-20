@@ -63,8 +63,13 @@ def provision_device(device_id, ser):
             time.sleep(0.01)
 
         ack = ser.readline().decode().strip()
+        
     except serial.SerialException as e:
         logging.error(f"Serial communication error: {e}")
+    except sqlite3.Error as e:
+        logging.error(f"Database error: {e}")
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
 
     if ack != "ACK":
         logging.error(f"Device {device_id} provisioning failed. Retrying...")
@@ -79,7 +84,12 @@ with sqlite3.connect('provision.db') as conn:
         with serial.Serial('COM6', 115200, timeout=1) as ser:
             for device_id in range(1, 11):
                 provision_device(device_id, ser)
+                
     except serial.SerialException as e:
         logging.error(f"Serial communication error: {e}")
+    except sqlite3.Error as e:
+        logging.error(f"Database error: {e}")
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
 
     conn.commit()

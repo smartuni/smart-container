@@ -1,66 +1,57 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-#include "net/loramac.h"
-#include "semtech_loramac.h"
 #include "net/ieee802154/submac.h"
 #include "periph/uart.h"
-#include "periph/flashpage.h"
-//#include "log.h"
 #include "periph/pm.h" 
-#include "mtd_flashpage.h"
 #include "net/gnrc.h"
 #include "net/gnrc/netif.h"
+#include "mtd.h"
 
 #define FLASH_KEY_PAGE 240
 #define UART_DEV0 UART_DEV(0)
 #define UART_BUFSIZE  (128U)
-#define MTD_NUM_OF_PAGES 1 
+#define MTD_NUM_OF_PAGES 1
+#define UART_PID 1 // Added PID
+#define FLASHPAGE_SIZE 4096 
 
 typedef struct {
     uint8_t device_id; // 8-bit device id [0, n]
     uint8_t ieee802154_key[16]; 
     uint8_t ipv6_addr_concentrator[16]; 
     uint8_t dtls_psk_aes_128_key[16];
-    uint8_t lorawan_dev_eui[16];
-    uint8_t lorawan_app_eui[16];
-    uint8_t lorawan_app_key[32];
+    uint8_t lorawan_dev_eui[16];//Concentrator
+    uint8_t lorawan_app_eui[16];//Concentrator
+    uint8_t lorawan_app_key[32];//Concentrator
     uint8_t sec_save_aes_key[16]; //128-bit AES key for sec_save
-    uint8_t prev_dtls_psk_aes_128_keys[9*16]; // keys from previous 9 devices
-    uint8_t prev_sec_save_aes_keys[9*16];     // keys from previous 9 devices
 } provisioning_data_t;
 
 provisioning_data_t provision;
-/*
-void panic() {
-    while (1) {}
-}*/
+mtd_dev_t *mtd_dev = NULL;
+void check_provisioning() {
+    // calculate the start address of the page
+    uint32_t addr = FLASH_KEY_PAGE * FLASHPAGE_SIZE;
+    uint8_t buffer[sizeof(provisioning_data_t)];
+    mtd_read(mtd_dev, buffer, addr, sizeof(provisioning_data_t));
 
-void provision_device() {
-    mtd_flashpage_write(FLASH_KEY_PAGE, &provision);
-    printf("Provisioning done successfully!\n");
-    printf("ACK\n");
+    if (memcmp(buffer, &provision, sizeof(provisioning_data_t)) != 0) {
+        printf("Device not provisioned. Please provision the device first!\n");
+        pm_reboot();
+    }
 }
-/*
-void provision_device() {
-    mtd_dev->driver->erase_sector(mtd_dev, FLASH_KEY_PAGE, 1);
-    
-    if(mtd_dev->driver->write_page(mtd_dev, FLASH_KEY_PAGE, &provision, sizeof(provision)) < 0){
-        printf("Failed to write to flash page!\n");
-        pm_reboot();  
-    }
 
-    provisioning_data_t verify_provision;
-    memcpy(&verify_provision, (uint8_t*)mtd_dev->driver->read_page(mtd_dev, FLASH_KEY_PAGE, NULL, 0), sizeof(provision));
-    if (memcmp(&verify_provision, &provision, sizeof(provision)) != 0) {
-        printf("Provisioning failed!\n");
-        pm_reboot();  
-    }
+void provision_device() {
+    // calculate the start address of the page
+    uint32_t addr = FLASH_KEY_PAGE * FLASHPAGE_SIZE;
+
+    // erase the whole page
+    mtd_erase(mtd_dev, addr, FLASHPAGE_SIZE);
+    // write the provision data to the start of the page
+    mtd_write(mtd_dev, (uint8_t*)&provision, addr, sizeof(provisioning_data_t));
 
     printf("Provisioning done successfully!\n");
     printf("ACK\n"); 
-}*/
-
+}
 
 void store_ipv6_address(kernel_pid_t pid) {
     gnrc_netif_t* netif = gnrc_netif_get_by_pid(pid);
@@ -95,7 +86,7 @@ static void rx_cb(void *arg, uint8_t data)
 
 int main(void)
 {
-    store_ipv6_address(/* PID */);
+    store_ipv6_address(UART_PID);
     check_provisioning();
 
     uint8_t rx_mem[sizeof(provisioning_data_t)];
