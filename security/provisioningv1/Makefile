@@ -8,14 +8,13 @@ BOARD ?= feather-nrf52840
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
+
 # Import necessary modules
 USEMODULE += xtimer
 USEMODULE += od
-USEMODULE += semtech_loramac_rx
 USEMODULE += periph_uart
 USEMODULE += periph_flashpage
 USEMODULE += shell_cmds_default  # Provides reboot command
-USEMODULE += log  # Include the log module
 USEMODULE += fmt
 USEMODULE += fmt_hexdump
 USEMODULE += periph_pm
