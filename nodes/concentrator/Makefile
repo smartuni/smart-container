@@ -41,12 +41,6 @@ USEMODULE += gnrc_lorawan
 
 CFLAGS += -DCONFIG_GNRC_NETIF_LORAWAN_NETIF_HDR
 
-# We can reduce the size of the packet buffer for LoRaWAN, since there's no IP
-# support. This will reduce RAM consumption.
-# Set GNRC_PKTBUF_SIZE via CFLAGS if not being set via Kconfig.
-
-CFLAGS += -DCONFIG_GNRC_PKTBUF_SIZE=1024
-
 #
 # Set region
 CFLAGS += -DCONFIG_LORAMAC_REGION_EU_868
