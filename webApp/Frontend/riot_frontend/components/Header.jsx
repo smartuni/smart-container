@@ -28,10 +28,12 @@ const Header = () => {
                 ) : (
                 <p className="text-sky-600">Welcome, user!</p>
                 )}
-                <button
-                className="text-blue-500 hover:underline ml-1"
-                onClick={signOut}> Sign Out
-                </button>
+                {user ? (
+                <button className="text-blue-500 hover:underline ml-1" onClick={signOut}> Sign Out</button>
+                ) : (
+                <a className="text-blue-500 hover:underline ml-1" href="/signin_page">Sign in</a>
+                )}
+                
             </div>       
         </div>
     )
