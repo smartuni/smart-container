@@ -2,9 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
 const TempChart = ({ data }) => {
+    const chartContainerRef = useRef(null);
+    const chartInstanceRef = useRef(null);
+
     useEffect(() => {
         const chartCanvas = document.getElementById('temp-chart');
-        const chartInstance = new Chart(chartCanvas, {
+        const chartContainer = chartContainerRef.current;
+
+        if (!chartCanvas || !chartContainer) {
+            return;
+        }
+
+        chartInstanceRef.current = new Chart(chartCanvas, {
             type: 'line',
             data: {
                 labels: data.map((d) => d.time),
@@ -37,26 +46,41 @@ const TempChart = ({ data }) => {
                 },
                 plugins: {
                     legend: {
-                      labels: {
-                         filter: (l) => (l.text !== 'Temperature in °C')
-                      }
-                    }
-                }
+                        labels: {
+                            filter: (l) => l.text !== 'Temperature in °C',
+                        },
+                    },
+                },
             },
         });
 
         return () => {
-            chartInstance.destroy();
+            chartInstanceRef.current?.destroy();
         };
     }, [data]);
 
     return (
-        <div style={{ width: '300px', height: '180px', position: 'relative' }}>
-            <canvas id="temp-chart" style={{ position: "relative", top:"10px", left:"-10px", width: '100%', height: '100%' }}/>
+        <div
+            style={{
+                width: '100%',
+                aspectRatio: '16/9',
+                position: 'relative',
+            }}
+            ref={chartContainerRef}
+        >
+            <canvas
+                id="temp-chart"
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+    
+      }}
+    />
         </div>
-      );
-      
-      
+    );
 };
 
 export default TempChart;

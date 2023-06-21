@@ -52,67 +52,66 @@ export default function SignUp() {
     };
 
     return (
-        <div className="signup">
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/signin">Log In</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </nav>
-            <h1 className="signup-header">Sign Up</h1>
-            <div className="signup-body">
-                <form onSubmit={handleSubmit}>
-                <div className={styles['form-group']}>
-                        <label className={styles.label}>
-                            First name:
-                            <input
-                                type="text"
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
-                            /> 
-                            {errors.firstname && <span className={styles.error}>{errors.firstname}</span>}
-                        </label>
-                    </div>
-                    <div className={styles['form-group']}>
-                        <label className={styles.label}>
-                            Last name:
-                            <input
-                                type="text"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
-                            /> 
-                            {errors.lastname && <span className={styles.error}>{errors.lastname}</span>}
-                        </label>
-                    </div>
-                    <div className={styles['form-group']}>
-                        <label className={styles.label}>
-                            Email:
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            /> 
-                            {errors.email && <span className={styles.error}>{errors.email}</span>}
-                        </label>
-                    </div>
-                    <div className={styles['form-group']}>
-                        <label className={styles.label}>
-                            Password:
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            {errors.password && <span className={styles.error}>{errors.password}</span>}
-                        </label>
-                    </div>
-                    <button type="submit">Sign up</button>
-                    <button>Cancel</button>
-                    <footer>
-                        <p>If you already have an account, please <a href="/signin">log in here</a>.</p>
-                    </footer>
-                </form>
+        <div className='bg-malibu-500 h-screen'>
+            <div className={styles.signup}>
+                <h1 className={styles.signup_header}>Sign Up</h1>
+                <div className={styles.signup_body}>
+                    <form onSubmit={handleSubmit}>
+                        <div className={styles['form-group']}>
+                            <label className={styles.label}>
+                                First name:
+                                <input
+                                    type="text"
+                                    placeholder="first name"
+                                    value={firstname}
+                                    onChange={(e) => setFirstname(e.target.value)}
+                                /> 
+                                {errors.firstname && <span className={styles.error}>{errors.firstname}</span>}
+                            </label>
+                        </div>
+                        <div className={styles['form-group']}>
+                            <label className={styles.label}>
+                                Last name:
+                                <input
+                                    type="text"
+                                    placeholder="last name"
+                                    value={lastname}
+                                    onChange={(e) => setLastname(e.target.value)}
+                                /> 
+                                {errors.lastname && <span className={styles.error}>{errors.lastname}</span>}
+                            </label>
+                        </div>
+                        <div className={styles['form-group']}>
+                            <label className={styles.label}>
+                                Email:
+                                <input
+                                    type="email"
+                                    placeholder="name@example.com" 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                /> 
+                                {errors.email && <span className={styles.error}>{errors.email}</span>}
+                            </label>
+                        </div>
+                        <div className={styles['form-group']}>
+                            <label className={styles.label}>
+                                Password:
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                {errors.password && <span className={styles.error}>{errors.password}</span>}
+                            </label>
+                        </div>
+                        <button type="submit">Sign up</button>
+                        <button>Cancel</button>
+                        <footer>
+                            <p>If you already have an account, please<br/> <a href="/signin_page">log in here</a>.</p>
+                        </footer>
+                    </form>
+                </div>
             </div>
         </div>
     );

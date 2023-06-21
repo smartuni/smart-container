@@ -16,7 +16,7 @@
   .left h2 {
     margin-top: 0px;
     margin-bottom: 45px;
-    color: darkturquoise;
+    color: rgb(48, 94, 124);
     font-size: 25px;
     font-weight: 700;
   }
@@ -37,7 +37,7 @@
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 50px;
+    padding: 70px;
     background-color: white;
     margin-right: 100px;
     border-radius: 1000px;

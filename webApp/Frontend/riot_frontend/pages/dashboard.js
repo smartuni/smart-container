@@ -5,10 +5,14 @@ import Header from '../components/Header';
 import TopCards from "@/components/TopCards";
 import RecentOrders from "@/components/RecentOrders";
 import {ContainersMap} from "@/components/Map/ContainersMap";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { axiosInstance } from "@/utils/axiosInstance";
+import { useContainers } from "@/hooks/useContainers";
 //import  ContainerProblem from "./containerProblem";
 
 export default function Home() {
-
+  const containers = useContainers()
 
 
 
@@ -25,8 +29,8 @@ export default function Home() {
       <Header/>
       <TopCards/>
      <div className="p-4 grid md:grid-cols-2 grid-cols-1 gap-4">
-        <ContainersMap />
-        <RecentOrders/>
+        <ContainersMap containers={containers} />
+        <RecentOrders containers={containers} />
         {/* <ContainerProblem/> */}
       </div>
     </main>
