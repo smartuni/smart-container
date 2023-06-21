@@ -2,13 +2,13 @@ FROM python:3.9-alpine
 
 RUN mkdir -p /code
 WORKDIR /code
-COPY . /code
+COPY ./Backend /code
 
 RUN apk add --no-cache bash
 RUN apk add --no-cache postgresql
 RUN pip install --no-cache-dir -r requirements.yml
 
-COPY init.sh /usr/local/bin/
+COPY ./Backend/init.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/init.sh
 ENTRYPOINT ["init.sh"]

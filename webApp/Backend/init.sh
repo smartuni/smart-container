@@ -1,6 +1,7 @@
 #!/bin/bash
 
 python manage.py makemigrations
+python manage.py makemigrations sensor
 python manage.py migrate
 
 python manage.py shell < sensor/mqtt.py & 

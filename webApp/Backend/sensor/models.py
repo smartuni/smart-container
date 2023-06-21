@@ -58,7 +58,7 @@ class Container(models.Model):
 
 
 class User(AbstractBaseUser):
-    id = models.UUIDField
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     firstName = models.CharField(max_length=256)
     lastName = models.CharField(max_length=256)
     email = models.CharField(max_length=256, unique=True)

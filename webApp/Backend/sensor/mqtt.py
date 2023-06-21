@@ -4,11 +4,11 @@ from django.forms import ValidationError
 import paho.mqtt.client as mqtt
 import json
 import os
+from cbor2 import loads
 import base64
 from django.db import IntegrityError
 from sensor.models import SensorData, Container
 from sensor.models import SensorData, Container
-
 
 
 
@@ -66,11 +66,16 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     # Parse Byte data converted to JSON
+    
     payload = json.loads(msg.payload.decode("utf-8"))
+    decoded_payload = loads(payload)
     file = open("mqtt.txt", "a")
     file.write("Creating payload print-out\n")
     file.write(str(payload))
+    file.write(decoded_payload)
+    file.write("\n")
     file.close()
+    
     # print(msg.topic+" "+str(msg.payload))
     print(process_message(msg))
 

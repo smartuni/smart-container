@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: postgres:13
+    container_name: backend_db_1
     restart: always
     volumes:
       - db-data:/var/lib/postgresql/data/
@@ -12,16 +13,16 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
 
-  frontend:
-    build:
-      context: .
-      dockerfile: dockerfile_frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - REACT_APP_BACKEND_URL=http://localhost:8000
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfile_frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     - REACT_APP_BACKEND_URL=http://localhost:8000
 
   backend:
     build:
