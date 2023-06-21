@@ -1,9 +1,6 @@
-# BME280
+# BME280 Temperature via I2C
 
-This is an example for reading data via I2C from the BME280 using Saul.
+This is the final program for the bme280 temperature sensor node. 
+The temperature data are sent every 10 seconds, the data stream is the temperature with two decimal places.
 
-The BME280 measures temperature, humidity and pressure. It can be connected via I2C or SPI (I2C is used here).
-
-The values are printed to the console using `phydat_dump`, the values may be extracted separately from the struct (datatype of value is int16_t).
-
-The values are read every second. 
+The function used for the sleep mode is ztimer_periodic_wakeup.

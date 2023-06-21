@@ -64,7 +64,7 @@ int main(void){
     lis2dh12_t sensorDev; // Device descriptor
     lis2dh12_params_t sensorParams;
     sensorParams.i2c = dev;
-    char answerStream[] = "Acceleration exceeded 16G."
+    char answerStream[] = "Acceleration exceeded 10G."
 
     // Initialize sensor
     initDevice(&sensorDev, &sensorParams);
