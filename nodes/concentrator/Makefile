@@ -14,6 +14,7 @@ endif
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
+
 # enable default networking devices in the platform
 USEMODULE += netdev_default
 
@@ -40,9 +41,9 @@ CFLAGS += -DCONFIG_GNRC_NETIF_LORAWAN_NETIF_HDR
 # We can reduce the size of the packet buffer for LoRaWAN, since there's no IP
 # support. This will reduce RAM consumption.
 # Set GNRC_PKTBUF_SIZE via CFLAGS if not being set via Kconfig.
-ifndef CONFIG_GNRC_PKTBUF_SIZE
-  CFLAGS += -DCONFIG_GNRC_PKTBUF_SIZE=512
-endif
+
+CFLAGS += -DCONFIG_GNRC_PKTBUF_SIZE=1024
+
 #
 # Set region
 CFLAGS += -DCONFIG_LORAMAC_REGION_EU_868
@@ -50,6 +51,7 @@ CFLAGS += -DCONFIG_LORAMAC_REGION_EU_868
 # If commented, the default value (DR0) is used. Note this value is also used for the OTAA.
 CFLAGS += -DCONFIG_LORAMAC_DEFAULT_DR_5
 
+# CFLAGS += -DCONFIG_GNRC_IPV6_NIB_SLAAC
 # add ztimer module
 USEMODULE += ztimer
 
@@ -89,5 +91,8 @@ DEVELHELP ?= 1
 
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
+CFLAGS += -I$(CURDIR)
 
 include $(RIOTBASE)/Makefile.include
+
+

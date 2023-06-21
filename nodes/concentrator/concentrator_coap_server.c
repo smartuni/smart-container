@@ -13,6 +13,7 @@
 // #include "gcoap_example.h"
 
 #include "concentrator_coap.h"
+//#include "concentrator_lorawan.h"
 
 #include "periph/gpio.h"
 #include "board.h"
@@ -128,6 +129,8 @@ static ssize_t _waterleak_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, coa
     if (pdu->payload_len > 0) {
         printf("Waterleak: %.*s\n", pdu->payload_len, (char *)pdu->payload);
     }
+
+    //sendData(3);
 
     return gcoap_response(pdu, buf, len, COAP_CODE_CREATED);
 }

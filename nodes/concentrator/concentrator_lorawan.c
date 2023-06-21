@@ -10,8 +10,8 @@
 #include "fmt.h" /* String formatting */ 
 
 #define JOIN_DELAY (10U * MS_PER_SEC) /* Unit system wait time to complete join procedure in seconds */
-#define LORAWAN_DATARATE LORAMAC_DR_3 /* Delay between transmission in milliseconds */
-#define TRANSMISSION_INTERVAL (116U * MS_PER_SEC)
+#define LORAWAN_DATARATE LORAMAC_DR_2 /* Delay between transmission in milliseconds */
+#define TRANSMISSION_INTERVAL (15U * MS_PER_SEC)
                                                                                                                                                                                                                  /* LoRaWAN netif */
 static gnrc_netif_t *lorawan_netif;                                                                                                                                                                                                                            /* Number of times the button has been pressed */
 static uint8_t counter;                                                                                                                                                                                                                                        /* [TASK 2: Set the DevEUI, AppEUI and AppKey] */
@@ -27,9 +27,10 @@ void button_callback(void* arg)
  /* Join the network */
 void activate(gnrc_netif_t *netif)
 { /* All values are shorter than the APPKEY length */
+    lorawan_netif = netif;
     uint8_t key_holder[LORAMAC_APPKEY_LEN];
     int size;
-    puts("Joining the LoRaWAN network");
+    printf("Joining the LoRaWAN network (%d)\n", netif->pid);
     size = fmt_hex_bytes(key_holder, appeui_str); /* The key_holder variable holds at this point the AppEUI (`size` bytes) */ /* [TASK 2: Set the AppEUI using GNRC NetAPI] */
     gnrc_netapi_set(netif->pid, NETOPT_LORAWAN_APPEUI, 0, (void *)key_holder, size);
     size = fmt_hex_bytes(key_holder, appkey_str); /* The key_holder variable holds at this point the AppKey (`size` bytes) */ /* [TASK 2: Set the AppKey using GNRC NetAPI] */
@@ -61,10 +62,12 @@ gnrc_netif_t *get_lorawan_netif(void)
     for (gnrc_netif_t *dev = gnrc_netif_iter(NULL); dev != NULL; dev = gnrc_netif_iter(dev))
     { /* [TASK 1: Get device type and return netif if type is NETDEV_TYPE_LORA] */
         uint16_t type = 0;
-        printf("%p", dev);
+        printf("%p\n", dev);
         gnrc_netapi_get(dev->pid, NETOPT_DEVICE_TYPE, 0, (void *)&type, sizeof(type));
-        if (type == NETDEV_TYPE_LORA)
+        if (type == NETDEV_TYPE_LORA) {
+            printf("Found lora interface %d\n", dev->pid);
             return dev;
+        }
     } /* Shouldn't happen in this exercise */
     return NULL;
 }
@@ -74,8 +77,11 @@ void sendData(uint8_t data){
     printf("Counter value is %i\n", data);
     uint8_t port = CONFIG_LORAMAC_DEFAULT_TX_PORT; /* Default: 2 */               /* [TASK 3: Allocate a packet snip for the counter data] */
     pkt = gnrc_pktbuf_add(NULL, (void *)&data, sizeof(data), GNRC_NETTYPE_UNDEF); /* [TASK 3: Build GNRC Netif Header snip and prepend to packet] */
+    printf("added pkt data \n");
     hdr = gnrc_netif_hdr_build(NULL, 0, &port, sizeof(port));
+    printf("added hdr\n");
     pkt = gnrc_pkt_prepend(pkt, hdr);                                         /* [TASK 3: Send packet using GNRC NetAPI] */
+    printf("prepended hdr to pkt\n");
     gnrc_netapi_send(lorawan_netif->pid, pkt);
     puts("Successfully sent packet");
     ztimer_sleep(ZTIMER_MSEC, TRANSMISSION_INTERVAL);

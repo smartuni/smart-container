@@ -28,25 +28,27 @@ int main(void)
 {
     /* for the thread running the shell */
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
+
+
+     /* init lorawan */
+     puts("LoRaWAN Sensor application"); /* Setup button callback */
+     if (gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, button_callback, NULL) < 0)
+     {
+         puts("[FAILED] init BTN0!");
+         return 1;
+     } /* Try to get a LoRaWAN interface */
+     gnrc_netif_t* lorawan_netif = NULL;
+     if (!(lorawan_netif = get_lorawan_netif()))
+     {
+         puts("Couldn't find a LoRaWAN interface");
+         return 1;
+     }
+     activate(lorawan_netif);
+     //sendData(2);
+
+     //sendData(2);
     server_init();
     puts("gcoap example app");
-
-    /* init lorawan */
-    puts("LoRaWAN Sensor application"); /* Setup button callback */
-    if (gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, button_callback, NULL) < 0)
-    {
-        puts("[FAILED] init BTN0!");
-        return 1;
-    } /* Try to get a LoRaWAN interface */
-    gnrc_netif_t* lorawan_netif = NULL;
-    if (!(lorawan_netif = get_lorawan_netif()))
-    {
-        puts("Couldn't find a LoRaWAN interface");
-        return 1;
-    }
-    activate(lorawan_netif);
-    sendData(2);
-
     /* start shell */
     puts("All up, running the shell now");
     char line_buf[SHELL_DEFAULT_BUFSIZE];
