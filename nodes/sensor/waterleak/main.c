@@ -1,20 +1,31 @@
+/*
+ * Copyright (C) 2022 HAW Hamburg
+ *
+ * This file is subject to the terms and conditions of the GNU Lesser
+ * General Public License v2.1. See the file LICENSE in the top level
+ * directory for more details.
+ */
+
 #include <stdio.h>
-
+#include "periph/gpio.h"
 #include "board.h"
-#include "saul_reg.h"
+#include "ztimer.h"
+#include "coap.h"
 
-int main(void) {
+gpio_t waterleak = GPIO_PIN(1, 8);    // Feather Pin D5
 
-    printf("Hello World.\n");
+void waterleak_callback (void *arg){
+    (void) arg; /* the argument is not used*/
+    send_to_concentrator("Water detected.");
+}
 
-    saul_reg_t *adc = saul_reg_find_type(SAUL_SENSE_ANALOG);
-    if(!adc) {
-        puts("No adc present");
-        return 1;
-    } else {
-        printf("Found adc: %s\n", adc->name);
-    }
+
+int main(void)
+{
+    coap_path = "/waterleak";
+    discover_concentrator();
+    gpio_init_int(waterleak, GPIO_IN, GPIO_FALLING, waterleak_callback, NULL);
+    puts("GPIOs example.");
 
     return 0;
-
 }

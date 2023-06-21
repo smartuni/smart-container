@@ -1,12 +1,12 @@
 # name of your application
-APPLICATION = test_waterleak
+APPLICATION = test_reedswitch
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= feather-nrf52840
+BOARD ?= pba-d-01-kw2x
 
 # This has to be the absolute path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../../../RIOT
-PROJECT_BASE ?= $(CURDIR)/../../..
+RIOTBASE ?= $(CURDIR)/../../RIOT
+PROJECT_BASE ?= $(CURDIR)/../..
 
 # Include external CoAP module
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
