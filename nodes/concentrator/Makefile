@@ -26,6 +26,9 @@ USEMODULE += gnrc_ipv6_default
 
 # add CoAP module
 USEMODULE += gcoap
+USEMODULE += od
+USEMODULE += senml_cbor
+
 
 # Add support for GNRC LoRaWAN (v1.0.3)
 USEMODULE += gnrc_lorawan
