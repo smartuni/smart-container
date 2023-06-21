@@ -9,6 +9,8 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework import generics, viewsets
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .models import SensorData, Container, User
 from .serializer import SensorSerializer, ContainerSerializer, UserSerializer
@@ -75,6 +77,23 @@ class ContainerLocation(APIView):
         ).latest("sensor_time")
         serializer = SensorSerializer(gpsLocation, many=False)
         return JsonResponse(serializer.data["sensor_data"], safe=False)
+
+
+class IsUserLoggedIn(APIView):
+    """
+    Retrieve user login status
+    """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        """
+        Return the user login status
+        """
+        if request.user.is_authenticated:
+            return JsonResponse({"loggedIn": True})
+        else:
+            return JsonResponse({"loggedIn": False})
+
 
 
 class SensorByType(APIView):
