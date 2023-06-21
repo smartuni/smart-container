@@ -54,19 +54,19 @@ const LoginPage = () => {
   };
 
   return (
-    <div
-      className={
-        "flex flex-col justify-center items-center  h-screen bg-gradient-to-br gap-1 from-cyan-300 to-sky-600"
-      }
-    > <h1 className={styles.signin_header}>Sign in</h1>
-      <div className="{styles.signinnew} px-7 py-4 shadow bg-white rounded-md flex flex-col gap-2">
-        <TextBox className={styles['form-group']} lableText="Email" onChange={(e) => (userName.current = e.target.value)} />
+    <div className={"flex flex-col justify-center items-center h-screen bg-malibu-500"}> 
+      <h1 className={styles.signin_header}>Sign in</h1>
+      <div className={styles.signinNew}>
+        <TextBox className={styles['form-group']} lableText="Email" placeholder="Email" onChange={(e) => (userName.current = e.target.value)} />
         <TextBox className={styles['form-group']}
-          lableText="Password"
+          lableText="Password" placeholder="Password"
           type={"password"}
           onChange={(e) => (pass.current = e.target.value)}
         />
         <Button onClick={onSubmit}>Login</Button>
+        <footer>
+                <p>If you don't have an account, please <a href="/signup">sign up here</a>.</p>
+              </footer>
       </div>
     </div>
   );

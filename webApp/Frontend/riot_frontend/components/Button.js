@@ -29,7 +29,7 @@ const Button = ({
           return "bg-white text-violet-500 border border-violet-500 hover:text-white hover:bg-violet-700  ";
   
         default:
-          return "bg-violet-500 hover:bg-violet-700 hover:bg-gra text-white shadow shadow-violet-600/25 hover:shadow-violet-600/75";
+          return "w-full mt-8 bg-violet-500 hover:bg-violet-700 hover:bg-gra text-white shadow shadow-violet-600/25 hover:shadow-violet-600/75";
       }
     };
     return (

@@ -13,10 +13,10 @@ const TextBox = React.forwardRef(
     ref
   ) => {
     return (
-      <div className={className + " relative"}>
+      <div >
         {lableText && (
           <label
-            className="block text-gray-600  mb-2 text-xs lg:text-sm xl:text-base"
+            className="block lg:text-sm xl:text-base"
             htmlFor="txt"
           >
             {lableText}
