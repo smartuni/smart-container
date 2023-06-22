@@ -9,15 +9,6 @@ const LoginPage = () => {
   const userName = useRef("");
   const pass = useRef("");
 
-  /* const onSubmit = async () => {
-    const result = await signIn("credentials", {
-      email: userName.current,
-      password: pass.current,
-      redirect: true,
-      callbackUrl: "/dashboard",
-    });
-  }; */
-
   const onSubmit = async () => {
     console.log("Login Pressed!");
     const res = await fetch("http://178.128.192.215:80/api/signIn/", {
