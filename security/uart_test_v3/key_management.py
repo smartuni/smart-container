@@ -1,42 +1,24 @@
-import sqlite3
-import secrets
 import serial
-import time
-import logging
+import secrets
+SERIAL_PORT = '/dev/tty.usbmodem14401'  
+BAUD_RATE = 96000
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def provision_device(device_id, ser):
-    dtls_psk_aes_128_key = secrets.token_hex(16)
-    
+def generate_key():
+    return secrets.token_bytes(16)
+
+def send_key(key):
     try:
-        data = f'{device_id}{dtls_psk_aes_128_key}'
+        # Open the serial port
+        with serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1) as ser:
+            # Send the key
+            ser.write(key)
 
-        db.execute('INSERT INTO provision (device_id, dtls_psk_aes_128_key) VALUES (?, ?)', 
-                   (device_id, dtls_psk_aes_128_key))
+        print(f"Successfully sent key: {key}")
 
-        ser.write(data.encode())
-        while ser.out_waiting > 0:
-            time.sleep(0.01)
-
-        ack = ser.readline().decode().strip()
     except serial.SerialException as e:
-        logging.error(f"Serial communication error: {e}")
+        print(f"An error occurred: {str(e)}")
 
-    if ack != "ACK":
-        logging.error(f"Device {device_id} provisioning failed. Retrying...")
-        provision_device(device_id, ser)  
-        return
-
-with sqlite3.connect('provision.db') as conn:
-    db = conn.cursor()
-    db.execute('CREATE TABLE IF NOT EXISTS provision (device_id INTEGER PRIMARY KEY, dtls_psk_aes_128_key TEXT)')
-
-    try:
-        with serial.Serial('COM6', 115200, timeout=1) as ser:
-            for device_id in range(1, 4):  # Change to only provision 3 devices
-                provision_device(device_id, ser)
-    except serial.SerialException as e:
-        logging.error(f"Serial communication error: {e}")
-
-    conn.commit()
+if __name__ == "__main__":
+    key = generate_key()
+    send_key(key)

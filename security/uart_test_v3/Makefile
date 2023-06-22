@@ -2,7 +2,7 @@
 APPLICATION = provisioning
 
 # If no BOARD is found in the environment, use this default:
-PORT=/dev/tty.usbmodem143101
+PORT=/dev/tty.usbmodem14401
 BOARD ?= feather-nrf52840
 
 # This has to be the absolute path to the RIOT base directory:
@@ -30,7 +30,7 @@ FEATURES_REQUIRED += periph_flashpage
 # Comment this out to disable code in RIOT that does safety checking
 # Which is not needed in a production environment but helps in the
 # Development process:
-DEVELHELP ?= 1
+#DEVELHELP ?= 1
 
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1

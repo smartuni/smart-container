@@ -1,86 +1,33 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdint.h>
 #include "periph/uart.h"
-#include "periph/flashpage.h"
-//#include "log.h"
-#include "periph/pm.h"
+#include <string.h>
+#define UART_DEV0      UART_DEV(0)
+#define UART_BAUD_RATE 96000
+#define RX_BUFFER_SIZE 256
 
-#define FLASH_KEY_PAGE 240
-#define UART_DEV0 UART_DEV(0)
-#define UART_BUFSIZE  (128U)
+char rx_buffer[RX_BUFFER_SIZE];
+int rx_idx = 0;
 
-typedef struct {
-    uint8_t device_id; 
-    uint8_t dtls_psk_aes_128_key[16];
-} provisioning_data_t;
+void uart_rx_cb(void *ctx, uint8_t data) {
+    (void)ctx;
 
-provisioning_data_t provision;
+    // Add received data to buffer
+    rx_buffer[rx_idx++] = data;
 
-/*
+    // Check for end of transmission or buffer overflow
+    if (data == '\n' || rx_idx == RX_BUFFER_SIZE) {
+        // Null-terminate the string
+        rx_buffer[rx_idx] = '\0';
 
-panic() {
-    while (1) {}
-}
+        // Reset index for next message
+        rx_idx = 0;
 
-void check_provisioning() {
-    uint8_t* key_ptr = (uint8_t*)flashpage_addr(FLASH_KEY_PAGE);
-    uint8_t* end_ptr = key_ptr + sizeof(provision);
-    uint8_t* provision_ptr = (uint8_t*)&provision;
-
-    for (; key_ptr < end_ptr; key_ptr++, provision_ptr++) {
-        if (*provision_ptr == 0xFF) continue;
-        if (*key_ptr != *provision_ptr) {
-            LOG_ERROR("Device not provisioned. Please provision the device first!\n");
-            pm_reboot();  //panic()
-        }
-    }
-}
-*/
-
-void provision_device(void) {
-    flashpage_erase(FLASH_KEY_PAGE);
-    
-    flashpage_write_page(FLASH_KEY_PAGE, &provision);
-
-    provisioning_data_t verify_provision;
-    memcpy(&verify_provision, (uint8_t*)flashpage_addr(FLASH_KEY_PAGE), sizeof(provision));
-    if (memcmp(&verify_provision, &provision, sizeof(provision)) != 0) {
-        printf("Provisioning failed!\n");
-        pm_reboot();  
-    }
-
-    printf("Provisioning done successfully!\n");
-    printf("ACK\n"); 
-}
-
-
-static void rx_cb(void *arg, uint8_t data)
-{
-    static uint8_t pos = 0;
-    uint8_t *rx_mem = arg;
-    rx_mem[pos] = data;
-
-    if (pos == sizeof(provisioning_data_t) - 1) {
-        memcpy(&provision, rx_mem, sizeof(provisioning_data_t));
-        provision_device();
-        pos = 0;
-    } else {
-        pos++;
+        printf("Received key: %s\n", rx_buffer);
     }
 }
 
-int main(void)
-{
-    (void) getchar();
-    //check_provisioning();
-
-    uint8_t rx_mem[sizeof(provisioning_data_t)];
-    
-    if (uart_init(UART_DEV0, 115200, rx_cb, rx_mem) < 0) {
-        printf("Cannot initialize UART\n");
-        return 1;
-    }
+int main(void) {
+    memset(rx_buffer, 0, sizeof(rx_buffer));
+    uart_init(UART_DEV0, UART_BAUD_RATE, uart_rx_cb, NULL);
     return 0;
 }
 
