@@ -62,7 +62,7 @@ export default function Home() {
                     <div className="flex items-center justify-center">
                         <div className='bg-malibu-500 w-1/3 p-4 rounded-lg'>
                 
-                            <Link href = '/signup' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
+                            <Link href = '/signup_page' className="bg-blue-200 hover:bg-blue-300 flex justify-center items-center lg:p-4 p-2 rounded-lg cursor-pointer ">
                                 <p className="font-bold">Sign Up</p>
                             </Link>
 
