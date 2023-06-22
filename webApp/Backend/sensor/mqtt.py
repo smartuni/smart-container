@@ -6,6 +6,8 @@ import base64
 from .models import Container, SensorData
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
+from kpn_senml import *
+
 
 
 
@@ -78,14 +80,23 @@ def on_message(client, userdata, msg):
 
 # Parsing the payload message for the data we want
 def process_message(msg):
-    payload = json.loads(msg.payload.decode("utf-8"))
-    # Extract temperature and humidity data
+    # Decode the SenML message
+    # Might change to SenmlRecord
+    payload = SenmlPack(msg)
 
-    sensor = payload['sensor']
-    value = payload['value'] + payload['unit']
-    time = payload['time']
+    # Print the decoded SenML message
+    print(payload.to_json())
 
-    return postToDatabase(sensor, value, time)
+
+
+    # payload = json.loads(msg.payload.decode("utf-8"))
+    # # Extract temperature and humidity data
+
+    # sensor = payload['sensor']
+    # value = payload['value'] + payload['unit']
+    # time = payload['time']
+
+    # return postToDatabase(sensor, value, time)
     
 
 client = mqtt.Client()
