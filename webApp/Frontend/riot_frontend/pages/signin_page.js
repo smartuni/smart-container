@@ -56,8 +56,8 @@ const LoginPage = () => {
         />
         <Button onClick={onSubmit}>Login</Button>
         <footer>
-                <p>If you don't have an account, please <a href="/signup">sign up here</a>.</p>
-              </footer>
+          <p>If you don't have an account, please <a href="/signup">sign up here</a>.</p>
+        </footer>
       </div>
     </div>
   );
