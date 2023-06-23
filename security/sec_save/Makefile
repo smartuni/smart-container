@@ -1,24 +1,37 @@
-LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+# LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+# CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 
 # name of your application
-APPLICATION = hello-world
+APPLICATION = sec_save
+BOARD = feather-nrf52840
 
-# If no BOARD is found in the environment, use this default:
-BOARD ?= pba-d-01-kw2x
+
+FEATURES_OPTIONAL += periph_rtc
+FEATURES_REQUIRED += periph_spi
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
-USEMODULE += cipher_modes
-USEMODULE += crypto
-USEMODULE += crypto_aes_128
-USEMODULE += fmt
+# General modules
+USEMODULE += log_color
+USEMODULE += random 
 USEMODULE += fmt
 USEMODULE += od
-USEMODULE += phydat
-USEMODULE += sdcard_spi
+USEMODULE += shell
 
+# Provisioning modules
+USEMODULE += mtd
+USEMODULE += mtd_flashpage
+
+# Secure save modules
+USEMODULE += cipher_modes
+USEMODULE += crypto_aes_128
+USEMODULE += phydat
+# USEMODULE += sdcard_spi
+USEMODULE += fatfs_diskio_mtd
+USEMODULE += mtd_sdcard
+USEPKG    += fatfs
+FATFS_IMAGE_FILE_SIZE_MIB ?= 128
 
 # Comment this out to disable code in RIOT that does safety checking
 # which is not needed in a production environment but helps in the
@@ -29,3 +42,5 @@ DEVELHELP ?= 1
 QUIET ?= 1
 
 include $(RIOTBASE)/Makefile.include
+
+CFLAGS ?= -DLOG_LEVEL=LOG_ALL
