@@ -89,7 +89,8 @@ const RecentOrders = ({ containers }) => {
         });
     }
 
-
+    console.log("containers list?: ", containers)
+    console.log(typeof containers)
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
             return newList.sort(problemSort)
@@ -254,4 +255,7 @@ const RecentOrders = ({ containers }) => {
         </div>
     )
 }
+
+// TODO getServerSideProps
 export default RecentOrders
+

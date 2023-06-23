@@ -1,31 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { axiosInstance } from "@/utils/axiosInstance";
 
-export const useContainers = () => {
+export const useContainers = async () => {
   const [containers, setContainers] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        // fetch sensors and containers from backend then combine sensors per containers
+  const list = useRef([]);
 
-        const sensorsRes = await axiosInstance.get("http://178.128.192.215:80/api/sensor/");
-        const containersRes = await axiosInstance.get("http://178.128.192.215:80/api/container/");
 
-        const sensorsData = sensorsRes.data;
+  const onSubmit = async () => {
 
-        const containersData = containersRes.data.map((container) => ({
-          ...container,
-          sensors: sensorsData.filter((sensor) => sensor.owner === container.container_id),
-        }));
+    console.log("Containers are fetched!");
+    const res = await fetch("http://178.128.192.215:8000/api/container/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3NTQyNjMwLCJpYXQiOjE2ODc1NDIzMzAsImp0aSI6IjcxYTUyMGJlYjk3YTQ1YmM5OGE5NzZkOTYyMTFhZDY4IiwidXNlcl9pZCI6ImQwNjk5MTM1LTAyNzEtNDY3ZS1iMDUyLTc2YzQ3ZWIzOWI5NSIsInVzZXJuYW1lIjoiZW1pbHlsdWNpYS5hbnRvc2NoQGhhd2hhbWJ1cmcuZGUiLCJmaXJzdE5hbWUiOiJFbWlseSIsImxhc3RuYW1lIjoiQW50b3NjaCJ9.ja8RIUcysQvqyQSuNOEvJ6JLRZo8KekMKOBKaEQhsVM"
+      },
 
-        setContainers(containersData);
-      } catch (error) {
-        console.error("Error fetching container data:", error);
-      }
-    })();
-  }, []);
+    });
+    var data = await res.json() // Parse the response body as JSON
 
-  return containers;
+
+    console.log("Container List: " + data);
+    return data;
+
+    if (res.ok) {
+      const newList = extract_containers(response_body); // Call the extract_user function with the response body 
+      localStorage.setItem('containerlist', JSON.stringify(newList));
+      console.log(localStorage);
+      console.log(newList);
+      window.location.href = "/dashboard";
+      return newList;
+    } else {
+      console.log("Response not OK!");
+      return null;
+    }
+  };
+
+  // const extract_containers = (response) => {
+  //   let access_jwt_str = response?.access;
+  //   let jwt_payload_base64 = access_jwt_str?.split('.')[1]; // TODO: Should it be [1]?
+  //   let jwt_payload = Buffer.from(jwt_payload_base64, 'base64'); //equivalent to atob
+  //   let list = JSON.parse(jwt_payload);
+  //   return list;
+  // };
+
+  onSubmit()
 };
