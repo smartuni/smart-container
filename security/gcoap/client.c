@@ -404,7 +404,9 @@ int gcoap_cli_cmd(int argc, char **argv)
         }
         else {
             /* send Observe notification for /cli/stats */
-            notify_observers();
+            // notify_observers();
+            printf("%d", req_count);
+            
         }
         return 0;
     }
