@@ -4,7 +4,7 @@ import TextBox from "../components/TextBox";
 import React, { useRef } from "react";
 import styles from '../styles/Signin.module.css'
 
-const SignUp = () => {
+const SignUp_page = () => {
   const userName = useRef("");
   const pass = useRef("");
   const firstName = useRef("");
@@ -12,20 +12,20 @@ const SignUp = () => {
 
   const onSubmit = async () => {
     console.log("Sign Up Pressed!");
-    const res = await fetch("http://178.128.192.215:80/api/signUp/", {
+    const res = await fetch("http://178.128.192.215:8000/api/signUp/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ 
         email: userName.current, //username entered by the user in textbox
-        password: pass.current, 
+        password: pass.current,
         firstName: firstName.current,
         lastName: lastName.current,
         company: "HAW",
       }), 
     });
-    console.log("Email: " + userName.current);
+    console.log("Email: " + userName.current + " pass: " + pass.current + " fName: " + firstName.current + " lName: " + lastName.current);
     if (res.ok) {
       console.log("New user added.");
       window.location.href = "/dashboard";
@@ -64,4 +64,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp_page;

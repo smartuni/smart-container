@@ -48,6 +48,7 @@ export default function SignUp() {
         event.preventDefault();
         if (checkForm()) {
             console.log({ firstname, lastname, email, password });
+            window.location.href = "/dashboard";
         }
     };
 

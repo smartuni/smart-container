@@ -1,7 +1,6 @@
 "use client";
 import Button from "../components/Button";
 import TextBox from "../components/TextBox";
-//import { signIn } from "next-auth/react";
 import React, { useRef } from "react";
 import styles from '../styles/Signin.module.css'
 
@@ -11,7 +10,7 @@ const LoginPage = () => {
 
   const onSubmit = async () => {
     console.log("Login Pressed!");
-    const res = await fetch("http://178.128.192.215:80/api/signIn/", {
+    const res = await fetch("http://178.128.192.215:8000/api/signIn/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +18,7 @@ const LoginPage = () => {
       body: JSON.stringify({ 
         email: userName.current, //username entered by the user in textbox
         password: pass.current, //password entered by the user in textbox
-      }), //"email": "sahar.behravesh@gmail.com", password: "Sahar1364"
+      }), 
     });
     console.log("Email: " + userName.current);
     const response_body = await res.json(); // Parse the response body as JSON
