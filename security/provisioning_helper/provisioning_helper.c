@@ -1,7 +1,7 @@
 #include "string.h"
 #include "provisioning_helper.h"
 
-#define PROVISIONING_HELPER_BUF_SIZE 512
+#define PROVISIONING_HELPER_BUF_SIZE 128
 #define PROVISIONING_ENABLE_DEV 1
 
 mtd_flashpage_t _mtd_dev = MTD_FLASHPAGE_INIT_VAL(1);

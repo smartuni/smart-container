@@ -21,7 +21,7 @@ int main(void)
     /* ------------------------------------------------ */
     /*              Start security testing              */
     /* ------------------------------------------------ */
-    char *filename = "TEST.TXT";
+    char *filename = "TEST2.TXT";
 
     // size_t num_blocks = 8;
     uint8_t plain_text[AES_BLOCK_SIZE * 8];
