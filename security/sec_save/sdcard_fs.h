@@ -34,7 +34,7 @@
 void sdcard_fs_init(void);
 int _mount(void);
 int _ls(void);
-int sdcard_fs_write(const char *filename, char *buf, uint32_t buf_len);
+int sdcard_fs_write(char *buf, uint32_t buf_len);
 
 #endif /* SDCARD_FS_H */
 /** @} */

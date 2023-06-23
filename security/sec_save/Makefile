@@ -5,9 +5,6 @@
 APPLICATION = sec_save
 BOARD = feather-nrf52840
 
-# Enable for concentrator only 
-# CFLAGS += -DPROVISIONING_CONFIG_CONCENTRATOR
-
 # SPI parameters for nrf52840
 CFLAGS += -DSDCARD_SPI_PARAM_SPI_MODE=0
 CFLAGS += -DSDCARD_SPI_PARAM_CS=GPIO_PIN\(0,10\)
@@ -42,14 +39,14 @@ USEMODULE += mtd_sdcard
 USEPKG    += fatfs
 FATFS_IMAGE_FILE_SIZE_MIB ?= 128
 
-# Development environment only 
+# Comment this out to disable code in RIOT that does safety checking
+# which is not needed in a production environment but helps in the
+# development process:
 DEVELHELP ?= 1
+
+# Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
-# CFLAGS += -DPROVISIONING_ENABLE_DEV
-# CFLAGS += -DENABLE_DEBUG=1
 
 include $(RIOTBASE)/Makefile.include
 
-# Must be after include $(RIOTBASE)/Makefile.include
 CFLAGS ?= -DLOG_LEVEL=LOG_ALL
-# CFLAGS += -DPROVISIONING_ENABLE_DEV
