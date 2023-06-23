@@ -9,10 +9,10 @@
 
 #define AES_KEY_SIZE 16
 #define AES_BLOCK_SIZE 16
-#define PROVISIONING_CONFIG_CONCENTRATOR 1
+#define PROVISIONING_CONFIG_CONCENTRATOR
 
 /* Provisioning - Flash Page Number */
-#define PROVISIONING_FLASH_PAGE_NUMBER 240
+#define PROVISIONING_FLASH_PAGE_NUMBER 230
 #define PROVISIONING_FLASH_PAGE_BASE_ADDR (uint32_t)((uintptr_t)flashpage_addr(PROVISIONING_FLASH_PAGE_NUMBER))
 #define PROVISIONING_ADD_TO_BASE_ADDRESS(addr) (uint32_t)(PROVISIONING_FLASH_PAGE_BASE_ADDR + addr)
 
@@ -35,7 +35,7 @@
 /************************************************/
 /*      Concentrator-specific provisioning      */
 /************************************************/
-#if(PROVISIONING_CONFIG_CONCENTRATOR==1) /* Start Concentrator-specific provisioning */
+// #ifdef PROVISIONING_CONFIG_CONCENTRATOR /* Start Concentrator-specific provisioning */
 
 /* Provisioning -  LoRaWAN DEV EUI*/
 #define PROVISIONING_FLASH_ADDRESS_LOWRAWAN_DEV_EUI 0x31
@@ -53,7 +53,7 @@
 #define PROVISIONING_FLASH_ADDRESS_SEC_SAVE_AES_KEY 0x71
 #define PROVISIONING_FLASH_LEN_SEC_SAVE_AES_KEY 16
 
-#endif /* End Concentrator-specific provisioning */
+// #endif /* End Concentrator-specific provisioning */
 
 extern mtd_flashpage_t _mtd_dev;
 extern mtd_dev_t *mtd_dev;
