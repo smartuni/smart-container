@@ -1,5 +1,7 @@
 #include "sec_save.h"
 
+uint8_t buf_enc[SEC_SAVE_ENC_BUFFER_SIZE];
+
 /*************************************************************
  * Encryption functions
  ************************************************************/
@@ -25,7 +27,7 @@ static int encrypt_buf(uint8_t *cipher_text, uint8_t *key, const uint8_t *buf, s
     return 0;
 }
 
-void sec_save(const char *filename, uint8_t *buf_enc, const uint8_t *buf, size_t buf_len)
+void sec_save(const char *filename, const uint8_t *buf, size_t buf_len)
 {
     uint8_t sec_save_aes_key[AES_KEY_SIZE];
     provisioning_helper_get_sec_save_aes_key(sec_save_aes_key);
