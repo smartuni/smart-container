@@ -3,8 +3,9 @@
 /*************************************************************
  * Encryption functions
  ************************************************************/
-static int encrypt_buf(uint8_t *cipher_text, uint8_t *key, uint8_t *buf, size_t buf_len)
+static int encrypt_buf(uint8_t *cipher_text, uint8_t *key, const uint8_t *buf, size_t buf_len)
 {
+    // Add edge case for buf_len and padding
     cipher_t cipher;
 
     if (cipher_init(&cipher, CIPHER_AES, key, AES_KEY_SIZE) < 0)
@@ -24,25 +25,19 @@ static int encrypt_buf(uint8_t *cipher_text, uint8_t *key, uint8_t *buf, size_t 
     return 0;
 }
 
-void sec_save(void)
+void sec_save(const char *filename, uint8_t *buf_enc, const uint8_t *buf, size_t buf_len)
 {
     uint8_t sec_save_aes_key[AES_KEY_SIZE];
     provisioning_helper_get_sec_save_aes_key(sec_save_aes_key);
-    
-    size_t num_blocks = 8;
-    uint8_t plain_text[AES_BLOCK_SIZE * num_blocks];
-    uint8_t cipher_text[sizeof(plain_text)];
-    random_bytes(plain_text, sizeof(plain_text));
 
-    plain_text[sizeof(plain_text) - 1] = 0x00; // Null terminating string
     LOG_INFO("Plaintext is: \n");
-    // od_hex_dump(plain_text, sizeof(plain_text), OD_WIDTH_DEFAULT);
+    od_hex_dump(buf, buf_len, OD_WIDTH_DEFAULT);
 
-    encrypt_buf(cipher_text, sec_save_aes_key, plain_text, sizeof(plain_text));
+    encrypt_buf(buf_enc, sec_save_aes_key, buf, buf_len);
     LOG_INFO("Ciphertext is: \n");
-    // od_hex_dump(cipher_text, sizeof(cipher_text), OD_WIDTH_DEFAULT);
+    od_hex_dump(buf_enc, buf_len, OD_WIDTH_DEFAULT);
     
-    sdcard_fs_write((char *) cipher_text, sizeof(cipher_text));
+    sdcard_fs_write(filename, (char *) buf_enc, buf_len);
 
     return;
 }

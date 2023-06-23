@@ -130,10 +130,11 @@ int _ls(void)
     return -1;
 }
 
-int sdcard_fs_write(char *buf, uint32_t buf_len)
+int sdcard_fs_write(const char *_filename, char *buf, uint32_t buf_len)
 {
     // argv[1] = filename
     // argv[2] = string
+    (void) _filename;
 
     FIL fd;
     UINT bw;

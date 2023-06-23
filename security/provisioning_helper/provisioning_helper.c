@@ -49,7 +49,6 @@ int provisioning_helper_init(void)
 int provisioning_helper_get_sec_save_aes_key(uint8_t *sec_save_aes_key)
 {
     LOG_INFO("Inside provisioning_helper_get_sec_save_aes_key.\n");
-    // getchar();
 
     uint8_t page_buf[PROVISIONING_HELPER_BUF_SIZE];
     int ret = mtd_read(mtd_dev, page_buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);

@@ -8,7 +8,7 @@
 #include "sdcard_fs.h"
 #include "provisioning_helper.h"
 
-void sec_save(void);
+void sec_save(const char *filename, uint8_t *buf_enc, const uint8_t *buf, size_t buf_len);
 
 #endif /* SEC_SAVE_H */
 /** @} */
