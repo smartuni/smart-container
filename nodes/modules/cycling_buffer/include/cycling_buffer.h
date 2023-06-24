@@ -4,6 +4,7 @@
 #include <clist.h>
 #include <stdint.h>
 
+#define CYCLING_BUFFER_SIZE 30
 #define GPS_BUFF 128
 
 typedef enum {
@@ -24,10 +25,13 @@ typedef struct {
         char gps[GPS_BUFF];
     } vals;
     int timestamp;
-} cycling_buffer;
+} sensor_data_entry;
 
-cycling_buffer* getCyclingBufferSlot();
+void initCyclingBuffer();
+sensor_data_entry* getCyclingBufferSlot();
 clist_node_t* getCyclingBuffer();
 void clearCyclingBuffer();
+
+
 
 #endif

@@ -95,7 +95,7 @@ static uint8_t cbor_buf[BUF_SIZE];
 
 void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
 {
-    cycling_buffer *element = (cycling_buffer *)data;
+    sensor_data_entry *element = (sensor_data_entry *)data;
 
     switch (element->sensor_type) {
     case SENSOR_TYPE_CRASH: 
@@ -141,7 +141,7 @@ void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
 /*
 a test that works
 
-    cycling_buffer crash_data = {
+    sensor_data_entry crash_data = {
         .next = NULL,
         .sensor_type = SENSOR_TYPE_CRASH,
         .values.event = true,
@@ -149,14 +149,14 @@ a test that works
     };
 
 
-    cycling_buffer hum_data = {
+    sensor_data_entry hum_data = {
         .next = NULL,
         .sensor_type = SENSOR_TYPE_HUMIDITY,
         .values.value = 50,
         .timestamp = 2,
     };
 
-    cycling_buffer gps_data = {
+    sensor_data_entry gps_data = {
         .next = NULL,
         .sensor_type = SENSOR_TYPE_GPS,
         .values.gps = "1234.5678,1234.5678",

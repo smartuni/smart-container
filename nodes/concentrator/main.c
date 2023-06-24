@@ -11,44 +11,67 @@
 
 #include "net/gcoap.h"
 #include "shell.h"
-
+#include "event/periodic_callback.h"
+#include "event/thread.h"
+#include "ztimer.h"
 #include "periph/gpio.h"
+
 #include "gcoap_example.h"
 #include "concentrator_lorawan.h"
+#include "cycling_buffer.h"
 
 #define MAIN_QUEUE_SIZE (4)
 static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
+
+static event_periodic_callback_t buffer_flush_event;
 
 static const shell_command_t shell_commands[] = {
     { "coap", "CoAP example", gcoap_cli_cmd },
     { NULL, NULL, NULL }
 };
 
+void buffer_flush_callback(void* args)
+{
+    (void)args;
+    send_data_list(getCyclingBuffer());
+    clearCyclingBuffer();
+}
+
+void event_init(void)
+{
+    /* initialize periodic callback */
+    event_periodic_callback_init(&buffer_flush_event, ZTIMER_SEC, EVENT_QUEUE_PRIO_MEDIUM,
+                                 buffer_flush_cb, NULL);
+}
+
 int main(void)
 {
     /* for the thread running the shell */
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
 
+    /* init cycling buffer for in ram storage of sensor data*/
+    initCyclingBuffer();
 
-     /* init lorawan */
-     puts("LoRaWAN Sensor application"); /* Setup button callback */
-     if (gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, button_callback, NULL) < 0)
-     {
-         puts("[FAILED] init BTN0!");
-         return 1;
-     } /* Try to get a LoRaWAN interface */
-     gnrc_netif_t* lorawan_netif = NULL;
-     if (!(lorawan_netif = get_lorawan_netif()))
-     {
-         puts("Couldn't find a LoRaWAN interface");
-         return 1;
-     }
-     activate(lorawan_netif);
-     //sendData(2);
+    /* init lorawan */
+    puts("LoRaWAN Sensor application"); /* Setup button callback */
+    if (gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, button_callback, NULL) < 0)
+    {
+        puts("[FAILED] init BTN0!");
+        return 1;
+    } /* Try to get a LoRaWAN interface */
+    gnrc_netif_t* lorawan_netif = NULL;
+    if (!(lorawan_netif = get_lorawan_netif()))
+    {
+        puts("Couldn't find a LoRaWAN interface");
+        return 1;
+    }
+    activate(lorawan_netif);
 
-     //sendData(2);
     server_init();
-    puts("gcoap example app");
+    
+    event_init();
+    
+    
     /* start shell */
     puts("All up, running the shell now");
     char line_buf[SHELL_DEFAULT_BUFSIZE];
@@ -57,3 +80,4 @@ int main(void)
     /* should never be reached */
     return 0;
 }
+

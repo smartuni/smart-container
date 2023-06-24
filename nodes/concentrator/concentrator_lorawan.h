@@ -24,7 +24,7 @@ typedef struct {
         int value;
         char gps[GPS_BUFF];
     } values;
-} cycling_buffer;
+} sensor_data_entry;
 
 gnrc_netif_t *get_lorawan_netif(void);
 void button_callback(void* arg);

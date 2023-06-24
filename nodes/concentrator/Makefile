@@ -14,6 +14,12 @@ endif
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
+# Add project base for custom includes
+PROJECTBASE ?= $(CURDIR)/../..
+
+# Add modules directory for custom modules
+EXTERNAL_MODULE_DIRS += $(PROJECTBASE)/modules
+USEMODULE += cycling_buffer
 
 # enable default networking devices in the platform
 USEMODULE += netdev_default
@@ -32,6 +38,10 @@ USEMODULE += senml_cbor
 
 # Add support for GNRC LoRaWAN (v1.0.3)
 USEMODULE += gnrc_lorawan
+
+# Add event queue/threads
+USEMODULE += event_periodic_callback
+USEMODULE += event_thread
 
 # Tell GNRC to encode LoRaWAN port in the GNRC netif header.
 # This allows us to use `gnrc_txtsnd` to send data from the shell using the

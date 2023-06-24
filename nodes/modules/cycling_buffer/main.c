@@ -48,10 +48,10 @@ typedef struct {
         char gps[GPS_BUFF];
     } vals;
     int timestamp;
-} cycling_buffer;
+} sensor_data_entry;
 
 memarray_t memmanage;
-uint8_t mempool[CYCLING_BUFFER_SIZE * sizeof(cycling_buffer)];
+uint8_t mempool[CYCLING_BUFFER_SIZE * sizeof(sensor_data_entry)];
 
 int main(void)
 {
@@ -60,25 +60,25 @@ int main(void)
     printf("You are running RIOT on a(n) %s board.\n", RIOT_BOARD);
     printf("This board features a(n) %s MCU.\n", RIOT_MCU);
 
-    memarray_init(&memmanage, mempool, sizeof(cycling_buffer), CYCLING_BUFFER_SIZE);
+    memarray_init(&memmanage, mempool, sizeof(sensor_data_entry), CYCLING_BUFFER_SIZE);
 
     clist_node_t list = {0}; /* clear list */
     clist_node_t *curr_el;
-    cycling_buffer* el1 = memarray_alloc(&memmanage);
+    sensor_data_entry* el1 = memarray_alloc(&memmanage);
     el1->sensor_type = SENSOR_TYPE_DOOR;
     /* Add element to list */
     clist_rpush(&list, &el1->node);
     /* Add second element to the list */
-    cycling_buffer el2 = {.sensor_type = SENSOR_TYPE_HUMIDITY};
+    sensor_data_entry el2 = {.sensor_type = SENSOR_TYPE_HUMIDITY};
     clist_rpush(&list, &el2.node);
     /* Pop the first element */
     curr_el = clist_lpop(&list);
     /* Cast the element to the list structure*/
-    cycling_buffer *cast_el = container_of(curr_el, cycling_buffer, node);
+    sensor_data_entry *cast_el = container_of(curr_el, sensor_data_entry, node);
     printf("%d", cast_el->sensor_type);
     /* Pop second element */
     curr_el = clist_lpop(&list);
-    cast_el = container_of(curr_el, cycling_buffer, node);
+    cast_el = container_of(curr_el, sensor_data_entry, node);
     printf("%d", cast_el->sensor_type);
 
     (void) curr_el;
