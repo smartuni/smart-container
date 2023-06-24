@@ -1,7 +1,7 @@
 # name of your application
 APPLICATION = echo-fgets
 BOARD = feather-nrf52840
-
+PORT=/dev/tty.usbmodem14301
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 

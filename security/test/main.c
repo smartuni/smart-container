@@ -3,41 +3,23 @@
 
 #define BUF_SIZE 1024
 
-// int main(void)
-// {
-//     // char *line[0];
-//     getchar();
-//     // getline(,stdin);
-//     // char buf[BUF_SIZE];
-
-//     while(1) {
-//         memset(buf, 0, sizeof(buf));  // Clear the buffer
-//         puts("Waiting for input:");  // Print prompt
-
-//         if (gets(buf) != NULL) {     // Get input
-//             printf("Echo: %s\n", buf);  // Echo input
-//         }
-//     }
-
-//     return 0;
-// }
-
 int main(void)
 {
-    // getchar();
     char buf[BUF_SIZE];
+    int char_count = 0;
 
     while(1) {
         memset(buf, 0, sizeof(buf));  // Clear the buffer
-        puts("Waiting for input:");  // Print prompt
+        printf("Waiting for input:\n");  
 
-        if (fgets(buf, sizeof(buf), stdin) != NULL) {  // Get input
-            // Remove trailing newline character, if it exists
+        if (fgets(buf, sizeof(buf), stdin) != NULL) {  
             if (buf[strlen(buf) - 1] == '\n') {
                 buf[strlen(buf) - 1] = '\0';
             }
 
-            printf("Echo: %s\n", buf);  // Echo input
+            char_count += strlen(buf);
+            printf("Received message: %s\n", buf);  
+            printf("Total characters received so far: %d\n", char_count);
         }
     }
 
