@@ -193,5 +193,5 @@ void send_data_list(clist_node_t *list)
 
     // od_hex_dump(cbor_buf, encoded_length, 0);
     /* TODO: send the data here */
-    // send_data(cbor_buf, encoded_length);
+    send_data(cbor_buf, encoded_length);
 }
