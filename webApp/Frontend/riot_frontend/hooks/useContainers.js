@@ -10,19 +10,20 @@ export const useContainers = async () => {
 
   const onSubmit = async () => {
 
-    console.log("Containers are fetched!");
+
     const res = await fetch("http://178.128.192.215:8000/api/container/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3NTQyNjMwLCJpYXQiOjE2ODc1NDIzMzAsImp0aSI6IjcxYTUyMGJlYjk3YTQ1YmM5OGE5NzZkOTYyMTFhZDY4IiwidXNlcl9pZCI6ImQwNjk5MTM1LTAyNzEtNDY3ZS1iMDUyLTc2YzQ3ZWIzOWI5NSIsInVzZXJuYW1lIjoiZW1pbHlsdWNpYS5hbnRvc2NoQGhhd2hhbWJ1cmcuZGUiLCJmaXJzdE5hbWUiOiJFbWlseSIsImxhc3RuYW1lIjoiQW50b3NjaCJ9.ja8RIUcysQvqyQSuNOEvJ6JLRZo8KekMKOBKaEQhsVM"
+        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3NjQzNDAwLCJpYXQiOjE2ODc2NDMxMDAsImp0aSI6ImY3YWE5NmIyOWU5NTRiMTE5ODkyYmVmMzM2N2MwOTZmIiwidXNlcl9pZCI6ImQwNjk5MTM1LTAyNzEtNDY3ZS1iMDUyLTc2YzQ3ZWIzOWI5NSIsInVzZXJuYW1lIjoiZW1pbHlsdWNpYS5hbnRvc2NoQGhhd2hhbWJ1cmcuZGUiLCJmaXJzdE5hbWUiOiJFbWlseSIsImxhc3RuYW1lIjoiQW50b3NjaCJ9.56HcUR2LFJ6Y-DPxDkCdVqs3YUKU1D8I9IgpPmMtbIM"
       },
 
     });
     var data = await res.json() // Parse the response body as JSON
 
 
-    console.log("Container List: " + data);
+    console.log("Container List: ", data);
+    console.log("Containers are fetched!");
     return data;
 
     if (res.ok) {
@@ -46,5 +47,5 @@ export const useContainers = async () => {
   //   return list;
   // };
 
-  onSubmit()
+  const temp = onSubmit()
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import TempChart from "../pages/temperature";
 import mc from './TopCards.module.css';
-import { containers } from '../data/container.js'
+// import { containers } from '../data/container.js'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
 
@@ -19,7 +19,7 @@ const getConById = (Id) => {
 
 // const Cards = classNames('flex justify-between w-full p-4 rounded-lg' + (isProblem(getConById(currentContainer)) ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg'));
 
-const TopCards = () => {
+const TopCards = ({ containers }) => {
   const router = useRouter()
 
   const {
@@ -42,7 +42,7 @@ const TopCards = () => {
     //var con1 = props.error
     var error = false
     if (con1 != undefined) {
-      if (con1.doorStatus == "open") {
+      if (con1.container_door_closed == "false") {
         error = true
       } else if (con1.crashed == "True") {
         error = true
@@ -98,9 +98,9 @@ const TopCards = () => {
           </p>
         </div>
 
-        <div className={'border-1 p-4 rounded-lg mb-4' + (isProblem() ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
+        <div className={'border-1 p-4 rounded-lg mb-4' + (isTrueSet ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
           <div className={mc.status}>
-            <p className={mc.cardTitle}>Door Status:</p>
+            <p className={mc.cardTitle}>Door Closed:</p>
             <p className={mc.doorStatus} id="doorStatus"></p>
             <p className={mc.cardTitle}>Last Opened:</p>
             <p className={mc.lastOpened}>23/02/23 12pm</p>

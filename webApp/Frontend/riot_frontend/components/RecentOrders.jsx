@@ -1,16 +1,18 @@
 import React from 'react'
 import Router from "next/router"
 import { Button } from "@nextui-org/react"
-
+// import { containers } from "../data/container"
 
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
 import { Checkbox } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react';
+import { getServerSideProps } from '@/pages/dashboard'
 
 
 function isProblem(con) {
     var error = false
+    console.log("undefined check for con: " + typeof con)
     if (con != undefined) {
         if (con.container_door_closed == "open") {
             error = true
@@ -51,6 +53,8 @@ const RecentOrders = ({ containers }) => {
     const [currentContainer, setCurrentContainer] = useState(0);
 
     const [list, setList] = useState(containers)
+
+    useEffect(() => { initiateList() })
     const updateCon = (conID) => setCurrentContainer(conID);
     const [IsChecked, setIsChecked] = useState(false);
     const updateChecked = () => {
@@ -102,31 +106,36 @@ const RecentOrders = ({ containers }) => {
 
 
     const renderAuthButton = () => {
+        // If access token is expired, this function will throw an error!
+        if (containers != undefined) {
 
-        if (updated === "" && updatedID === "") {
-            return containers
-        } else if (updated != "" && updatedID === "") {
 
-            var tempList = list.filter((item) => item.start == updated
-                || item.dest.includes(updated)
-                || item.content.includes(updated))
-            // || item.id === updated)
-            return tempList
+            if (updated === "" && updatedID === "") {
+                return containers
+            } else if (updated != "" && updatedID === "") {
 
-        } else if (updated === "" && updatedID != "") {
-            return list.filter((item) => item.id == updatedID)
+                var tempList = list.filter((item) => item.container_start == updated
+                    || item.container_destination.includes(updated)
+                    || item.container_content.includes(updated))
+                // || item.id === updated)
+                return tempList
 
-        } else {
-            console.log("else reached")
-            var tempList2 = list.filter((item) => item.start == updated
-                && item.id === updatedID
-                || item.dest.includes(updated)
-                && item.id === updatedID
-                || item.content.includes(updated)
-                && item.id === updatedID)
-            return tempList2
+            } else if (updated === "" && updatedID != "") {
+                return list.filter((item) => item.container_id == updatedID)
 
+            } else {
+                console.log("else reached")
+                var tempList2 = list.filter((item) => item.container_start == updated
+                    && item.container_id === updatedID
+                    || item.container_destination.includes(updated)
+                    && item.container_id === updatedID
+                    || item.container_content.includes(updated)
+                    && item.container_id === updatedID)
+                return tempList2
+
+            }
         }
+
     }
 
 
@@ -237,13 +246,13 @@ const RecentOrders = ({ containers }) => {
 
 
                             <div className=''>
-                                <p className='text-gray-800 font-bold'>Container id: {con.id}</p>
-                                <span className='text-gray-500 text-sm'>{con.start}--- </span>
-                                <span className='text-gray-500 text-sm'>{con.dest}</span>
+                                <p className='text-gray-800 font-bold'>Container id: {con.container_id}</p>
+                                <span className='text-gray-500 text-sm'>{con.container_start}--- </span>
+                                <span className='text-gray-500 text-sm'>{con.container_destination}</span>
                             </div>
 
                             <div className='text-gray-500 text-sm'>
-                                {con.content}
+                                {con.container_content}
                             </div>
 
                         </div>
