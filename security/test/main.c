@@ -10,7 +10,7 @@ int main(void)
 
     while(1) {
         memset(buf, 0, sizeof(buf));  // Clear the buffer
-        printf("Waiting for input:\n");  
+        printf("Waiting for key:\n");  
 
         if (fgets(buf, sizeof(buf), stdin) != NULL) {  
             if (buf[strlen(buf) - 1] == '\n') {
@@ -18,8 +18,11 @@ int main(void)
             }
 
             char_count += strlen(buf);
-            printf("Received message: %s\n", buf);  
+            printf("Received key: %s\n", buf);  
             printf("Total characters received so far: %d\n", char_count);
+
+            // Send 'ACK' to python 
+            printf("ACK\n");
         }
     }
 
