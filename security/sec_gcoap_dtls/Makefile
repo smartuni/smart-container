@@ -1,22 +1,12 @@
 # Default Makefile, for host native GNRC-based networking
 
 # name of your application
-APPLICATION = sec_coap
+APPLICATION = gcoap_example
 
 # If no BOARD is found in the environment, use this default:
-# PORT=/dev/tty.usbmodem31401#0
-#PORT = /dev/tty.usbmodem31301#1
-#PORT = /dev/tty.usbmodem31202#2
+PORT=/dev/tty.usbmodem141101
+#PORT = /dev/tty.usbmodem141301#CLIENT
 BOARD ?= feather-nrf52840
-
-# Required features
-FEATURES_REQUIRED += periph_flashpage
-
-# Development process:
-DEVELHELP ?= 1
-
-# Change this to 0 show compiler invocation lines by default:
-QUIET ?= 1
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
@@ -62,16 +52,10 @@ USEMODULE += od
 USEMODULE += fmt
 USEMODULE += netutils
 USEMODULE += random
-USEMODULE += log_color
 # Add also the shell, some shell commands
 USEMODULE += shell
 USEMODULE += shell_cmds_default
 USEMODULE += ps
-# Required by MTD
-# USEMODULE += periph_flashpage
-USEMODULE += mtd_flashpage
-USEMODULE += mtd_write_page
-USEMODULE += embunit
 
 # Comment this out to disable code in RIOT that does safety checking
 # which is not needed in a production environment but helps in the
@@ -127,5 +111,3 @@ GCOAP_RESEND_BUFS_MAX ?= 2
 CFLAGS += -DCONFIG_GCOAP_RESEND_BUFS_MAX=$(GCOAP_RESEND_BUFS_MAX)
 endif
 CFLAGS += -DTHREAD_STACKSIZE_MAIN=\(2*THREAD_STACKSIZE_LARGE\)
-
-CFLAGS ?= -DLOG_LEVEL=LOG_ALL
