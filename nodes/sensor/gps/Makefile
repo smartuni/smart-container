@@ -13,10 +13,9 @@ FEATURES_OPTIONAL += periph_uart_rxstart_irq
 USEPKG += minmea
 USEPKG += nanocbor
 
-# nodes team base directory
-PROJECT_BASE ?= $(CURDIR)/../..
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../../RIOT
+PROJECT_BASE ?= $(CURDIR)/../..
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= feather-nrf52840
@@ -34,6 +33,12 @@ USEMODULE += senml
 
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
+
+USEMODULE += mtd
+USEMODULE += mtd_flashpage
+USEMODULE += cipher_modes
+USEMODULE += ieee802154_security
+USEMODULE += crypto_aes_128
 
 # avoid running Kconfig by default
 SHOULD_RUN_KCONFIG ?=

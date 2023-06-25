@@ -31,6 +31,16 @@
 #include "gps.h"
 #include "coap.h"
 
+/* ------------------------------------------------ */
+/*          Start security initialization           */
+/* ------------------------------------------------ */
+#include "provisioning_helper.h"
+#include "sec_link_layer.h"
+static ieee802154_sec_context_t link_layer_sec_ctx;
+/* ------------------------------------------------ */
+/*           End security initialization            */
+/* ------------------------------------------------ */
+
 mutex_t mutex; 
 
 // UART
@@ -157,7 +167,17 @@ static int send_cmd(uart_t dev, const char cmd[]) {
 
 //char *coap_path = "/gps";
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    provisioning_helper_init();
+    sec_link_layer_init(&link_layer_sec_ctx);
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
+
     (void) argc;
     (void) argv;
     xtimer_msleep(3000);
