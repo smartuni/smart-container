@@ -13,8 +13,6 @@ ifneq (,$(wildcard $(CURDIR)/tests*/.))
   endif
 endif
 
-
-
 CFLAGS += -DPROVISIONING_ENABLE_DEV=1
 CFLAGS += -DPROVISIONING_CONFIG_CONCENTRATOR
 
