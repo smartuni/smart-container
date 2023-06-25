@@ -3,6 +3,7 @@ APPLICATION = concentrator
 
 # This is the target board for the Concentrator
 BOARD ?= nrf52840dk
+FEATURES_REQUIRED += periph_spi
 # enable this for testing on the small feather board
 # BOARD = feather-nrf52840
 
@@ -38,12 +39,8 @@ USEMODULE += cycling_buffer
 
 # Provisioning modules
 include $(CURDIR)/Makefile.provisioning_helper
-include $(CURDIR)/Makefile.link_layer_security
-
-
-# Secure save modules
+include $(CURDIR)/Makefile.sec_link_layer
 include $(CURDIR)/Makefile.sec_save
-
 
 # enable default networking devices in the platform
 USEMODULE += netdev_default
@@ -55,6 +52,11 @@ USEMODULE += auto_init_gnrc_netif
 USEMODULE += gnrc_ipv6_default
 
 # add CoAP module
+USEMODULE += log_color
+USEMODULE += random 
+USEMODULE += fmt
+USEMODULE += od
+USEMODULE += shell
 USEMODULE += gcoap
 USEMODULE += od
 USEMODULE += senml_cbor
@@ -126,4 +128,4 @@ CFLAGS += -I$(CURDIR)
 
 include $(RIOTBASE)/Makefile.include
 
-
+CFLAGS ?= -DLOG_LEVEL=LOG_ALL
