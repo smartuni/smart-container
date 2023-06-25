@@ -104,11 +104,6 @@ export const getServerSideProps = async (context) => {
   var data = await res2.json() // Parse the response body as JSON
   // console.log("Data check!!: ", data)
 
-  // const res_array = []
-  // for (let i in data) {
-  //   res_array.push([data[i]]);
-  // }
-
   // console.log("Container List: " + data);
 
   return {

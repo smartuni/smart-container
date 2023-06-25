@@ -18,6 +18,7 @@ const getConById = (Id) => {
   return result
 }
 
+
 // const Cards = classNames('flex justify-between w-full p-4 rounded-lg' + (isProblem(getConById(currentContainer)) ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg'));
 
 const TopCards = ({ containers }) => {
@@ -33,23 +34,26 @@ const TopCards = ({ containers }) => {
 
   const [currentContainerObj, setCurrentContainerObj] = useState(containers[0]);
   const updateConObj = (propCon) => setCurrentContainerObj(propCon);
-  useEffect(() => updateConObj(containers[parseInt(props.test, 10) - 1]));
-  function isProblem(con) {
-    var error = false
-    //console.log("undefined check for con: " + typeof con)
-    if (con != undefined) {
-      if (con.container_door_closed == false) { // should be == false
-        error = true
-      }
-      return error
-    }
-  }
+  // useEffect(() => updateConObj(containers[parseInt(props.test, 10) - 1]));
+
   var isTrueSet = (props.error === 'true') // fix line (doesnt change !!!)
   // Current TODO: props.error is not yet a useable boolean 
   console.log("props.error is currently: ", props.error) // For some reason props.error is always false
+  console.log("props.test is currently: " + props.test)
+  console.log("props.test.content type is: ", typeof props.test.content)
   // console.log(isTrueSet)
   // console.log(isProblem(containers[parseInt(props.test, 10) - 1]))
+  function isProblem(con_array, containerId) {
+    var error = false
 
+    // console.log("undefined check for con: " + typeof con_array)
+
+    var tempList = con_array.filter((item) => item.container_id == containerId)
+    console.log("tempList is currently: ", tempList)
+    return error
+
+
+  }
   return (
     <div>
 
@@ -94,7 +98,7 @@ const TopCards = ({ containers }) => {
           </p>
         </div>
 
-        <div className={'border-1 p-4 rounded-lg mb-4' + (isProblem(props.test) ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
+        <div className={'border-1 p-4 rounded-lg mb-4' + (isTrueSet ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
           <div className={mc.status}>
             <p className={mc.cardTitle}>Door Closed:</p>
             <p className={mc.doorStatus} id="doorStatus"></p>

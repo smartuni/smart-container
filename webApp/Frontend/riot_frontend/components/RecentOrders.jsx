@@ -48,12 +48,12 @@ function reverseProblemSort(a, b) {
 
 
 const RecentOrders = ({ containers, location }) => {
-    const [currentContainer, setCurrentContainer] = useState(0);
+    const [currentContainer, setCurrentContainer] = useState(containers[0]);
 
     const [list, setList] = useState(containers)
 
 
-    const updateCon = (conID) => setCurrentContainer(conID);
+    const updateCon = (con) => setCurrentContainer(con);
     const [IsChecked, setIsChecked] = useState(false);
     const updateChecked = () => {
         setIsChecked(!IsChecked);
@@ -83,9 +83,9 @@ const RecentOrders = ({ containers, location }) => {
     var newList = containers
 
     function sendProps() {
-        const test = currentContainer
-        var error = isProblem(test)
-
+        var test = currentContainer
+        var error = isProblem(currentContainer)
+        // console.log("sendprops")
         Router.push({
             pathname: "/dashboard",
             query: {
@@ -106,8 +106,8 @@ const RecentOrders = ({ containers, location }) => {
     //         }
     // })
 
-    console.log("containers list?: ", containers)
-    console.log(typeof containers)
+    // console.log("containers list?: ", containers)
+    // console.log(typeof containers)
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
             return newList.sort(problemSort)
@@ -137,7 +137,7 @@ const RecentOrders = ({ containers, location }) => {
                 return list.filter((item) => item.container_id == updatedID)
 
             } else {
-                console.log("else reached")
+                // console.log("else reached")
                 var tempList2 = list.filter((item) => item.container_start == updated
                     && item.container_id === updatedID
                     || item.container_destination.includes(updated)
@@ -160,7 +160,7 @@ const RecentOrders = ({ containers, location }) => {
                 <span className=''>sort by error</span>
                 <input type='checkbox' className="h-6 w-6 ml-2" placeholder="Sort By Error" checked={IsChecked} onClick={() => {
                     updateChecked(),
-                        console.log(IsChecked),
+                        // console.log(IsChecked),
                         testArray = testfunc()
                 }}
                 />
@@ -238,7 +238,7 @@ const RecentOrders = ({ containers, location }) => {
                         onClick={() => {
                             document.getElementById("containerTracker").innerHTML = con.container_id;
                             document.getElementById("doorStatus").innerHTML = con.container_door_closed;
-                            updateCon(con.container_id)
+                            updateCon(con)
 
                             sendProps()
                         }}
