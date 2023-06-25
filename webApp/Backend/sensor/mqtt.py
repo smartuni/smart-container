@@ -66,9 +66,10 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     # Parse Byte data converted to JSON
     # payload = json.loads(msg.payload.decode("utf-8"))
-    payload = SenmlPack(msg)
+    doc = SenmlPack('Payload')
+    doc.add(msg)
 
-    print(payload)
+    print(doc)
     # print(msg.topic+" "+str(msg.payload))
     print(process_message(msg))
 
@@ -86,10 +87,13 @@ def process_message(msg):
     # Might change to SenmlRecord
     # Convert SenML data to JSON format
     # payload = json.dumps(msg)
-    payload = SenmlPack(msg)
+    doc = SenmlPack('Payload')
+    doc.add(msg)
+
+    json_data = doc.to_json()
 
     # Print the decoded SenML message
-    print(payload.to_json())
+    print(doc.to_json())
 
 
 
