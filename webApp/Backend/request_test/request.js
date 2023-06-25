@@ -141,4 +141,61 @@ async  function testConnection(){
   const response_body = await res.json(); // Parse the response body as JSON
   console.log(response_body)
 }
-onSubmit()
+
+async function testLogin(){
+const res = await fetch("http://178.128.192.215:8000/api/signIn/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ 
+    email: "emilylucia.antosch@hawhamburg.de", //username entered by the user in textbox
+    password: "gend55@opqqq" //password entered by the user in textbox
+  }), //"email": "sahar.behravesh@gmail.com", password: "Sahar1364"
+});
+let json = await res.json();
+console.log(json);
+
+}
+testLogin();
+
+async function testSignup(){
+const res = fetch("http://178.128.192.215:8000/api/signup/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ 
+    email: "emilylucia.antosch@hawhamburg.de", //username entered by the user in textbox
+    password: "gend55@opqqq" //password entered by the user in textbox
+  }), //"email": "sahar.behravesh@gmail.com", password: "Sahar1364"
+}).then((response) => {
+  console.log("Test");
+  return response.json();
+}).then((data) => {
+  console.log(data);
+}).catch((error) => {
+  console.log(error);
+});
+
+
+}
+
+
+
+
+async function testFilter(sensorData, container_id){
+  let containerLocations = sensorData.filter((sensor) => sensor.container_id == container_id && sensor.sensor_type == "GPS")
+  latestcontainerLocations = containerLocations.reduce((latest, current) => {
+    if (latest.timestamp > current.timestamp) {
+      return latest
+    } else {
+      return current
+    }
+  
+  })
+  containerLocations = containerLocations.map((sensor) => sensor.sensor_data)
+  containerLocations = containerLocations.map((sensor) => sensor.split(","))
+  
+
+}

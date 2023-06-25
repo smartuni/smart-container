@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from rest_framework.routers import DefaultRouter
-from sensor.views import ContainerViewset, SensorViewset, UserViewset, MyObtainTokenPairView
+from sensor.views import ContainerViewset, SensorViewset, UserViewset
 from django.urls import include
 router = DefaultRouter()
 router.register(r'container', ContainerViewset)
@@ -16,5 +16,6 @@ urlpatterns = [
     path("signUp/", views.RegisterView.as_view()),
     path('signIn/', views.MyObtainTokenPairView.as_view()),
     path('signIn/refresh/', TokenRefreshView.as_view()),
+    path("container_location/", views.ContainerLocation.as_view())
     # path("signInWebJwt/", JwtViews.token_obtain_pair.as_view()),
 ]
