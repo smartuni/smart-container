@@ -12,6 +12,13 @@ PROJECT_BASE ?= $(CURDIR)/../../..
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
 
+# Security modules
+USEMODULE += mtd
+USEMODULE += mtd_flashpage
+USEMODULE += cipher_modes
+USEMODULE += ieee802154_security
+USEMODULE += crypto_aes_128
+
 # Conversion from uint to string
 USEMODULE += fmt
 

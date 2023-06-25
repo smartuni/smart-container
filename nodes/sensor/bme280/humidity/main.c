@@ -16,11 +16,29 @@
 #include "coap.h"
 #include "fmt.h"
 
+/* ------------------------------------------------ */
+/*          Start security initialization           */
+/* ------------------------------------------------ */
+#include "provisioning_helper.h"
+#include "sec_link_layer.h"
+static ieee802154_sec_context_t link_layer_sec_ctx;
+/* ------------------------------------------------ */
+/*           End security initialization            */
+/* ------------------------------------------------ */
+
 #define STRINGLENGTH 10
 #define SEND_FREQUENCY_S 10
 
 int main(void)
 {
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    provisioning_helper_init();
+    sec_link_layer_init(&link_layer_sec_ctx);
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
     puts("BME280 example.");
 
     saul_reg_t *humid_sensor = saul_reg_find_type(SAUL_SENSE_HUM);
