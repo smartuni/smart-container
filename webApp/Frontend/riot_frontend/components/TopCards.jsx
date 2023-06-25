@@ -91,10 +91,10 @@ const TopCards = () => {
 
         <div className={mc.card}>
           <div>
-            <p className={mc.cardTitle}>Removed</p>
+            <p className={mc.cardTitle}>Container updated:</p>
           </div>
           <p className={mc.cardValue}>
-            <span>Removed</span>
+            <span id="container_time_stamp">---timestamp---</span>
           </p>
         </div>
 

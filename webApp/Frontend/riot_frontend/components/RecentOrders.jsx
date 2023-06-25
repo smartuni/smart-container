@@ -217,6 +217,7 @@ const RecentOrders = ({ containers }) => {
                         onClick={() => {
                             document.getElementById("containerTracker").innerHTML = con.container_id;
                             document.getElementById("doorStatus").innerHTML = con.container_door_closed;
+                            // document.getElementById("container_time_stamp").innerHTML = TIMESTAMP GOES HERE
                             setCurrentContainer(con.container_id)
                             sendProps()
                         }}
