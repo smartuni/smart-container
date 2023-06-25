@@ -65,7 +65,9 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     # Parse Byte data converted to JSON
-    payload = json.loads(msg.payload.decode("utf-8"))
+    # payload = json.loads(msg.payload.decode("utf-8"))
+    payload = SenmlPack(msg)
+
     print(payload)
     # print(msg.topic+" "+str(msg.payload))
     print(process_message(msg))
@@ -82,6 +84,8 @@ def on_message(client, userdata, msg):
 def process_message(msg):
     # Decode the SenML message
     # Might change to SenmlRecord
+    # Convert SenML data to JSON format
+    # payload = json.dumps(msg)
     payload = SenmlPack(msg)
 
     # Print the decoded SenML message
