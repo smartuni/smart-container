@@ -60,7 +60,6 @@ class ContainerViewset(viewsets.ModelViewSet):
     serializer_class = ContainerSerializer
 
 
-@csrf_protect
 class ContainerLocation(APIView):
     """
     Retrieve container location

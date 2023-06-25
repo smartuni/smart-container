@@ -16,6 +16,6 @@ urlpatterns = [
     path("signUp/", views.RegisterView.as_view()),
     path('signIn/', views.MyObtainTokenPairView.as_view()),
     path('signIn/refresh/', TokenRefreshView.as_view()),
-    path("container_location/", views.ContainerLocation.as_view())
+    path("container_location/", views.ContainerLocation.as_view(), name="container_location"),
     # path("signInWebJwt/", JwtViews.token_obtain_pair.as_view()),
 ]

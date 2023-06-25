@@ -186,7 +186,7 @@ const res = fetch("http://178.128.192.215:8000/api/signup/", {
 
 async function testFilter(sensorData, container_id){
   let containerLocations = sensorData.filter((sensor) => sensor.container_id == container_id && sensor.sensor_type == "GPS")
-  latestcontainerLocations = containerLocations.reduce((latest, current) => {
+  let latestcontainerLocations = containerLocations.reduce((latest, current) => {
     if (latest.timestamp > current.timestamp) {
       return latest
     } else {
