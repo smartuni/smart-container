@@ -6,9 +6,11 @@ import json
 import os
 from cbor2 import loads
 import base64
+from .models import Container, SensorData
 from django.db import IntegrityError
-from sensor.models import SensorData, Container
-from sensor.models import SensorData, Container
+from django.core.exceptions import ValidationError
+from kpn_senml import *
+
 
 
 
@@ -25,7 +27,7 @@ TOPIC = f"v3/{USERNAME}/devices/+/up"
 TTN_MQTT_SERVER = "mobi35.inet.haw-hamburg.de"
 
 
-def postToDatabase(time, data, dataType, owner):
+def postToDatabase(sensorType, sensorData, time):
     """
     The function then creates a new SensorData object using the SensorData.objects.create() method.
     The SensorData object has five fields: id, sensor_type, sensor_data, sensor_time, and owner.
@@ -34,14 +36,14 @@ def postToDatabase(time, data, dataType, owner):
     The sensor_time field is a date-time field that stores the time the data was recorded.
     The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
     """
-    owner_instance = Container.objects.get(container_id=owner)
-    if time is None or data is None or dataType is None or owner_instance is None:
+    owner_instance = Container.objects.get(container_id=SensorData.owner)
+    if time is None or sensorData is None or sensorType is None or owner_instance is None:
         raise (ValueError("One or more parameters are None"))
     try:
-        entry = SensorData.objects.create(
+        entry = sensorData.objects.create(
             id=uuid.uuid4(),
-            sensor_type=dataType,
-            sensor_data=data,
+            sensor_type=sensorType,
+            sensor_data=sensorData,
             sensor_time=time,
             owner=owner_instance,
         )
@@ -66,42 +68,46 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     # Parse Byte data converted to JSON
-    
-    payload = json.loads(msg.payload.decode("utf-8"))
-    decoded_payload = loads(payload)
-    file = open("mqtt.txt", "a")
-    file.write("Creating payload print-out\n")
-    file.write(str(payload))
-    file.write(decoded_payload)
-    file.write("\n")
-    file.close()
-    
+    # payload = json.loads(msg.payload.decode("utf-8"))
+    doc = SenmlPack('Payload')
+    doc.add(msg)
+
+    print(doc)
     # print(msg.topic+" "+str(msg.payload))
     print(process_message(msg))
 
 
+# {
+# 	sensor: string
+# 	value: number
+# 	unit: string
+# 	time: string
+# }
+
 # Parsing the payload message for the data we want
 def process_message(msg):
-    payload = json.loads(msg.payload.decode("utf-8"))
-    # Extract temperature and humidity data
+    # Decode the SenML message
+    # Might change to SenmlRecord
+    # Convert SenML data to JSON format
+    # payload = json.dumps(msg)
+    doc = SenmlPack('Payload')
+    doc.add(msg)
 
-    time = payload['received_at']
-    
-    message = payload['uplink_message']['frm_payload']
-    # Convert base64 encoded string to bytes
-    bytes_data = base64.b64decode(message)
-    # Convert bytes to string
-    decoded_message = bytes_data.decode('utf-8')
+    json_data = doc.to_json()
 
-    # temperature = payload['uplink_message']['decoded_payload']['temperature']['value']
-    # temperature_unit = payload['uplink_message']['decoded_payload']['temperature']['unit']
-    # temperature_str = str(temperature) + " " + temperature_unit
+    # Print the decoded SenML message
+    print(doc.to_json())
 
-    # humidity = payload['uplink_message']['decoded_payload']['humidity']['value']
-    # humidity_unit = payload['uplink_message']['decoded_payload']['humidity']['unit']
-    # humidity_str = str(humidity) + " " + humidity_unit
 
-    return time, decoded_message
+
+    # payload = json.loads(msg.payload.decode("utf-8"))
+    # # Extract temperature and humidity data
+
+    # sensor = payload['sensor']
+    # value = payload['value'] + payload['unit']
+    # time = payload['time']
+
+    # return postToDatabase(sensor, value, time)
     
 
 client = mqtt.Client()
