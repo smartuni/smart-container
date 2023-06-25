@@ -32,7 +32,7 @@ const TopCards = ({ containers }) => {
     test, error
   };
 
-  const [currentContainerObj, setCurrentContainerObj] = useState(containers[0]);
+  // const [currentContainerObj, setCurrentContainerObj] = useState(containers[0]);
   const updateConObj = (propCon) => setCurrentContainerObj(propCon);
   // useEffect(() => updateConObj(containers[parseInt(props.test, 10) - 1]));
 
