@@ -38,9 +38,9 @@ const TopCards = ({ containers }) => {
 
   var isTrueSet = (props.error === 'true') // fix line (doesnt change !!!)
   // Current TODO: props.error is not yet a useable boolean 
-  console.log("props.error is currently: ", props.error) // For some reason props.error is always false
-  console.log("props.test is currently: " + props.test)
-  console.log("props.test.content type is: ", typeof props.test.content)
+  // console.log("props.error is currently: ", props.error) // For some reason props.error is always false
+  // console.log("props.test is currently: " + props.test)
+  // console.log("props.test.content type is: ", typeof props.test.content)
   // console.log(isTrueSet)
   // console.log(isProblem(containers[parseInt(props.test, 10) - 1]))
   function isProblem(con_array, containerId) {
