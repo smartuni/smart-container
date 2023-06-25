@@ -13,12 +13,19 @@ ifneq (,$(wildcard $(CURDIR)/tests*/.))
   endif
 endif
 
-CFLAGS += -DCONFIG_IEEE802154_SEC_DEFAULT_KEY=\"2GjwNxBjGnzktUB5\"
+
+
+CFLAGS += -DPROVISIONING_ENABLE_DEV=1
+CFLAGS += -DPROVISIONING_CONFIG_CONCENTRATOR
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 QUIET ?= 1
 DEVELHELP ?= 1
+
+# Provisioning modules
+USEMODULE += mtd
+USEMODULE += mtd_flashpage
 
 USEMODULE += od
 USEMODULE += log_color
@@ -52,6 +59,8 @@ USEMODULE += gnrc_txtsnd
 
 # the application dumps received packets to stdout
 USEMODULE += gnrc_pktdump
+
+CFLAGS += -DCONFIG_IEEE802154_SEC_DEFAULT_KEY=\"29DJ29XL8D3Q7QXG\"
 
 include $(RIOTBASE)/Makefile.include
 
