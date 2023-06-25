@@ -1,17 +1,15 @@
-import uuid
-import datetime
+import binascii, json, base64, uuid, datetime
 from django.forms import ValidationError
 import paho.mqtt.client as mqtt
-import json
-import os
 from cbor2 import loads
-import base64
-from .models import Container, SensorData
+from sensor.models import Container, SensorData 
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from kpn_senml import *
 
-
+file = open("mqtt.txt", "w")
+file.write("MQTT started execution....")
+file.close()
 
 
 # Confiugure as needed
@@ -36,14 +34,14 @@ def postToDatabase(sensorType, sensorData, time):
     The sensor_time field is a date-time field that stores the time the data was recorded.
     The owner field is a foreign key to the Container model, which represents the container that the sensor is attached to.
     """
-    owner_instance = Container.objects.get(container_id=SensorData.owner)
+    owner_instance = Container.objects.get(container_id=uuid.UUID('30676a11-4342-4c12-8a5c-720d9515115a')) 
     if time is None or sensorData is None or sensorType is None or owner_instance is None:
         raise (ValueError("One or more parameters are None"))
     try:
-        entry = sensorData.objects.create(
+        entry = SensorData.objects.create(
             id=uuid.uuid4(),
             sensor_type=sensorType,
-            sensor_data=sensorData,
+            sensor_data=str(sensorData),
             sensor_time=time,
             owner=owner_instance,
         )
@@ -64,70 +62,37 @@ def on_connect(client, userdata, flags, rc):
     # reconnect then subscriptions will be renewed.
     client.subscribe("#")
 
-
-# The callback for when a PUBLISH message is received from the server.
-def on_message(client, userdata, msg):
-    # Parse Byte data converted to JSON
-    # payload = json.loads(msg.payload.decode("utf-8"))
-    doc = SenmlPack('Payload')
-    doc.add(msg)
-
-    print(doc)
-    # print(msg.topic+" "+str(msg.payload))
-    print(process_message(msg))
-
-
-# {
-# 	sensor: string
-# 	value: number
-# 	unit: string
-# 	time: string
-# }
-
 # Parsing the payload message for the data we want
-def process_message(msg):
-    msg = [{-2: "gps", 6: 6, 3: "1234.5678,1234.5678"}, {-2: "crash", 6: 1, 4: True}, {-2: "hum", 6: 2, 2: 61}]
-    # Decode the SenML message
-    # Convert SenML data to JSON format
-    # payload = json.dumps(msg)
-    doc = SenmlPack('Payload')
-    doc.add(msg)
-    json_data = doc.to_json()
+def process_message(client, userdata, msg):
+    msg_decoded = msg.payload.decode("utf-8")
+    output_dict = json.loads(msg_decoded)
+    decoded_payload = base64.b64decode(output_dict["uplink_message"]["frm_payload"])
 
-    # Extract values from the first SenML data object
-    # Extracts GPS
-    first_senml_data = json_data[0]
-    value = first_senml_data[3]
-    sensor = first_senml_data[-2]
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    print("Current Time:", current_time)
-    print("GPS Value:", value)
-    print("Sensor Type:", sensor)
+    decoded_cbor_data = binascii.unhexlify(binascii.hexlify(decoded_payload))
+    json_data = loads(decoded_cbor_data)
 
-    # Print the decoded SenML message
-    print("=============================================")
-    print(doc.to_json())
-
-
-
-    # payload = json.loads(msg.payload.decode("utf-8"))
-    # # Extract temperature and humidity data
-
-    # sensor = payload['sensor']
-    # value = payload['value'] + payload['unit']
-    # time = payload['time']
-
-    # return postToDatabase(sensor, value, time)
+    for entry in json_data:
+        sensor_type = entry[-2]
+        
+        if 2 in entry:
+            #Integer
+            sensor_data = entry[2]
+        elif 3 in entry:
+            #String
+            sensor_data = entry[3]
+        elif 4 in entry:
+            #Boolean
+            sensor_data = entry[4]
+        else:
+            sensor_data = None
+        sensor_time = datetime.datetime.now() 
+        postToDatabase(sensor_type, sensor_data, sensor_time)
     
 
 client = mqtt.Client()
 client.on_connect = on_connect
-client.on_message = on_message
+client.on_message = process_message
 
-file = open("mqtt.txt", "w")
-file.write("MQTT started execution....")
-file.close()
 
 # client = mqtt.Client()
 # client.on_connect = on_connect

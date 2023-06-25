@@ -10,25 +10,17 @@
 #
 # base value example
 
+import binascii
 from kpn_senml import *
 import time
 import datetime
-
-pack = SenmlPack("device_name")
-temp = SenmlRecord(SenmlNames.KPN_SENML_TEMPERATURE, unit=SenmlUnits.SENML_UNIT_DEGREES_CELSIUS, value=23.5)
-door_pos = SenmlRecord("doorPos", update_time=20, value=True)
-int_val = SenmlRecord("int_val", sum=100)
-
-pack.add(temp)
-pack.add(door_pos)
-pack.add(int_val)
-
-random_time = datetime.datetime.strptime('Jan 1 2018  1:33PM', '%b %d %Y %I:%M%p')
-pack.base_time = time.mktime(random_time.timetuple())                       # set a base time
-pack.base_value = 5
-pack.base_sum = 50
-temp.time = time.mktime(datetime.datetime.now().timetuple())                             # all child objects will receive the time value
+from cbor2 import loads, dumps, CBORTag
 
 
+cbor_data = "81A4216B6465766963655F6E616D65006474656D70016343656C0214"
+decoded_cbor_data = binascii.unhexlify(cbor_data)
 
-print(pack.to_json())
+json_data = loads(decoded_cbor_data)
+
+print(decoded_cbor_data)
+print(json_data[0][-2])
