@@ -30,16 +30,18 @@
 #include "provisioning_helper.h"
 #include "link_layer_security.h"
 
+static ieee802154_sec_context_t link_layer_sec_ctx;
+
 int main(void)
 {
     getchar(); // Needed for nrf52840
-    
+
     /* ------------------------------------------------ */
     /*          Start security initialization           */
     /* ------------------------------------------------ */
     // sdcard_fs_init();
     provisioning_helper_init();
-    link_layer_sec_init();
+    link_layer_sec_init(&link_layer_sec_ctx);
     /* ------------------------------------------------ */
     /*           End security initialization            */
     /* ------------------------------------------------ */

@@ -12,7 +12,7 @@
 #include "provisioning_helper.h"
 
 
-void link_layer_sec_init(void)
+void link_layer_sec_init(ieee802154_sec_context_t *link_layer_sec_ctx)
 {
     uint8_t link_layer_security_key[IEEE802154_SEC_KEY_LENGTH];
     provisioning_helper_get_ieee802154_security_key(link_layer_security_key);
@@ -21,14 +21,13 @@ void link_layer_sec_init(void)
     //     link_layer_security_key[8], link_layer_security_key[9], link_layer_security_key[10], link_layer_security_key[11],
     //     link_layer_security_key[12], link_layer_security_key[13], link_layer_security_key[14], link_layer_security_key[15]);
 
-    static ieee802154_sec_context_t link_layer_sec_ctx;
-    ieee802154_sec_init(&link_layer_sec_ctx);
-    cipher_init(&link_layer_sec_ctx.cipher, CIPHER_AES, link_layer_security_key, IEEE802154_SEC_KEY_LENGTH);
+    ieee802154_sec_init(link_layer_sec_ctx);
+    cipher_init(&(link_layer_sec_ctx->cipher), CIPHER_AES, link_layer_security_key, IEEE802154_SEC_KEY_LENGTH);
     
-    LOG_INFO("security_level = %d\n", link_layer_sec_ctx.security_level);
-    LOG_INFO("key_id_mode = %d\n", link_layer_sec_ctx.key_id_mode);
-    LOG_INFO("key_index = %d\n", link_layer_sec_ctx.key_index);
+    LOG_INFO("security_level = %d\n", link_layer_sec_ctx->security_level);
+    LOG_INFO("key_id_mode = %d\n", link_layer_sec_ctx->key_id_mode);
+    LOG_INFO("key_index = %d\n", link_layer_sec_ctx->key_index);
     LOG_INFO("key_source: \n");
-    od_hex_dump(link_layer_sec_ctx.key_source, IEEE802154_LONG_ADDRESS_LEN, OD_WIDTH_DEFAULT);
-    LOG_INFO("frame_counter = %ld\n",link_layer_sec_ctx.frame_counter);
+    od_hex_dump(&(link_layer_sec_ctx->key_source), IEEE802154_LONG_ADDRESS_LEN, OD_WIDTH_DEFAULT);
+    LOG_INFO("frame_counter = %ld\n",link_layer_sec_ctx->frame_counter);
 }
