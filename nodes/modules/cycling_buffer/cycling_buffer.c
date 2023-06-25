@@ -5,7 +5,7 @@
 
 #define MIN_STRING_BUFF_SIZE GPS_BUFF + 128
 
-static const char* string_format = "sensor_type: %s, value: %s, timestamp: %d;";
+static const char* string_format = "sensor_type: %s, value: %s, timestamp: %d;\n";
 
 static memarray_t memmanage;
 static uint8_t mempool[CYCLING_BUFFER_SIZE * sizeof(sensor_data_entry)];

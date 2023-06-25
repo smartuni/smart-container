@@ -23,6 +23,7 @@
 #define MAIN_QUEUE_SIZE (4)
 static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
 
+#define BUFFER_FLUSH_INTERVAL (30U)
 static event_periodic_callback_t buffer_flush_event;
 
 static const shell_command_t shell_commands[] = {
@@ -42,6 +43,8 @@ void event_init(void)
     /* initialize periodic callback */
     event_periodic_callback_init(&buffer_flush_event, ZTIMER_SEC, EVENT_QUEUE_PRIO_MEDIUM,
                                  buffer_flush_cb, NULL);
+    /* start periodic callback */
+    event_periodic_callback_start(&buffer_flush_event, BUFFER_FLUSH_INTERVAL);
 }
 
 int main(void)
