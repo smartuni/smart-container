@@ -68,6 +68,8 @@ export const getServerSideProps = async (context) => {
     return res
   })
 
+
+  // The code below is a bit redundant, but gets the location, not yet as an array
   const locationTest = await fetch("http://178.128.192.215:8000/api/signIn/refresh/", {
     method: "POST",
     headers: {
