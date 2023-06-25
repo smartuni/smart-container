@@ -47,7 +47,7 @@ function reverseProblemSort(a, b) {
 
 
 
-const RecentOrders = ({ containers, location }) => {
+const RecentOrders = ({ containers, location, date }) => {
     const [currentContainer, setCurrentContainer] = useState(containers[0]);
 
     const [list, setList] = useState(containers)
@@ -151,10 +151,7 @@ const RecentOrders = ({ containers, location }) => {
         }
 
     }
-    var currentDate = new Date()
 
-    var curTime = currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds();
-    var date = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate() + ' ';
 
 
 
@@ -162,7 +159,7 @@ const RecentOrders = ({ containers, location }) => {
         <div className='w-full relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
             <h1 className='font-bold text-xl'>Container List</h1>
             <span className='font-bold'>Last Fetched: </span>
-            <span className='inline-block'>{date + curTime}</span>
+            <span className='inline-block'>{date}</span>
             <div className='items-center '>
                 <span className=''>sort by error</span>
 

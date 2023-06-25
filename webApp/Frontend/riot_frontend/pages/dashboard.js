@@ -28,7 +28,7 @@ const Home = (props) => {
         <TopCards containers={props.containers} />
         <div className="p-4 grid md:grid-cols-2 grid-cols-1 gap-4">
           <ContainersMap containers={props.containers} />
-          <RecentOrders containers={props.containers} location={props.location} />
+          <RecentOrders containers={props.containers} location={props.location} date={props.date} />
           {/* <ContainerProblem/> */}
         </div>
       </main>
@@ -105,12 +105,15 @@ export const getServerSideProps = async (context) => {
   // console.log("Data check!!: ", data)
 
   // console.log("Container List: " + data);
+  var currentDate = new Date()
+  var date = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate() + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+  //var curTime = currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds();
 
   return {
     props: {
       containers: data,
       location: locData,
-
+      date: date
     },
   }
 }
