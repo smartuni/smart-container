@@ -86,16 +86,27 @@ def on_message(client, userdata, msg):
 
 # Parsing the payload message for the data we want
 def process_message(msg):
+    msg = [{-2: "gps", 6: 6, 3: "1234.5678,1234.5678"}, {-2: "crash", 6: 1, 4: True}, {-2: "hum", 6: 2, 2: 61}]
     # Decode the SenML message
-    # Might change to SenmlRecord
     # Convert SenML data to JSON format
     # payload = json.dumps(msg)
     doc = SenmlPack('Payload')
     doc.add(msg)
-
     json_data = doc.to_json()
 
+    # Extract values from the first SenML data object
+    # Extracts GPS
+    first_senml_data = json_data[0]
+    value = first_senml_data[3]
+    sensor = first_senml_data[-2]
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("Current Time:", current_time)
+    print("GPS Value:", value)
+    print("Sensor Type:", sensor)
+
     # Print the decoded SenML message
+    print("=============================================")
     print(doc.to_json())
 
 
@@ -117,6 +128,11 @@ client.on_message = on_message
 file = open("mqtt.txt", "w")
 file.write("MQTT started execution....")
 file.close()
+
+# client = mqtt.Client()
+# client.on_connect = on_connect
+# client.on_message = on_message
+
 
 client.username_pw_set(USERNAME, API_KEY)
 client.connect(TTN_MQTT_SERVER, 80, 60)
