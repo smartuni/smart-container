@@ -24,29 +24,27 @@
 #include "net/gnrc/pktdump.h"
 #include "net/gnrc/netif.h"
 #include "net/gnrc.h"
-
 #include "log.h"
 #include "od.h"
 
+#include "provisioning_helper.h"
+#include "link_layer_security.h"
+
 int main(void)
 {
-    getchar();
-
-    ieee802154_sec_context_t link_layer_sec_ctx;
+    getchar(); // Needed for nrf52840
     
-    uint8_t key[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    // sdcard_fs_init();
+    provisioning_helper_init();
+    link_layer_sec_init();
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
 
-    ieee802154_sec_init(&link_layer_sec_ctx);
-
-    cipher_init(&link_layer_sec_ctx.cipher, CIPHER_AES, key, IEEE802154_SEC_KEY_LENGTH);
     
-    printf("security_level = %d\n", link_layer_sec_ctx.security_level);
-    printf("key_id_mode = %d\n", link_layer_sec_ctx.key_id_mode);
-    printf("key_index = %d\n", link_layer_sec_ctx.key_index);
-    printf("key_source: \n");
-    od_hex_dump(link_layer_sec_ctx.key_source, IEEE802154_LONG_ADDRESS_LEN, OD_WIDTH_DEFAULT);
-    printf("frame_counter = %ld\n",link_layer_sec_ctx.frame_counter);
-
     ///////////////////////////
     /* enable pktdump output */
     gnrc_netreg_entry_t dump = GNRC_NETREG_ENTRY_INIT_PID(GNRC_NETREG_DEMUX_CTX_ALL,
