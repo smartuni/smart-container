@@ -12,7 +12,17 @@
 #include "ztimer.h"
 #include "coap.h"
 
-gpio_t reedSwitch = GPIO_PIN(PORT_E, 4); 
+/* ------------------------------------------------ */
+/*          Start security initialization           */
+/* ------------------------------------------------ */
+#include "provisioning_helper.h"
+#include "sec_link_layer.h"
+static ieee802154_sec_context_t link_layer_sec_ctx;
+/* ------------------------------------------------ */
+/*           End security initialization            */
+/* ------------------------------------------------ */
+
+gpio_t reedSwitch = GPIO_PIN(0, 4); // Security team changed this after updating board
 
 void reedswitch_callback (void *arg)
 {
@@ -20,9 +30,17 @@ void reedswitch_callback (void *arg)
     send_to_concentrator("Door opened");
 }
 
-
 int main(void)
 {
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    provisioning_helper_init();
+    sec_link_layer_init(&link_layer_sec_ctx);
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
+
     coap_path = "/door";
     discover_concentrator();
     gpio_init_int(reedSwitch, GPIO_IN_PU, GPIO_RISING, reedswitch_callback, NULL);
