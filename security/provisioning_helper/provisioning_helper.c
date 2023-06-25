@@ -95,8 +95,48 @@ void provisioning_helper_init_dev(void)
     }
 }
 
-// int provisioning_helper_get_device_id(uint8_t *device_id)
-// int provisioning_helper_get_ieee802154_security_key(uint8_t *ieee802154_security_key)
+int provisioning_helper_get_device_id(uint8_t *device_id)
+{
+    LOG_INFO("Inside provisioning_helper_get_device_id.\n");
+
+    uint8_t page_buf[PROVISIONING_HELPER_BUF_SIZE];
+    int ret = mtd_read(mtd_dev, page_buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
+
+    if(ret !=0)
+    {
+        LOG_ERROR("Provisioning helper failed - couldn't read flash memory to access PROVISIONING_FLASH_ADDRESS_SEC_SAVE_AES_KEY.\n");
+        LOG_ERROR("Returned: %d\n", ret);
+        return -1;
+    }
+
+    memcpy(device_id, page_buf + PROVISIONING_FLASH_ADDRESS_DEVICE_ID, PROVISIONING_FLASH_LEN_DEVICE_ID);
+    LOG_INFO("Provisioned Device ID is: %x\n", device_id[0]);
+    // od_hex_dump(device_id, PROVISIONING_FLASH_LEN_DEVICE_ID, OD_WIDTH_DEFAULT);
+    return 0;
+}
+
+int provisioning_helper_get_ieee802154_security_key(uint8_t *ieee802154_security_key)
+{
+     LOG_INFO("Inside provisioning_helper_get_ieee802154_security_key.\n");
+
+    uint8_t page_buf[PROVISIONING_HELPER_BUF_SIZE];
+    int ret = mtd_read(mtd_dev, page_buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
+
+    if(ret !=0)
+    {
+        LOG_ERROR("Provisioning helper failed - couldn't read flash memory to access PROVISIONING_FLASH_ADDRESS_SEC_SAVE_AES_KEY.\n");
+        LOG_ERROR("Returned: %d\n", ret);
+        return -1;
+    }
+
+    memcpy(ieee802154_security_key, page_buf + PROVISIONING_FLASH_ADDRESS_IEEE802154_KEY, PROVISIONING_FLASH_LEN_IEEE802154_KEY);
+    LOG_INFO("Provisioned IEEE 802.15.4 security key is: %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x\n", ieee802154_security_key[0], ieee802154_security_key[1], ieee802154_security_key[2], ieee802154_security_key[3], 
+        ieee802154_security_key[4], ieee802154_security_key[5], ieee802154_security_key[6], ieee802154_security_key[7],
+        ieee802154_security_key[8], ieee802154_security_key[9], ieee802154_security_key[10], ieee802154_security_key[11],
+        ieee802154_security_key[12], ieee802154_security_key[13], ieee802154_security_key[14], ieee802154_security_key[15]);
+    // od_hex_dump(device_id, PROVISIONING_FLASH_LEN_DEVICE_ID, OD_WIDTH_DEFAULT);
+    return 0;
+}
 // int provisioning_helper_get_concentrator_ipv6_addr(uint8_t *concentrator_ipv6_addr)
 // int provisioning_helper_get_psk_id_key(uint8_t *psk_id, uint8_t *psk_key)
 // int provisioning_helper_get_lorawan_cred(uint8_t *lorawan_dev_eui, uint8_t *lorawan_app_eui, uint8_t *lorawan_app_key)
