@@ -118,6 +118,7 @@ const RecentOrders = ({ containers, location }) => {
     var testArray;
 
 
+
     const renderAuthButton = () => {
         // If access token is expired, this function will throw an error!
         if (containers != undefined) {
@@ -150,13 +151,18 @@ const RecentOrders = ({ containers, location }) => {
         }
 
     }
+    var currentDate = new Date()
+
+    var curTime = currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+    var date = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate() + ' ';
 
 
 
     return (
         <div className='w-full relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll '>
-            <h1 className='font-bold'>Container List</h1>
-            <h1 className='font-bold'>Last Fetched: ----------</h1>
+            <h1 className='font-bold text-xl'>Container List</h1>
+            <span className='font-bold'>Last Fetched: </span>
+            <span className='inline-block'>{date + curTime}</span>
             <div className='items-center '>
                 <span className=''>sort by error</span>
 
@@ -240,6 +246,7 @@ const RecentOrders = ({ containers, location }) => {
                         onClick={() => {
                             document.getElementById("containerTracker").innerHTML = con.container_id;
                             document.getElementById("doorStatus").innerHTML = con.container_door_closed;
+                            document.getElementById("container_time_stamp").innerHTML = con.container_time;
                             updateCon(con)
 
                             sendProps()
