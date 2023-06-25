@@ -15,10 +15,10 @@ const LoginPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         email: userName.current, //username entered by the user in textbox
         password: pass.current, //password entered by the user in textbox
-      }), 
+      }),
     });
     console.log("Email: " + userName.current);
     const response_body = await res.json(); // Parse the response body as JSON
@@ -33,18 +33,12 @@ const LoginPage = () => {
       console.log("Response not OK!");
       return null;
     }
-  }; 
-
-  const extract_user = (response) => {
-    let access_jwt_str = response?.access;
-    let jwt_payload_base64 = access_jwt_str?.split('.')[1];
-    let jwt_payload = Buffer.from(jwt_payload_base64, 'base64'); //equivalent to atob
-    let user = JSON.parse(jwt_payload);
-    return user;
   };
 
+
+
   return (
-    <div className={"flex flex-col justify-center items-center h-screen bg-malibu-500"}> 
+    <div className={"flex flex-col justify-center items-center h-screen bg-malibu-500"}>
       <h1 className={styles.signin_header}>Sign in</h1>
       <div className={styles.signinNew}>
         <TextBox className={styles['form-group']} lableText="Email" placeholder="Email" onChange={(e) => (userName.current = e.target.value)} />

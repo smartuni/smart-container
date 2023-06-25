@@ -1,20 +1,20 @@
 import React from 'react'
 import Router from "next/router"
 import { Button } from "@nextui-org/react"
-
+// import { containers } from "../data/container"
 
 import Image from 'next/image'
 import myLogo from '../assets/RIOT_Sum_2023_Logo.png'
 import { Checkbox } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react';
+import { getServerSideProps } from '@/pages/dashboard'
 
 
 function isProblem(con) {
     var error = false
+    //console.log("undefined check for con: " + typeof con)
     if (con != undefined) {
-        if (con.container_door_closed == "open") {
-            error = true
-        } else if (con.crashed == "True") {
+        if (con.container_door_closed == false) { // should be == false
             error = true
         }
         return error
@@ -47,11 +47,13 @@ function reverseProblemSort(a, b) {
 
 
 
-const RecentOrders = ({ containers }) => {
-    const [currentContainer, setCurrentContainer] = useState(0);
+const RecentOrders = ({ containers, location }) => {
+    const [currentContainer, setCurrentContainer] = useState(containers[0]);
 
     const [list, setList] = useState(containers)
-    const updateCon = (conID) => setCurrentContainer(conID);
+
+
+    const updateCon = (con) => setCurrentContainer(con);
     const [IsChecked, setIsChecked] = useState(false);
     const updateChecked = () => {
         setIsChecked(!IsChecked);
@@ -77,10 +79,13 @@ const RecentOrders = ({ containers }) => {
         setUpdatedID(messageID)
     }
 
-    const test = currentContainer
+
     var newList = containers
-    var error = isProblem(test)
+
     function sendProps() {
+        var test = currentContainer
+        var error = isProblem(currentContainer)
+        // console.log("sendprops")
         Router.push({
             pathname: "/dashboard",
             query: {
@@ -88,8 +93,21 @@ const RecentOrders = ({ containers }) => {
             }
         });
     }
+    // Code below is from Emily
+    // sensorData is all sensor data
+    // returns latest location data
 
+    // let containerLocations = sensorData.filter((sensor) => sensor.container_id == container_id && sensor.sensor_type == "GPS")
+    //     let latestcontainerLocations = containerLocations.reduce((latest, current) => {
+    //         if (latest.timestamp > current.timestamp) {
+    //         return latest
+    //         } else {
+    //          return current
+    //         }
+    // })
 
+    // console.log("containers list?: ", containers)
+    // console.log(typeof containers)
     function testfunc() {
         if (IsChecked) { // change to whenever IsChecked is incremented/changed
             return newList.sort(problemSort)
@@ -101,31 +119,36 @@ const RecentOrders = ({ containers }) => {
 
 
     const renderAuthButton = () => {
+        // If access token is expired, this function will throw an error!
+        if (containers != undefined) {
 
-        if (updated === "" && updatedID === "") {
-            return containers
-        } else if (updated != "" && updatedID === "") {
 
-            var tempList = list.filter((item) => item.start == updated
-                || item.dest.includes(updated)
-                || item.content.includes(updated))
-            // || item.id === updated)
-            return tempList
+            if (updated === "" && updatedID === "") {
+                return containers
+            } else if (updated != "" && updatedID === "") {
 
-        } else if (updated === "" && updatedID != "") {
-            return list.filter((item) => item.id == updatedID)
+                var tempList = list.filter((item) => item.container_start == updated
+                    || item.container_destination.includes(updated)
+                    || item.container_content.includes(updated))
+                // || item.id === updated)
+                return tempList
 
-        } else {
-            console.log("else reached")
-            var tempList2 = list.filter((item) => item.start == updated
-                && item.id === updatedID
-                || item.dest.includes(updated)
-                && item.id === updatedID
-                || item.content.includes(updated)
-                && item.id === updatedID)
-            return tempList2
+            } else if (updated === "" && updatedID != "") {
+                return list.filter((item) => item.container_id == updatedID)
 
+            } else {
+                // console.log("else reached")
+                var tempList2 = list.filter((item) => item.container_start == updated
+                    && item.container_id === updatedID
+                    || item.container_destination.includes(updated)
+                    && item.container_id === updatedID
+                    || item.container_content.includes(updated)
+                    && item.container_id === updatedID)
+                return tempList2
+
+            }
         }
+
     }
 
 
@@ -139,7 +162,7 @@ const RecentOrders = ({ containers }) => {
 
                 <input type='checkbox' className="h-6 w-6 ml-2" placeholder="Sort By Error" checked={IsChecked} onClick={() => {
                     updateChecked(),
-                        console.log(IsChecked),
+                        // console.log(IsChecked),
                         testArray = testfunc()
                 }}
                 />
@@ -217,8 +240,8 @@ const RecentOrders = ({ containers }) => {
                         onClick={() => {
                             document.getElementById("containerTracker").innerHTML = con.container_id;
                             document.getElementById("doorStatus").innerHTML = con.container_door_closed;
-                            // document.getElementById("container_time_stamp").innerHTML = TIMESTAMP GOES HERE
-                            setCurrentContainer(con.container_id)
+                            updateCon(con)
+
                             sendProps()
                         }}
                         className={"rounded-lg my-3 p-2 flex items-center cursor-pointer " + (isProblem(con) ? 'hover:bg-red-400 bg-red-300' : 'hover:bg-gray-200 bg-gray-100')
@@ -239,13 +262,13 @@ const RecentOrders = ({ containers }) => {
 
 
                             <div className=''>
-                                <p className='text-gray-800 font-bold'>Container id: {con.id}</p>
-                                <span className='text-gray-500 text-sm'>{con.start}--- </span>
-                                <span className='text-gray-500 text-sm'>{con.dest}</span>
+                                <p className='text-gray-800 font-bold'>Container id: {con.container_id}</p>
+                                <span className='text-gray-500 text-sm'>{con.container_start}--- </span>
+                                <span className='text-gray-500 text-sm'>{con.container_destination}</span>
                             </div>
 
                             <div className='text-gray-500 text-sm'>
-                                {con.content}
+                                {con.container_content}
                             </div>
 
                         </div>
@@ -257,4 +280,7 @@ const RecentOrders = ({ containers }) => {
         </div>
     )
 }
+
+// TODO getServerSideProps
 export default RecentOrders
+
