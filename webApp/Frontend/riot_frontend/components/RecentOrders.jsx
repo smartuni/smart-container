@@ -12,11 +12,9 @@ import { getServerSideProps } from '@/pages/dashboard'
 
 function isProblem(con) {
     var error = false
-    console.log("undefined check for con: " + typeof con)
+    //console.log("undefined check for con: " + typeof con)
     if (con != undefined) {
-        if (con.container_door_closed == "open") {
-            error = true
-        } else if (con.crashed == "True") {
+        if (con.container_door_closed == false) { // should be == false
             error = true
         }
         return error
@@ -49,12 +47,12 @@ function reverseProblemSort(a, b) {
 
 
 
-const RecentOrders = ({ containers }) => {
+const RecentOrders = ({ containers, location }) => {
     const [currentContainer, setCurrentContainer] = useState(0);
 
     const [list, setList] = useState(containers)
 
-    useEffect(() => { initiateList() })
+
     const updateCon = (conID) => setCurrentContainer(conID);
     const [IsChecked, setIsChecked] = useState(false);
     const updateChecked = () => {
@@ -81,10 +79,13 @@ const RecentOrders = ({ containers }) => {
         setUpdatedID(messageID)
     }
 
-    const test = currentContainer
+
     var newList = containers
-    var error = isProblem(test)
+
     function sendProps() {
+        const test = currentContainer
+        var error = isProblem(test)
+
         Router.push({
             pathname: "/dashboard",
             query: {
@@ -92,6 +93,18 @@ const RecentOrders = ({ containers }) => {
             }
         });
     }
+    // Code below is from Emily
+    // sensorData is all sensor data
+    // returns latest location data
+
+    // let containerLocations = sensorData.filter((sensor) => sensor.container_id == container_id && sensor.sensor_type == "GPS")
+    //     let latestcontainerLocations = containerLocations.reduce((latest, current) => {
+    //         if (latest.timestamp > current.timestamp) {
+    //         return latest
+    //         } else {
+    //          return current
+    //         }
+    // })
 
     console.log("containers list?: ", containers)
     console.log(typeof containers)
@@ -225,7 +238,8 @@ const RecentOrders = ({ containers }) => {
                         onClick={() => {
                             document.getElementById("containerTracker").innerHTML = con.container_id;
                             document.getElementById("doorStatus").innerHTML = con.container_door_closed;
-                            setCurrentContainer(con.container_id)
+                            updateCon(con.container_id)
+
                             sendProps()
                         }}
                         className={"rounded-lg my-3 p-2 flex items-center cursor-pointer " + (isProblem(con) ? 'hover:bg-red-400 bg-red-300' : 'hover:bg-gray-200 bg-gray-100')

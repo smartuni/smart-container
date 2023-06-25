@@ -5,6 +5,7 @@ import mc from './TopCards.module.css';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
 
+// This data should be from sensors
 const tempData = [
   { time: '12:00', temperature: 23 },
   { time: '12:30', temperature: 24 },
@@ -33,27 +34,19 @@ const TopCards = ({ containers }) => {
   const [currentContainerObj, setCurrentContainerObj] = useState(containers[0]);
   const updateConObj = (propCon) => setCurrentContainerObj(propCon);
   useEffect(() => updateConObj(containers[parseInt(props.test, 10) - 1]));
-  const isProblem = () => {
-    // Idea: instead of containers[], search through containers till it matches container id,
-    // then call isProblem() on that container
-    //var con1 = containers[parseInt(props.test, 10) - 1]
-    var con1 = getConById(parseInt(props.test, 10))
-
-    //var con1 = props.error
+  function isProblem(con) {
     var error = false
-    if (con1 != undefined) {
-      if (con1.container_door_closed == "false") {
-        error = true
-      } else if (con1.crashed == "True") {
+    //console.log("undefined check for con: " + typeof con)
+    if (con != undefined) {
+      if (con.container_door_closed == false) { // should be == false
         error = true
       }
+      return error
     }
-
-    return error
   }
-  var isTrueSet = (props.error === 'false')
+  var isTrueSet = (props.error === 'true') // fix line (doesnt change !!!)
   // Current TODO: props.error is not yet a useable boolean 
-  // console.log(props.error)
+  console.log("props.error is currently: ", props.error) // For some reason props.error is always false
   // console.log(isTrueSet)
   // console.log(isProblem(containers[parseInt(props.test, 10) - 1]))
 
@@ -66,7 +59,7 @@ const TopCards = ({ containers }) => {
       </div>
 
       <div className='grid lg:grid-cols-5 grid-rows-1 gap-4 p-4'>
-
+        {/* New card that checks if there was a crash? */}
         <div className={mc.card}>
           <div>
             <div>
@@ -76,6 +69,7 @@ const TopCards = ({ containers }) => {
               <TempChart data={tempData} />
             </div>
           </div>
+          {/* Get temp from sensor data */}
           <p className={mc.temperature}>20.1C</p>
         </div>
 
@@ -85,12 +79,14 @@ const TopCards = ({ containers }) => {
             <p className={mc.cardTitle}>Current Humidity:</p>
           </div>
           <p className={mc.cardValue}>
+            {/* Get humidity from sensor data */}
             <span>50%</span>
           </p>
         </div>
 
         <div className={mc.card}>
           <div>
+            {/* Newest timestamp goes here (OR CURRENT LOCATION COORDINATES) */}
             <p className={mc.cardTitle}>Removed</p>
           </div>
           <p className={mc.cardValue}>
@@ -98,17 +94,19 @@ const TopCards = ({ containers }) => {
           </p>
         </div>
 
-        <div className={'border-1 p-4 rounded-lg mb-4' + (isTrueSet ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
+        <div className={'border-1 p-4 rounded-lg mb-4' + (isProblem(props.test) ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
           <div className={mc.status}>
             <p className={mc.cardTitle}>Door Closed:</p>
             <p className={mc.doorStatus} id="doorStatus"></p>
             <p className={mc.cardTitle}>Last Opened:</p>
+            {/* Redundant timestamp? */}
             <p className={mc.lastOpened}>23/02/23 12pm</p>
           </div>
         </div>
 
         <div className={mc.card}>
           <div>
+            {/* Does this atttribute exist? */}
             <p className={mc.cardTitle}>No water leak detected</p>
           </div>
         </div>
