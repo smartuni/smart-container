@@ -11,6 +11,21 @@ ifeq ($(BOARD),nrf52840dk)
   USEMODULE += sx1272
 endif
 
+ifeq ($(BOARD),feather-nrf52840)
+  # SPI parameters for nrf52840
+  CFLAGS += -DSDCARD_SPI_PARAM_SPI_MODE=0
+  CFLAGS += -DSDCARD_SPI_PARAM_CS=GPIO_PIN\(0,10\)
+  CFLAGS += -DSDCARD_SPI_PARAM_CLK=GPIO_PIN\(0,14\)
+  CFLAGS += -DSDCARD_SPI_PARAM_MOSI=GPIO_PIN\(0,13\)
+  CFLAGS += -DSDCARD_SPI_PARAM_MISO=GPIO_PIN\(0,15\)
+endif
+
+# For development environment
+QUIET ?= 1
+DEVELHELP ?= 1
+CFLAGS += -DPROVISIONING_ENABLE_DEV=1
+CFLAGS += -DPROVISIONING_CONFIG_CONCENTRATOR
+
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
@@ -20,6 +35,15 @@ PROJECTBASE ?= $(CURDIR)/../..
 # Add modules directory for custom modules
 EXTERNAL_MODULE_DIRS += $(PROJECTBASE)/modules
 USEMODULE += cycling_buffer
+
+# Provisioning modules
+include $(CURDIR)/Makefile.provisioning_helper
+include $(CURDIR)/Makefile.link_layer_security
+
+
+# Secure save modules
+include $(CURDIR)/Makefile.sec_save
+
 
 # enable default networking devices in the platform
 USEMODULE += netdev_default

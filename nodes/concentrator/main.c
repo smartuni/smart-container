@@ -16,6 +16,19 @@
 #include "ztimer.h"
 #include "periph/gpio.h"
 
+/* ------------------------------------------------ */
+/*          Start security initialization           */
+/* ------------------------------------------------ */
+#include "provisioning_helper.h"
+#include "sdcard_fs.h"
+#include "link_layer_security.h"
+#include "sec_save.h"
+
+static ieee802154_sec_context_t link_layer_sec_ctx;
+/* ------------------------------------------------ */
+/*           End security initialization            */
+/* ------------------------------------------------ */
+
 #include "gcoap_example.h"
 #include "concentrator_lorawan.h"
 #include "cycling_buffer.h"
@@ -49,6 +62,16 @@ void event_init(void)
 
 int main(void)
 {
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    sdcard_fs_init();
+    provisioning_helper_init();
+    link_layer_sec_init(&link_layer_sec_ctx);
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
+
     /* for the thread running the shell */
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
 
