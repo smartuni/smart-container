@@ -91,7 +91,7 @@ const TopCards = ({ containers }) => {
         <div className={mc.card}>
           <div>
             {/* Newest timestamp goes here (OR CURRENT LOCATION COORDINATES) */}
-            <p className={mc.cardTitle}>Removed</p>
+            <p className={mc.cardTitle}>Sensors last updated:</p>
           </div>
           <p className={mc.cardValue}>
             <span id="container_time_stamp">---timestamp---</span>
