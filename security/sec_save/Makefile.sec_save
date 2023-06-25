@@ -1,0 +1,10 @@
+USEMODULE += mtd
+USEMODULE += mtd_flashpage
+USEMODULE += cipher_modes
+USEMODULE += crypto_aes_128
+USEMODULE += phydat
+# USEMODULE += sdcard_spi
+USEMODULE += fatfs_diskio_mtd
+USEMODULE += mtd_sdcard
+USEPKG    += fatfs
+FATFS_IMAGE_FILE_SIZE_MIB ?= 128
