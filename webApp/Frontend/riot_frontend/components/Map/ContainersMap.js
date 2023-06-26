@@ -5,8 +5,8 @@ import styles from "../../styles/mapPopup.module.css";
 
 const DEFAULT_CENTER = [53.5511, 9.9937];
 
-export const ContainersMap = () => {
-  const [containers, setContainers] = useState([]);
+export const ContainersMap = ({ containers }) => {
+  const [containers2, setContainers] = useState([]);
 
   useEffect(() => {
     const fetchContainers = async () => {
