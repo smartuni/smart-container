@@ -3,35 +3,105 @@ import axiosInstance from "axios";
 import Map from "@/components/Map/Map";
 import styles from "../../styles/mapPopup.module.css";
 
-const DEFAULT_CENTER = [53.5511, 9.9937];
+const DEFAULT_CENTER = [54.17792343350527, 15.576558965969518];
 
 export const ContainersMap = () => {
   const [containers, setContainers] = useState([]);
 
+  console.log("Map of Containers!");
+
   useEffect(() => {
     const fetchContainers = async () => {
       try {
-        const containerResponse = await axiosInstance.get(
-          "http://178.128.192.215:8000/api/container/"
-        );
-        const sensorResponse = await axiosInstance.get(
-          "http://178.128.192.215:8000/api/sensor/"
-        );
-
-        const containersWithSensorData = containerResponse.data.map(
-          (container) => {
-            const sensorData = sensorResponse.data.find(
-              (sensor) => sensor.owner === container.container_id
-            );
-
-            return {
-              ...container,
-              sensor_data: sensorData,
-            };
+        const res2 = await fetch(
+          "http://178.128.192.215:8000/api/signIn/refresh/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              refresh:
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4Nzc5ODgyNiwiaWF0IjoxNjg3NzEyNDI2LCJqdGkiOiI3ODliNDEyNmVhNmQ0MDFmYWQ3NjFlNWY1ZjZmNTA0MyIsInVzZXJfaWQiOiJkMDY5OTEzNS0wMjcxLTQ2N2UtYjA1Mi03NmM0N2ViMzliOTUiLCJ1c2VybmFtZSI6ImVtaWx5bHVjaWEuYW50b3NjaEBoYXdoYW1idXJnLmRlIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0bmFtZSI6IkFudG9zY2gifQ.37wWnzKr02lm8RgSm01lgwq6bhaRR4rV8EPDRcvdcIA",
+            }),
           }
-        );
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((response) => {
+            const containerResponse = fetch(
+              "http://178.128.192.215:8000/api/container/",
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + response["access"],
+                },
+              }
+            );
+            if (containerResponse) {
+              console.log(
+                "Containers are fetched! " + containerResponse + " Printed!"
+              );
+            }
+            return containerResponse;
+          });
 
-        setContainers(containersWithSensorData);
+        var data = await res2.json();
+        console.log("containerResponse", data[0]);
+
+        const res_array = [];
+        for (let i in data) {
+          res_array.push([data[i]]);
+        }
+
+        console.log("Container List: ", data);
+        console.log("Container 1: ", data[0].container_id);
+
+        setContainers(data);
+
+        // The code below is a bit redundant, but gets the location, not yet as an array
+        const locationTest = await fetch(
+          "http://178.128.192.215:8000/api/signIn/refresh/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              refresh:
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4Nzc5ODgyNiwiaWF0IjoxNjg3NzEyNDI2LCJqdGkiOiI3ODliNDEyNmVhNmQ0MDFmYWQ3NjFlNWY1ZjZmNTA0MyIsInVzZXJfaWQiOiJkMDY5OTEzNS0wMjcxLTQ2N2UtYjA1Mi03NmM0N2ViMzliOTUiLCJ1c2VybmFtZSI6ImVtaWx5bHVjaWEuYW50b3NjaEBoYXdoYW1idXJnLmRlIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0bmFtZSI6IkFudG9zY2gifQ.37wWnzKr02lm8RgSm01lgwq6bhaRR4rV8EPDRcvdcIA",
+            }),
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((response) => {
+            const sensorResponse = fetch(
+              "http://178.128.192.215:8000/api/container_location/",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + response["access"],
+                },
+                body: JSON.stringify({
+                  id: "3426b1dc-3b11-4685-b8ae-723dfa593c25",
+                }),
+              }
+            );
+            if (sensorResponse) {
+              console.log("Container loc are fetched!" + sensorResponse);
+            }
+            return sensorResponse;
+          });
+
+        var locData = await locationTest.json();
+        localStorage.setItem("locData", await locationTest.json());
+        console.log("location data: ", localStorage);
+        console.log("location data: ", locData);
       } catch (error) {
         console.error("Error fetching containers:", error);
       }
@@ -40,37 +110,11 @@ export const ContainersMap = () => {
     fetchContainers();
   }, []);
 
-  useEffect(() => {
-  const fetchContainers = async () => {
-    try {
-      const containerResponse = await axiosInstance.get(
-        "http://178.128.192.215:8000/api/container/"
-      );
-  
-      const containersWithSensorData_Gps = await Promise.all(
-        containerResponse.data.map(async (container) => {
-          const sensorResponse = await axiosInstance.get(
-            `http://178.128.192.215:8000/api/sensor/${container.container_id}`
-          );
-  
-          const sensorData = sensorResponse.data;
-  
-          return {
-            ...container,
-            sensor_data: sensorData,
-          };
-        })
-      );
-  
-      setContainers(containersWithSensorData_Gps);
-    } catch (error) {
-      console.error("Error fetching containers:", error);
-    }
-  };
-  
-    fetchContainers();
-  }, []);
+  console.log("List of Containers: ", containers);
 
+  var localgps = localStorage.getItem("locData");
+  var gps = [localgps.split(",")[0], localgps.split(",")[1]];
+  console.log("gps data: ", gps);
 
   return (
     <Map width="100%" height={400} center={DEFAULT_CENTER} zoom={12}>
@@ -80,45 +124,16 @@ export const ContainersMap = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          {containers.map((container) => {
-            const {
-              container_id,
-              location,
-              container_content,
-              container_door_closed,
-              container_start,
-              container_destination,
-              container_time,
-              sensor_data,
-            } = container;
-            const position =
-              location && location.length === 2 ? location : DEFAULT_CENTER;
-
-            return (
-              <Marker
-                key={container_id}
-                position={position}
-                className="Marker"
-              >
-                <Popup className={styles.popup}>
-                  <p>Container ID: {container_id}</p>
-                  <p>Container location: {location}</p>
-                  <p>Container content: {container_content}</p>
-                  <p>Container door closed: {container_door_closed}</p>
-                  <p>Container start: {container_start}</p>
-                  <p>Container destination: {container_destination}</p>
-                  <p>Last opened: {container_time}</p>
-                  {sensor_data && (
-                    <>
-                      <p>Sensor type: {sensor_data.sensor_type}</p>
-                      <p>Sensor data: {sensor_data.sensor_data}</p>
-                      <p>Sensor time: {sensor_data.sensor_time}</p>
-                    </>
-                  )}
-                </Popup>
-              </Marker>
-            );
-          })}
+          {
+            <Marker position={gps} className="Marker"></Marker>
+            /* {containers.map((container, container_id) => (
+            <Marker
+              key={container_id}
+              position={gps}
+              className="Marker"
+            ></Marker>
+          ))} */
+          }
         </>
       )}
     </Map>
