@@ -182,6 +182,7 @@ int provisioning_helper_get_psk_id_key(uint8_t *psk_id, uint8_t *psk_key)
     return 0;
 }
 
+// #ifdef PROVISIONING_CONFIG_CONCENTRATOR /* Start Concentrator-specific provisioning */
 int provisioning_helper_get_lorawan_cred(uint8_t *lorawan_dev_eui, uint8_t *lorawan_app_eui, uint8_t *lorawan_app_key)
 {
     LOG_INFO("Inside provisioning_helper_get_lorawan_cred.\n");
@@ -220,8 +221,6 @@ int provisioning_helper_get_lorawan_cred(uint8_t *lorawan_dev_eui, uint8_t *lora
     
     return 0;
 }
-
-// #ifdef PROVISIONING_CONFIG_CONCENTRATOR /* Start Concentrator-specific provisioning */
 
 int provisioning_helper_get_sec_save_aes_key(uint8_t *sec_save_aes_key)
 {

@@ -137,11 +137,90 @@ int provisioning_helper_get_ieee802154_security_key(uint8_t *ieee802154_security
     // od_hex_dump(device_id, PROVISIONING_FLASH_LEN_DEVICE_ID, OD_WIDTH_DEFAULT);
     return 0;
 }
-// int provisioning_helper_get_concentrator_ipv6_addr(uint8_t *concentrator_ipv6_addr)
-// int provisioning_helper_get_psk_id_key(uint8_t *psk_id, uint8_t *psk_key)
-// int provisioning_helper_get_lorawan_cred(uint8_t *lorawan_dev_eui, uint8_t *lorawan_app_eui, uint8_t *lorawan_app_key)
+int provisioning_helper_get_concentrator_ipv6_addr(uint8_t *concentrator_ipv6_addr)
+{
+    LOG_INFO("Inside provisioning_helper_get_concentrator_ipv6_addr.\n");
 
+    uint8_t page_buf[PROVISIONING_HELPER_BUF_SIZE];
+    int ret = mtd_read(mtd_dev, page_buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
+
+    if(ret !=0)
+    {
+        LOG_ERROR("Provisioning helper failed - couldn't read flash memory to access PROVISIONING_FLASH_ADDRESS_CONCENTRATOR_IPV6_ADDR.\n");
+        LOG_ERROR("Returned: %d\n", ret);
+        return -1;
+    }
+
+    memcpy(concentrator_ipv6_addr, page_buf + PROVISIONING_FLASH_ADDRESS_CONCENTRATOR_IPV6_ADDR, PROVISIONING_FLASH_LEN_CONCENTRATOR_IPV6_ADDR);
+    LOG_INFO("Provisioned Concentrator IPv6 Address is: %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x\n", concentrator_ipv6_addr[0], concentrator_ipv6_addr[1], concentrator_ipv6_addr[2], concentrator_ipv6_addr[3], 
+        concentrator_ipv6_addr[4], concentrator_ipv6_addr[5], concentrator_ipv6_addr[6], concentrator_ipv6_addr[7],
+        concentrator_ipv6_addr[8], concentrator_ipv6_addr[9], concentrator_ipv6_addr[10], concentrator_ipv6_addr[11],
+        concentrator_ipv6_addr[12], concentrator_ipv6_addr[13], concentrator_ipv6_addr[14], concentrator_ipv6_addr[15]);
+    return 0;
+}
+int provisioning_helper_get_psk_id_key(uint8_t *psk_id, uint8_t *psk_key)
+{
+     LOG_INFO("Inside provisioning_helper_get_psk_id_key.\n");
+
+    uint8_t page_buf[PROVISIONING_HELPER_BUF_SIZE];
+    int ret = mtd_read(mtd_dev, page_buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
+
+    if(ret !=0)
+    {
+        LOG_ERROR("Provisioning helper failed - couldn't read flash memory to access PROVISIONING_FLASH_ADDRESS_DTLS_PSK_AES_KEY.\n");
+        LOG_ERROR("Returned: %d\n", ret);
+        return -1;
+    }
+
+    memcpy(psk_key, page_buf + PROVISIONING_FLASH_ADDRESS_DTLS_PSK_AES_KEY, PROVISIONING_FLASH_LEN_DTLS_PSK_AES_KEY);
+    LOG_INFO("Provisioned PSK Key is: %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x\n", psk_key[0], psk_key[1], psk_key[2], psk_key[3], 
+        psk_key[4], psk_key[5], psk_key[6], psk_key[7],
+        psk_key[8], psk_key[9], psk_key[10], psk_key[11],
+        psk_key[12], psk_key[13], psk_key[14], psk_key[15]);
+    
+    memcpy(psk_id, page_buf + PROVISIONING_FLASH_ADDRESS_DEVICE_ID, PROVISIONING_FLASH_LEN_DEVICE_ID);
+    LOG_INFO("Provisioned PSK ID is: %x\n", psk_id[0]);
+    return 0;
+}
 // #ifdef PROVISIONING_CONFIG_CONCENTRATOR /* Start Concentrator-specific provisioning */
+int provisioning_helper_get_lorawan_cred(uint8_t *lorawan_dev_eui, uint8_t *lorawan_app_eui, uint8_t *lorawan_app_key)
+{
+    LOG_INFO("Inside provisioning_helper_get_lorawan_cred.\n");
+
+    uint8_t page_buf[PROVISIONING_HELPER_BUF_SIZE];
+    int ret = mtd_read(mtd_dev, page_buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
+
+    if(ret !=0)
+    {
+        LOG_ERROR("Provisioning helper failed - couldn't read flash memory to access PROVISIONING_FLASH_ADDRESS_LOWRAWAN_DEV_EUI.\n");
+        LOG_ERROR("Returned: %d\n", ret);
+        return -1;
+    }
+
+    memcpy(lorawan_dev_eui, page_buf + PROVISIONING_FLASH_ADDRESS_LOWRAWAN_DEV_EUI, PROVISIONING_FLASH_LEN_LOWRAWAN_DEV_EUI);
+    LOG_INFO("Provisioned LoRaWAN DEV EUI is: %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x\n", lorawan_dev_eui[0], lorawan_dev_eui[1], lorawan_dev_eui[2], lorawan_dev_eui[3], 
+        lorawan_dev_eui[4], lorawan_dev_eui[5], lorawan_dev_eui[6], lorawan_dev_eui[7],
+        lorawan_dev_eui[8], lorawan_dev_eui[9], lorawan_dev_eui[10], lorawan_dev_eui[11],
+        lorawan_dev_eui[12], lorawan_dev_eui[13], lorawan_dev_eui[14], lorawan_dev_eui[15]);
+
+    memcpy(lorawan_app_eui, page_buf + PROVISIONING_FLASH_ADDRESS_LOWRAWAN_APP_EUI, PROVISIONING_FLASH_LEN_LOWRAWAN_APP_EUI);
+    LOG_INFO("Provisioned LoRaWAN APP EUI is: %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x\n", lorawan_app_eui[0], lorawan_app_eui[1], lorawan_app_eui[2], lorawan_app_eui[3], 
+        lorawan_app_eui[4], lorawan_app_eui[5], lorawan_app_eui[6], lorawan_app_eui[7],
+        lorawan_app_eui[8], lorawan_app_eui[9], lorawan_app_eui[10], lorawan_app_eui[11],
+        lorawan_app_eui[12], lorawan_app_eui[13], lorawan_app_eui[14], lorawan_app_eui[15]);
+
+    memcpy(lorawan_app_key, page_buf + PROVISIONING_FLASH_ADDRESS_LOWRAWAN_APP_KEY, PROVISIONING_FLASH_LEN_LOWRAWAN_APP_KEY);
+    LOG_INFO("Provisioned LoRaWAN APP KEY is: %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x %x%x\n", lorawan_app_key[0], lorawan_app_key[1], lorawan_app_key[2], lorawan_app_key[3], 
+        lorawan_app_key[4], lorawan_app_key[5], lorawan_app_key[6], lorawan_app_key[7],
+        lorawan_app_key[8], lorawan_app_key[9], lorawan_app_key[10], lorawan_app_key[11],
+        lorawan_app_key[12], lorawan_app_key[13], lorawan_app_key[14], lorawan_app_key[15],
+        lorawan_app_key[16], lorawan_app_key[17], lorawan_app_key[18], lorawan_app_key[19], 
+        lorawan_app_key[20], lorawan_app_key[21], lorawan_app_key[22], lorawan_app_key[23],
+        lorawan_app_key[24], lorawan_app_key[25], lorawan_app_key[26], lorawan_app_key[27],
+        lorawan_app_key[28], lorawan_app_key[29], lorawan_app_key[30], lorawan_app_key[31]);
+    
+    return 0;
+}
 
 int provisioning_helper_get_sec_save_aes_key(uint8_t *sec_save_aes_key)
 {
