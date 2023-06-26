@@ -21,10 +21,10 @@
 /* ------------------------------------------------ */
 #include "provisioning_helper.h"
 #include "sdcard_fs.h"
-#include "link_layer_security.h"
+//#include "link_layer_security.h"
 #include "sec_save.h"
 
-static ieee802154_sec_context_t link_layer_sec_ctx;
+//static ieee802154_sec_context_t link_layer_sec_ctx;
 /* ------------------------------------------------ */
 /*           End security initialization            */
 /* ------------------------------------------------ */
@@ -44,7 +44,7 @@ static const shell_command_t shell_commands[] = {
     { NULL, NULL, NULL }
 };
 
-void buffer_flush_callback(void* args)
+void buffer_flush_cb(void* args)
 {
     (void)args;
     send_data_list(getCyclingBuffer());
@@ -54,7 +54,7 @@ void buffer_flush_callback(void* args)
 void event_init(void)
 {
     /* initialize periodic callback */
-    event_periodic_callback_init(&buffer_flush_event, ZTIMER_SEC, EVENT_QUEUE_PRIO_MEDIUM,
+    event_periodic_callback_init(&buffer_flush_event, ZTIMER_SEC, EVENT_PRIO_MEDIUM,
                                  buffer_flush_cb, NULL);
     /* start periodic callback */
     event_periodic_callback_start(&buffer_flush_event, BUFFER_FLUSH_INTERVAL);
@@ -67,7 +67,7 @@ int main(void)
     /* ------------------------------------------------ */
     sdcard_fs_init();
     provisioning_helper_init();
-    link_layer_sec_init(&link_layer_sec_ctx);
+    //link_layer_sec_init(&link_layer_sec_ctx);
     /* ------------------------------------------------ */
     /*           End security initialization            */
     /* ------------------------------------------------ */
