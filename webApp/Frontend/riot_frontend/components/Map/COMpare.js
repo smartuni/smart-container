@@ -14,21 +14,20 @@ export const ContainersMap = () => {
         const containerResponse = await axiosInstance.get(
           "http://178.128.192.215:8000/api/container/"
         );
-        const sensorResponse = await axiosInstance.get(
-          "http://178.128.192.215:8000/api/sensor/"
-        );
 
-        const containersWithSensorData = containerResponse.data.map(
-          (container) => {
-            const sensorData = sensorResponse.data.find(
-              (sensor) => sensor.owner === container.container_id
+        const containersWithSensorData = await Promise.all(
+          containerResponse.data.map(async (container) => {
+            const sensorResponse = await axiosInstance.get(
+              `http://178.128.192.215:8000/api/sensor/${container.container_id}`
             );
+
+            const sensorData = sensorResponse.data;
 
             return {
               ...container,
               sensor_data: sensorData,
             };
-          }
+          })
         );
 
         setContainers(containersWithSensorData);
@@ -39,38 +38,6 @@ export const ContainersMap = () => {
 
     fetchContainers();
   }, []);
-
-  useEffect(() => {
-  const fetchContainers = async () => {
-    try {
-      const containerResponse = await axiosInstance.get(
-        "http://178.128.192.215:8000/api/container/"
-      );
-  
-      const containersWithSensorData_Gps = await Promise.all(
-        containerResponse.data.map(async (container) => {
-          const sensorResponse = await axiosInstance.get(
-            `http://178.128.192.215:8000/api/sensor/${container.container_id}`
-          );
-  
-          const sensorData = sensorResponse.data;
-  
-          return {
-            ...container,
-            sensor_data: sensorData,
-          };
-        })
-      );
-  
-      setContainers(containersWithSensorData_Gps);
-    } catch (error) {
-      console.error("Error fetching containers:", error);
-    }
-  };
-  
-    fetchContainers();
-  }, []);
-
 
   return (
     <Map width="100%" height={400} center={DEFAULT_CENTER} zoom={12}>
@@ -91,15 +58,14 @@ export const ContainersMap = () => {
               container_time,
               sensor_data,
             } = container;
-            const position =
-              location && location.length === 2 ? location : DEFAULT_CENTER;
+
+            const latitude = sensor_data?.latitude; // Assuming latitude is available in the sensor_data object
+            const longitude = sensor_data?.longitude; // Assuming longitude is available in the sensor_data object
+
+            const position = [latitude, longitude] || DEFAULT_CENTER;
 
             return (
-              <Marker
-                key={container_id}
-                position={position}
-                className="Marker"
-              >
+              <Marker key={container_id} position={position} className="Marker">
                 <Popup className={styles.popup}>
                   <p>Container ID: {container_id}</p>
                   <p>Container location: {location}</p>
@@ -113,6 +79,8 @@ export const ContainersMap = () => {
                       <p>Sensor type: {sensor_data.sensor_type}</p>
                       <p>Sensor data: {sensor_data.sensor_data}</p>
                       <p>Sensor time: {sensor_data.sensor_time}</p>
+                      <p>Latitude: {latitude}</p>
+                      <p>Longitude: {longitude}</p>
                     </>
                   )}
                 </Popup>

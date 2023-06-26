@@ -48,6 +48,7 @@ export default function SignUp() {
         event.preventDefault();
         if (checkForm()) {
             console.log({ firstname, lastname, email, password });
+            window.location.href = "/dashboard";
         }
     };
 
@@ -106,7 +107,6 @@ export default function SignUp() {
                             </label>
                         </div>
                         <button type="submit">Sign up</button>
-                        <button>Cancel</button>
                         <footer>
                             <p>If you already have an account, please<br/> <a href="/signin_page">log in here</a>.</p>
                         </footer>

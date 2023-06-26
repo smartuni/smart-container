@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 20px;
   position: relative;
-  top: 100px;
+  top: 200px;
   font-family: monospace;
 }
 
@@ -52,7 +52,7 @@
   padding: 10px;
   margin-top: 20px;
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: #8a4baf;
   color: white;
   border: none;
   border-radius: 4px;
@@ -60,7 +60,7 @@
 }
 
 .signup button[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #6c1c92;
 }
 
 .signup button {
