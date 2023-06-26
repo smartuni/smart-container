@@ -208,6 +208,11 @@ void send_data_list(clist_node_t *list)
 
     size_t list_length = clist_count(list);
 
+    if(!list_length) {
+        puts("no sensor data");
+        return;
+    }
+
     memset(cbor_buf, 0, sizeof cbor_buf);
     nanocbor_encoder_init(&enc, cbor_buf, sizeof cbor_buf);
 

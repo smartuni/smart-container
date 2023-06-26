@@ -36,7 +36,7 @@
 #define MAIN_QUEUE_SIZE (4)
 static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
 
-#define BUFFER_FLUSH_INTERVAL (30U)
+#define BUFFER_FLUSH_INTERVAL (10U)
 static event_periodic_callback_t buffer_flush_event;
 
 static const shell_command_t shell_commands[] = {
@@ -47,6 +47,7 @@ static const shell_command_t shell_commands[] = {
 void buffer_flush_cb(void* args)
 {
     (void)args;
+    printf("callback");
     send_data_list(getCyclingBuffer());
     clearCyclingBuffer();
 }
