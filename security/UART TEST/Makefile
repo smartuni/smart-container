@@ -1,9 +1,14 @@
 # name of your application
-APPLICATION = echo-fgets
+APPLICATION = UART
 
 
 BOARD = feather-nrf52840
-PORT=/dev/tty.usbmodem14101
+PORT=/dev/tty.usbmodem143101
+
+
+
+# Include modules
+USEMODULE += periph_uart
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
@@ -12,6 +17,8 @@ RIOTBASE ?= $(CURDIR)/../RIOT
 # development process:
 DEVELHELP ?= 1
 
+
+FEATURES_REQUIRED += periph_uart
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
