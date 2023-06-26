@@ -1,5 +1,10 @@
 ## Accelerometer
 
+This is the final version for the accelerometer sensor node. 
+The sensor generates an interrupt, when 10g of acceleration are exceeded.
+It then sends a datastream to the concentrator and goes back to sleep. 
+The sent stream may be changed.
+
 This program is using the lis2dh12 sensor (SEN0224 shield) to detect impacts. 
 
 There is a FIFO aboard the sensor which may store the last acceleration values, it is possible that the FIFO mode changes after in impact occured so all the accelerations after the impact may be stored. The driver doesn't allow this feature and a manual solution is too slow so the FIFO is bypassed and no values are read. 

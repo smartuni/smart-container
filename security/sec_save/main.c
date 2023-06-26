@@ -1,82 +1,62 @@
-/*
- * Copyright (C) 2014 Freie Universität Berlin
- *
- * This file is subject to the terms and conditions of the GNU Lesser
- * General Public License v2.1. See the file LICENSE in the top level
- * directory for more details.
- */
-
-/**
- * @ingroup     examples
- * @{
- *
- * @file
- * @brief       Hello World application
- *
- * @author      Kaspar Schleiser <kaspar@schleiser.de>
- * @author      Ludwig Knüpfer <ludwig.knuepfer@fu-berlin.de>
- *
- * @}
- */
-
 #include <stdio.h>
-#include <stdint.h>
-#include <time.h>
-#include "periph/rtc.h"
-#include "od.h"
-#include "ztimer.h"
-#include "crypto/ciphers.h"
-#include "crypto/aes.h"
 
+#include "thread.h"
 #include "shell.h"
-#include "sdcard_spi.h"
-#include "sdcard_spi_internal.h"
-#include "sdcard_spi_params.h"
-#include "fmt.h"
-#include "container.h"
-#include <inttypes.h>
-#include <stdlib.h>
+#include "crypto/ciphers.h"
+#include "net/ieee802154_security.h"
+#include "net/gnrc/pktdump.h"
+#include "net/gnrc/netif.h"
+#include "net/gnrc.h"
+#include "log.h"
+#include "od.h"
 
-#include "config.h"
-#include "sdcard.h"
+#include "provisioning_helper.h"
+#include "sdcard_fs.h"
+#include "link_layer_security.h"
 #include "sec_save.h"
+
+static ieee802154_sec_context_t link_layer_sec_ctx;
 
 int main(void)
 {
-    fprintf(PRINT_FILE, "You are running RIOT on a(n) %s board.\n", RIOT_BOARD);
-    fprintf(PRINT_FILE, "This board features a(n) %s MCU.\n", RIOT_MCU);
+    /* Security initialization */
+    // getchar(); // Needed for nrf52840
 
-    cipher_t cipher;
-    ztimer_init(); // Initialize timer
-    init_sec_save();
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    sdcard_fs_init();
+    provisioning_helper_init();
+    link_layer_sec_init(&link_layer_sec_ctx);
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
 
-    while (1)
-    {
-        uint8_t key[AES_KEY_SIZE_128] = {0},
-                plain_text[AES_BLOCK_SIZE] = {0},
-                cipher_text[AES_BLOCK_SIZE] = {0};
+    /* ------------------------------------------------ */
+    /*              Start security testing              */
+    /* ------------------------------------------------ */
+    char *filename = "TEST2.TXT";
 
-        if (cipher_init(&cipher, CIPHER_AES, key, AES_KEY_SIZE_128) < 0)
-            fprintf(PRINT_FILE, "Cipher init failed!\n");
+    // size_t num_blocks = 8;
+    uint8_t plain_text[AES_BLOCK_SIZE * 8];
+    random_bytes(plain_text, sizeof(plain_text));
 
-        if (cipher_encrypt(&cipher, plain_text, cipher_text) < 0)
-            fprintf(PRINT_FILE, "Cipher encryption failed!\n");
-        else
-        {
-            od_hex_dump(key, AES_BLOCK_SIZE, 0);
-            od_hex_dump(plain_text, AES_BLOCK_SIZE, 0);
-            od_hex_dump(cipher_text, AES_BLOCK_SIZE, 0);
-        }
+    sec_save(filename, plain_text, sizeof(plain_text));
 
-        ztimer_now_t time = ztimer_now(ZTIMER_MSEC);
-        od_hex_dump((uint8_t *)&time, sizeof(time), 0);
+    ///////////////////////////
+    /* enable pktdump output */
+    gnrc_netreg_entry_t dump = GNRC_NETREG_ENTRY_INIT_PID(GNRC_NETREG_DEMUX_CTX_ALL,
+                                                          gnrc_pktdump_pid);
 
-        od_hex_dump((uint8_t *)&time_now, sizeof(time_now), 0);
+    gnrc_netreg_register(GNRC_NETTYPE_UNDEF, &dump);
 
-        ztimer_now_t last_wakeup = ztimer_now(ZTIMER_MSEC);
-        /* wait for 500 ms */
-        ztimer_periodic_wakeup(ZTIMER_MSEC, &last_wakeup, 500);
-    }
+    /* start the shell */
+    char line_buf[SHELL_DEFAULT_BUFSIZE];
+
+    shell_run(NULL, line_buf, SHELL_DEFAULT_BUFSIZE);
+    /* ------------------------------------------------ */
+    /*                End security testing              */
+    /* ------------------------------------------------ */
 
     return 0;
 }

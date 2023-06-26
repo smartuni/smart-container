@@ -7,6 +7,16 @@
 #include "ztimer.h"
 #include "coap.h"
 
+/* ------------------------------------------------ */
+/*          Start security initialization           */
+/* ------------------------------------------------ */
+#include "provisioning_helper.h"
+#include "sec_link_layer.h"
+static ieee802154_sec_context_t link_layer_sec_ctx;
+/* ------------------------------------------------ */
+/*           End security initialization            */
+/* ------------------------------------------------ */
+
 #define ACCEL_THRESHOLD     10000   // Acceleration threshold in mg
 #define THRESHOLD_TIME_US   0   // Threshold time until interrupt occurs
 
@@ -59,16 +69,27 @@ void configureThresholdEvent(lis2dh12_t *dev){
     lis2dh12_cfg_threshold_event(dev, mg, us, axis, event, LIS2DH12_INT1);
 }
 
-int main(void){
+int main(void)
+{
+    /* ------------------------------------------------ */
+    /*          Start security initialization           */
+    /* ------------------------------------------------ */
+    provisioning_helper_init();
+    sec_link_layer_init(&link_layer_sec_ctx);
+    /* ------------------------------------------------ */
+    /*           End security initialization            */
+    /* ------------------------------------------------ */
+
     i2c_t dev = I2C_DEV(0);
     lis2dh12_t sensorDev; // Device descriptor
     lis2dh12_params_t sensorParams;
     sensorParams.i2c = dev;
-    char answerStream[] = "Acceleration exceeded 16G."
+    char answerStream[] = "Acceleration exceeded 10G.";
 
     // Initialize sensor
     initDevice(&sensorDev, &sensorParams);
 
+    coap_path = "/acceleration";
     discover_concentrator();
 
     while(1){

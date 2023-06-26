@@ -3,12 +3,19 @@ APPLICATION = accelerometer
 
 BOARD ?= feather-nrf52840
 
+# This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../../RIOT
-PROJECT_BASE ?= $(CURDIR)/../../..
+PROJECT_BASE ?= $(CURDIR)/../..
 
 # Include external CoAP module
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
+
+USEMODULE += mtd
+USEMODULE += mtd_flashpage
+USEMODULE += cipher_modes
+USEMODULE += ieee802154_security
+USEMODULE += crypto_aes_128
 
 # Sensordriver
 USEMODULE += lis2dh12_i2c
