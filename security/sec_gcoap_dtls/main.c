@@ -22,21 +22,22 @@
 #include "msg.h"
 
 #include "net/gcoap.h"
-#include "shell.h"
+// #include "shell.h"
 
 #include "sec_gcoap_dtls.h"
-#include "gcoap_example.h"
+// #include "gcoap_example.h"
 
 #define MAIN_QUEUE_SIZE (4)
 static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
 
-static const shell_command_t shell_commands[] = {
-    { "coap", "CoAP example", gcoap_cli_cmd },
-    { NULL, NULL, NULL }
-};
+// static const shell_command_t shell_commands[] = {
+//     { "coap", "CoAP example", gcoap_cli_cmd },
+//     { NULL, NULL, NULL }
+// };
 
 int main(void)
 {
+    getchar();
     /* for the thread running the shell */
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
     sec_gcoap_dtls_init(); 
@@ -45,8 +46,8 @@ int main(void)
 
     /* start shell */
     puts("All up, running the shell now");
-    char line_buf[SHELL_DEFAULT_BUFSIZE];
-    shell_run(shell_commands, line_buf, SHELL_DEFAULT_BUFSIZE);
+    // char line_buf[SHELL_DEFAULT_BUFSIZE];
+    // shell_run(shell_commands, line_buf, SHELL_DEFAULT_BUFSIZE);
 
     /* should never be reached */
     return 0;
