@@ -91,11 +91,6 @@ CFLAGS += -DCONFIG_LORAMAC_DEFAULT_DR_5
 # add ztimer module
 USEMODULE += ztimer
 
-# The default size of GCOAP_PDU_BUF_SIZE can be too small for the response
-# from the RD server. Use a larger value if the client drops response packet
-# from RD server.
-CFLAGS += -DCONFIG_GCOAP_PDU_BUF_SIZE=512
-
 ifdef DBG_ID_COAP
   DEBUG_ADAPTER_ID=$(DBG_ID_COAP)
   PORT=/dev/ttyACM1
