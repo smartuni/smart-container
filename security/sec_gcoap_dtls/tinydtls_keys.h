@@ -28,11 +28,8 @@ extern "C" {
 /*
  *  Default keys examples for tinyDTLS (for RIOT, Linux and Contiki)
  */
-#define PSK_DEFAULT_IDENTITY "Client_identity"
-#define PSK_DEFAULT_KEY "secretPSK"
-#define PSK_OPTIONS "i:k:"
-#define PSK_ID_MAXLEN 32
-#define PSK_MAXLEN 32
+// #define PSK_DEFAULT_IDENTITY "Client_identity"
+// #define PSK_DEFAULT_KEY "secretPSK"
 
 #ifdef CONFIG_DTLS_ECC
 static const unsigned char ecdsa_priv_key[] = {

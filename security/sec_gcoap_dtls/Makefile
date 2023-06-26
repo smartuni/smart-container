@@ -1,12 +1,18 @@
 # Default Makefile, for host native GNRC-based networking
 
 # name of your application
-APPLICATION = gcoap_example
+APPLICATION = sec_gcoap_dtls
 
 # If no BOARD is found in the environment, use this default:
-PORT=/dev/tty.usbmodem141101
-#PORT = /dev/tty.usbmodem141301#CLIENT
+# PORT ?= /dev/tty.usbmodem31201
+PORT =/dev/tty.usbmodem31301#CLIENT
 BOARD ?= feather-nrf52840
+
+CFLAGS += -DPROVISIONING_ENABLE_DEV=1
+CFLAGS += -DPROVISIONING_CONFIG_CONCENTRATOR
+
+CFLAGS += -DPSK_DEFAULT_IDENTITY=\"1\"
+CFLAGS += -DPSK_DEFAULT_KEY=\"UALO5GO0LZFNLEG9\"
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
@@ -46,6 +52,8 @@ else
 endif
 
 USEMODULE += gcoap
+
+USEMODULE += mtd mtd_flashpage
 
 # Required by gcoap example
 USEMODULE += od

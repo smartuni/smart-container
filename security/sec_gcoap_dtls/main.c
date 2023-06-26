@@ -24,6 +24,7 @@
 #include "net/gcoap.h"
 #include "shell.h"
 
+#include "sec_gcoap_dtls.h"
 #include "gcoap_example.h"
 
 #define MAIN_QUEUE_SIZE (4)
@@ -38,7 +39,8 @@ int main(void)
 {
     /* for the thread running the shell */
     msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
-    server_init();
+    sec_gcoap_dtls_init(); 
+    //server_init();
     puts("gcoap example app");
 
     /* start shell */

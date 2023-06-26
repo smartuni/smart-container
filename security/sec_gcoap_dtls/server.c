@@ -37,23 +37,13 @@
 #if IS_USED(MODULE_GCOAP_DTLS)
 #include "net/credman.h"
 #include "net/dsm.h"
-#include "tinydtls_keys.h"
+// #include "tinydtls_keys.h"
+#define PSK_OPTIONS "i:k:"
+#define PSK_ID_MAXLEN 32
+#define PSK_MAXLEN 32
 
 /* Example credential tag for credman. Tag together with the credential type needs to be unique. */
 #define GCOAP_DTLS_CREDENTIAL_TAG 10
-
-static const uint8_t psk_id_0[] = PSK_DEFAULT_IDENTITY;
-static const uint8_t psk_key_0[] = PSK_DEFAULT_KEY;
-static const credman_credential_t credential = {
-    .type = CREDMAN_TYPE_PSK,
-    .tag = GCOAP_DTLS_CREDENTIAL_TAG,
-    .params = {
-        .psk = {
-            .key = { .s = psk_key_0, .len = sizeof(psk_key_0) - 1, },
-            .id = { .s = psk_id_0, .len = sizeof(psk_id_0) - 1, },
-        }
-    },
-};
 #endif
 
 static ssize_t _encode_link(const coap_resource_t *resource, char *buf,
@@ -187,19 +177,32 @@ void notify_observers(void)
 
 void server_init(void)
 {
-#if IS_USED(MODULE_GCOAP_DTLS)
-    int res = credman_add(&credential);
-    if (res < 0 && res != CREDMAN_EXIST) {
-        /* ignore duplicate credentials */
-        printf("gcoap: cannot add credential to system: %d\n", res);
-        return;
-    }
-    sock_dtls_t *gcoap_sock_dtls = gcoap_get_sock_dtls();
-    res = sock_dtls_add_credential(gcoap_sock_dtls, GCOAP_DTLS_CREDENTIAL_TAG);
-    if (res < 0) {
-        printf("gcoap: cannot add credential to DTLS sock: %d\n", res);
-    }
-#endif
+// #if IS_USED(MODULE_GCOAP_DTLS)
+//     static const uint8_t psk_id_0[] = PSK_DEFAULT_IDENTITY;
+//     static const uint8_t psk_key_0[] = PSK_DEFAULT_KEY;
+//     static const credman_credential_t credential = {
+//         .type = CREDMAN_TYPE_PSK,
+//         .tag = GCOAP_DTLS_CREDENTIAL_TAG,
+//         .params = {
+//             .psk = {
+//                 .key = { .s = psk_key_0, .len = sizeof(psk_key_0) - 1, },
+//                 .id = { .s = psk_id_0, .len = sizeof(psk_id_0) - 1, },
+//             }
+//         },
+//     };
+    
+//     int res = credman_add(&credential);
+//     if (res < 0 && res != CREDMAN_EXIST) {
+//         /* ignore duplicate credentials */
+//         printf("gcoap: cannot add credential to system: %d\n", res);
+//         return;
+//     }
+//     sock_dtls_t *gcoap_sock_dtls = gcoap_get_sock_dtls();
+//     res = sock_dtls_add_credential(gcoap_sock_dtls, GCOAP_DTLS_CREDENTIAL_TAG);
+//     if (res < 0) {
+//         printf("gcoap: cannot add credential to DTLS sock: %d\n", res);
+//     }
+// #endif
 
     gcoap_register_listener(&_listener);
 }
