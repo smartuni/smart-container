@@ -133,6 +133,36 @@ void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
         senml_encode_string_cbor(enc, &vs);
         break;
     }
+    case SENSOR_TYPE_TEMPERATURE: 
+    {
+        senml_value_t vf = {
+            .attr = {
+                .base_name = "temp",
+                .time = senml_duration_s(element->timestamp)
+            },
+            .value = senml_uint(61)
+        };
+        senml_encode_value_cbor(enc, &vf);
+        break;
+    }
+    case SENSOR_TYPE_WATERLEAK: 
+    {
+        senml_bool_value_t vf = {0};
+        vf.attr.base_name = "water";
+        vf.attr.time = senml_duration_s(element->timestamp);
+        vf.value = element->values.event;
+        senml_encode_bool_cbor(enc, &vf);
+        break;
+    }
+    case SENSOR_TYPE_DOOR: 
+    {
+        senml_bool_value_t vf = {0};
+        vf.attr.base_name = "door";
+        vf.attr.time = senml_duration_s(element->timestamp);
+        vf.value = element->values.event;
+        senml_encode_bool_cbor(enc, &vf);
+        break;
+    }
     default:
         break;
     }
@@ -191,7 +221,7 @@ void send_data_list(clist_node_t *list)
 
     size_t encoded_length = nanocbor_encoded_len(&enc);
 
-    // od_hex_dump(cbor_buf, encoded_length, 0);
+    od_hex_dump(cbor_buf, encoded_length, 0);
     /* TODO: send the data here */
     send_data(cbor_buf, encoded_length);
 }
