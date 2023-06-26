@@ -7,8 +7,8 @@
 #include "mtd.h"
 #include "mtd_flashpage.h"
 
-// #define PROVISIONING_CONFIG_CONCENTRATOR 
-// #define PROVISIONING_ENABLE_DEV 1
+#define PROVISIONING_CONFIG_CONCENTRATOR 
+#define PROVISIONING_ENABLE_DEV 1
 
 #define AES_KEY_SIZE 16
 #define AES_BLOCK_SIZE 16

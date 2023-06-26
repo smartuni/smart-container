@@ -12,7 +12,7 @@ def get_device_info(device_id):
     headers = {
         'Authorization': f'Bearer {ACCESS_KEY}',
         'Accept': 'application/json',
-        'User-Agent': 'python-requests',  # Recommended user-agent
+        'User-Agent': 'python-requests', 
     }
 
     response = requests.get(f'{API_BASE_URL}/applications/{APP_ID}/devices/{device_id}', headers=headers)
@@ -24,7 +24,7 @@ def get_device_info(device_id):
         print(f"Failed to retrieve device info: {response.text}")
         return None
 
-device_info = get_device_info('your-device-id')  # Replace 'your-device-id' with the actual device ID
+device_info = get_device_info('10')  
 if device_info is not None:
     print(json.dumps(device_info, indent=4))
 

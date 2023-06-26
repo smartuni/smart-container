@@ -2,15 +2,17 @@
 APPLICATION = provisioning
 
 # If no BOARD is found in the environment, use this default:
-PORT=/dev/ttyS6
+PORT=/dev/tty.usbmodem14101
 BOARD ?= feather-nrf52840
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../RIOT
 
 
+
+
 # Import necessary modules
-USEMODULE += xtimer
+USEMODULE += xtimer mtd mtd_flashpage
 USEMODULE += od
 USEMODULE += periph_uart
 USEMODULE += periph_flashpage
@@ -18,10 +20,11 @@ USEMODULE += shell_cmds_default  # Provides reboot command
 USEMODULE += fmt
 USEMODULE += fmt_hexdump
 USEMODULE += periph_pm
-USEMODULE+=shell
+USEMODULE += shell
+USEMODULE += log_color
 
 # Include the Semtech LoRaMAC package
-USEPKG += semtech-loramac
+# USEPKG += semtech-loramac
 
 # Required features
 FEATURES_REQUIRED += periph_uart

@@ -1,8 +1,8 @@
 #include "string.h"
 #include "provisioning_helper.h"
 
-// #define PROVISIONING_CONFIG_CONCENTRATOR 
-// #define PROVISIONING_ENABLE_DEV 1
+#define PROVISIONING_CONFIG_CONCENTRATOR 
+#define PROVISIONING_ENABLE_DEV 1
 
 #define PROVISIONING_HELPER_BUF_SIZE 256
 
@@ -18,82 +18,82 @@ int provisioning_helper_init(void)
     }
     
     #if(PROVISIONING_ENABLE_DEV==1)
-    provisioning_helper_init_dev();
+    // provisioning_helper_init_dev();
     #endif
 
     LOG_INFO("Successfully initialized Provisioning helper.\n");
     return 0;
 }
 
-void provisioning_helper_init_dev(void)
-{
-    LOG_WARNING("DEV_PROVISIONING enabled for development environment!\n");
-    LOG_WARNING("Erasing provisioning page (%d).\n", PROVISIONING_FLASH_PAGE_NUMBER);
-    mtd_erase(mtd_dev, PROVISIONING_FLASH_PAGE_BASE_ADDR, mtd_dev->pages_per_sector * mtd_dev->page_size);
+// void provisioning_helper_init_dev(void)
+// {
+//     LOG_WARNING("DEV_PROVISIONING enabled for development environment!\n");
+//     LOG_WARNING("Erasing provisioning page (%d).\n", PROVISIONING_FLASH_PAGE_NUMBER);
+//     mtd_erase(mtd_dev, PROVISIONING_FLASH_PAGE_BASE_ADDR, mtd_dev->pages_per_sector * mtd_dev->page_size);
 
-    // Creating page buffer with random data
-    LOG_INFO("Filling MTD with test values:\n");
+//     // Creating page buffer with random data
+//     LOG_INFO("Filling MTD with test values:\n");
     
-    int ret2 = 0;
+//     int ret2 = 0;
 
-    /* Provisioning - Device ID */
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_DEVICE_ID, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_DEVICE_ID), 
-        PROVISIONING_FLASH_LEN_DEVICE_ID);
+//     /* Provisioning - Device ID */
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_DEVICE_ID, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_DEVICE_ID), 
+//         PROVISIONING_FLASH_LEN_DEVICE_ID);
     
-    /* Provisioning - IEEE 802.15.4 Key */
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_IEEE802154_KEY, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_IEEE802154_KEY), 
-        PROVISIONING_FLASH_LEN_IEEE802154_KEY);
+//     /* Provisioning - IEEE 802.15.4 Key */
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_IEEE802154_KEY, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_IEEE802154_KEY), 
+//         PROVISIONING_FLASH_LEN_IEEE802154_KEY);
 
-    /* Provisioning - Concentrator node IPv6 addresss */
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_CONCENTRATOR_IPV6_ADDR, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_CONCENTRATOR_IPV6_ADDR), 
-        PROVISIONING_FLASH_LEN_CONCENTRATOR_IPV6_ADDR);
+//     /* Provisioning - Concentrator node IPv6 addresss */
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_CONCENTRATOR_IPV6_ADDR, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_CONCENTRATOR_IPV6_ADDR), 
+//         PROVISIONING_FLASH_LEN_CONCENTRATOR_IPV6_ADDR);
 
-    /* Provisioning - DTLS PSK AES128 Key*/
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_DTLS_PSK_AES_KEY, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_DTLS_PSK_AES_KEY), 
-        PROVISIONING_FLASH_LEN_DTLS_PSK_AES_KEY);
+//     /* Provisioning - DTLS PSK AES128 Key*/
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_DTLS_PSK_AES_KEY, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_DTLS_PSK_AES_KEY), 
+//         PROVISIONING_FLASH_LEN_DTLS_PSK_AES_KEY);
 
-    /************************************************/
-    /*      Concentrator-specific provisioning      */
-    /************************************************/
-    #ifdef PROVISIONING_CONFIG_CONCENTRATOR /* Start Concentrator-specific provisioning */
+//     /************************************************/
+//     /*      Concentrator-specific provisioning      */
+//     /************************************************/
+//     #ifdef PROVISIONING_CONFIG_CONCENTRATOR /* Start Concentrator-specific provisioning */
 
-    /* Provisioning -  LoRaWAN DEV EUI*/
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_LOWRAWAN_DEV_EUI, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_LOWRAWAN_DEV_EUI), 
-        sizeof(PROVISIONING_FLASH_DEV_LOWRAWAN_DEV_EUI));
-    /* Provisioning - LoRaWAN APP EUI */
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_LOWRAWAN_APP_EUI, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_LOWRAWAN_APP_EUI), 
-        PROVISIONING_FLASH_LEN_LOWRAWAN_APP_EUI);
+//     /* Provisioning -  LoRaWAN DEV EUI*/
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_LOWRAWAN_DEV_EUI, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_LOWRAWAN_DEV_EUI), 
+//         sizeof(PROVISIONING_FLASH_DEV_LOWRAWAN_DEV_EUI));
+//     /* Provisioning - LoRaWAN APP EUI */
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_LOWRAWAN_APP_EUI, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_LOWRAWAN_APP_EUI), 
+//         PROVISIONING_FLASH_LEN_LOWRAWAN_APP_EUI);
 
-    /* Provisioning - LoRaWAN APP Key */
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_LOWRAWAN_APP_KEY, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_LOWRAWAN_APP_KEY), 
-        PROVISIONING_FLASH_LEN_LOWRAWAN_APP_KEY);
+//     /* Provisioning - LoRaWAN APP Key */
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_LOWRAWAN_APP_KEY, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_LOWRAWAN_APP_KEY), 
+//         PROVISIONING_FLASH_LEN_LOWRAWAN_APP_KEY);
 
-    /* Provisioning - Secure Save AES-128 Key */
-    ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_SEC_SAVE_AES_KEY, 
-        PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_SEC_SAVE_AES_KEY), 
-        PROVISIONING_FLASH_LEN_SEC_SAVE_AES_KEY);
+//     /* Provisioning - Secure Save AES-128 Key */
+//     ret2 += mtd_write(mtd_dev, PROVISIONING_FLASH_DEV_SEC_SAVE_AES_KEY, 
+//         PROVISIONING_ADD_TO_BASE_ADDRESS(PROVISIONING_FLASH_ADDRESS_SEC_SAVE_AES_KEY), 
+//         PROVISIONING_FLASH_LEN_SEC_SAVE_AES_KEY);
 
-    #endif /* End Concentrator-specific provisioning */
+//     #endif /* End Concentrator-specific provisioning */
     
-    if(ret2)
-    {
-        LOG_ERROR("Failed to write test data to MTD.\n");
-    }
-    else
-    {
-        LOG_INFO("Initialized MTD test data with:\n");
-        char buf[PROVISIONING_HELPER_BUF_SIZE];
-        mtd_read(mtd_dev, buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
-        od_hex_dump(buf, sizeof(buf), OD_WIDTH_DEFAULT);
-    }
-}
+//     if(ret2)
+//     {
+//         LOG_ERROR("Failed to write test data to MTD.\n");
+//     }
+//     else
+//     {
+//         LOG_INFO("Initialized MTD test data with:\n");
+//         char buf[PROVISIONING_HELPER_BUF_SIZE];
+//         mtd_read(mtd_dev, buf, PROVISIONING_FLASH_PAGE_BASE_ADDR, PROVISIONING_HELPER_BUF_SIZE);
+//         od_hex_dump(buf, sizeof(buf), OD_WIDTH_DEFAULT);
+//     }
+// }
 
 int provisioning_helper_get_device_id(uint8_t *device_id)
 {
