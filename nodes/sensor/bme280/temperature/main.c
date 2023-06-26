@@ -20,8 +20,8 @@
 /*          Start security initialization           */
 /* ------------------------------------------------ */
 #include "provisioning_helper.h"
-#include "sec_link_layer.h"
-static ieee802154_sec_context_t link_layer_sec_ctx;
+//#include "sec_link_layer.h"
+//static ieee802154_sec_context_t link_layer_sec_ctx;
 /* ------------------------------------------------ */
 /*           End security initialization            */
 /* ------------------------------------------------ */
@@ -35,7 +35,7 @@ int main(void)
     /*          Start security initialization           */
     /* ------------------------------------------------ */
     provisioning_helper_init();
-    sec_link_layer_init(&link_layer_sec_ctx);
+    //sec_link_layer_init(&link_layer_sec_ctx);
     /* ------------------------------------------------ */
     /*           End security initialization            */
     /* ------------------------------------------------ */

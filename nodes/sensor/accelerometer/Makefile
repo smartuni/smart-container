@@ -1,5 +1,5 @@
 # name of application
-APPLICATION = accelerometer
+APPLICATION = accelerometer_node
 
 BOARD ?= feather-nrf52840
 
@@ -14,7 +14,7 @@ USEMODULE += coap
 USEMODULE += mtd
 USEMODULE += mtd_flashpage
 USEMODULE += cipher_modes
-USEMODULE += ieee802154_security
+#USEMODULE += ieee802154_security
 USEMODULE += crypto_aes_128
 
 # Sensordriver

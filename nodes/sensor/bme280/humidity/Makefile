@@ -1,5 +1,5 @@
 # name of application
-APPLICATION = bme280
+APPLICATION = bme280_humidity_node
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= feather-nrf52840
@@ -16,7 +16,7 @@ USEMODULE += coap
 USEMODULE += mtd
 USEMODULE += mtd_flashpage
 USEMODULE += cipher_modes
-USEMODULE += ieee802154_security
+#USEMODULE += ieee802154_security
 USEMODULE += crypto_aes_128
 
 # Conversion from uint to string

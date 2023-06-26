@@ -11,13 +11,13 @@
 /*          Start security initialization           */
 /* ------------------------------------------------ */
 #include "provisioning_helper.h"
-#include "sec_link_layer.h"
-static ieee802154_sec_context_t link_layer_sec_ctx;
+//#include "sec_link_layer.h"
+//static ieee802154_sec_context_t link_layer_sec_ctx;
 /* ------------------------------------------------ */
 /*           End security initialization            */
 /* ------------------------------------------------ */
 
-#define ACCEL_THRESHOLD     10000   // Acceleration threshold in mg
+#define ACCEL_THRESHOLD     5000   // Acceleration threshold in mg
 #define THRESHOLD_TIME_US   0   // Threshold time until interrupt occurs
 
 /*
@@ -75,7 +75,7 @@ int main(void)
     /*          Start security initialization           */
     /* ------------------------------------------------ */
     provisioning_helper_init();
-    sec_link_layer_init(&link_layer_sec_ctx);
+    //sec_link_layer_init(&link_layer_sec_ctx);
     /* ------------------------------------------------ */
     /*           End security initialization            */
     /* ------------------------------------------------ */
@@ -84,7 +84,7 @@ int main(void)
     lis2dh12_t sensorDev; // Device descriptor
     lis2dh12_params_t sensorParams;
     sensorParams.i2c = dev;
-    char answerStream[] = "Acceleration exceeded 10G.";
+    char answerStream[] = "Impact over 5G";
 
     // Initialize sensor
     initDevice(&sensorDev, &sensorParams);
@@ -95,9 +95,9 @@ int main(void)
     while(1){
         // Wait for interrupt, function uses mutex
         if(lis2dh12_wait_event(&sensorDev, LIS2DH12_INT1, false) < 0){
-            send_to_concentrator(answerStream);
             printf("Interrupt error\n");
         }
+        send_to_concentrator(answerStream);
         puts("Interrupt occured.");
     }  
 }

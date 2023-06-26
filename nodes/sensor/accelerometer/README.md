@@ -1,7 +1,7 @@
 ## Accelerometer
 
 This is the final version for the accelerometer sensor node. 
-The sensor generates an interrupt, when 10g of acceleration are exceeded.
+The sensor generates an interrupt, when 5g of acceleration are exceeded.
 It then sends a datastream to the concentrator and goes back to sleep. 
 The sent stream may be changed.
 

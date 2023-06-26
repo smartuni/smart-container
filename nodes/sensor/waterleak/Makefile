@@ -1,5 +1,5 @@
 # name of your application
-APPLICATION = test_waterleak
+APPLICATION = waterleak_node
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= feather-nrf52840
@@ -8,6 +8,9 @@ BOARD ?= feather-nrf52840
 RIOTBASE ?= $(CURDIR)/../../RIOT
 PROJECT_BASE ?= $(CURDIR)/../..
 
+USEMODULE += ztimer
+USEMODULE += ztimer_msec
+
 # Include external CoAP module
 EXTERNAL_MODULE_DIRS += $(PROJECT_BASE)/modules
 USEMODULE += coap
@@ -15,7 +18,7 @@ USEMODULE += coap
 USEMODULE += mtd
 USEMODULE += mtd_flashpage
 USEMODULE += cipher_modes
-USEMODULE += ieee802154_security
+#USEMODULE += ieee802154_security
 USEMODULE += crypto_aes_128
 USEMODULE += periph_gpio
 USEMODULE += periph_gpio_irq
