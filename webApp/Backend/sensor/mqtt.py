@@ -5,7 +5,6 @@ from cbor2 import loads
 from sensor.models import Container, SensorData 
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-from kpn_senml import *
 
 file = open("mqtt.txt", "w")
 file.write("MQTT started execution....")
@@ -64,12 +63,22 @@ def on_connect(client, userdata, flags, rc):
 
 # Parsing the payload message for the data we want
 def process_message(client, userdata, msg):
-    msg_decoded = msg.payload.decode("utf-8")
-    output_dict = json.loads(msg_decoded)
-    decoded_payload = base64.b64decode(output_dict["uplink_message"]["frm_payload"])
-
-    decoded_cbor_data = binascii.unhexlify(binascii.hexlify(decoded_payload))
-    json_data = loads(decoded_cbor_data)
+    try:
+        msg_decoded = msg.payload.decode("utf-8")
+        print(msg_decoded)
+        output_dict = json.loads(msg_decoded)
+        print(output_dict)
+        decoded_payload = base64.b64decode(output_dict["uplink_message"]["frm_payload"])
+        print(decoded_payload)
+        print(binascii.hexlify(decoded_payload))
+        decoded_cbor_data = binascii.unhexlify(binascii.hexlify(decoded_payload))
+        print(decoded_cbor_data)
+        json_data = loads(decoded_cbor_data)
+        print(json_data)
+    except Exception as e:
+        print(e)
+        return
+    
 
     for entry in json_data:
         sensor_type = entry[-2]
@@ -83,6 +92,9 @@ def process_message(client, userdata, msg):
         elif 4 in entry:
             #Boolean
             sensor_data = entry[4]
+        elif 7 in entry:
+            #Float
+            sensor_data = entry[7]
         else:
             sensor_data = None
         sensor_time = datetime.datetime.now() 
