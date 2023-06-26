@@ -17,6 +17,9 @@ RIOTBASE ?= $(CURDIR)/../RIOT
 # development process:
 DEVELHELP ?= 1
 
+USEMODULE+=shell
+
+
 
 FEATURES_REQUIRED += periph_uart
 # Change this to 0 show compiler invocation lines by default:
