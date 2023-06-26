@@ -3,7 +3,7 @@ APPLICATION = UART
 
 
 BOARD = feather-nrf52840
-PORT=/dev/tty.usbmodem143101
+PORT=/dev/tty.usbmodem14101
 
 
 
