@@ -55,11 +55,26 @@
   }
   
   .status {
-    background-color: #f9f4de;
+    //background-color: #f9f4de;
     padding: 1rem;
     border-radius: 0.5rem;
   }
   
+  .newValue {
+    background-color: #e5f7f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #008000;
+    
+    font-size: 1.1rem;
+    padding: 0.4rem;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+
+  }
+
   .doorStatus {
     color: #008000;
     font-size: 1.5rem;

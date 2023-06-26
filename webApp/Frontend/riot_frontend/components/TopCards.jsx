@@ -21,6 +21,7 @@ const getConById = (Id) => {
 
 // const Cards = classNames('flex justify-between w-full p-4 rounded-lg' + (isProblem(getConById(currentContainer)) ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg'));
 
+// Temperature, Humidity, GPS, Tamper, Acceleration
 const TopCards = ({ containers }) => {
   const router = useRouter()
 
@@ -58,23 +59,40 @@ const TopCards = ({ containers }) => {
     <div>
 
       <div className='flex justify-center items-center '>
-        <div className='col-span-1 bg-white h-full w-3/12 flex justify-center rounded-lg border items-center font-bold font-xl'>Current Container Id:
-          <span className='font-bold font-xl' id="containerTracker">1</span></div>
+        <div className='col-span-1 bg-white h-full w-2/12 flex justify-center rounded-lg border items-center font-bold font-xl'>
+          <div className=''>Current Container Id:
+            <div>
+              <p className='font-bold font-xl' id="containerTracker">1</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className='grid lg:grid-cols-5 grid-rows-1 gap-4 p-4'>
+      <div className='grid lg:grid-cols-6 grid-rows-1 gap-4 p-4'>
         {/* New card that checks if there was a crash? */}
+
+        <div className={mc.card}>
+          <div>
+            {/* Newest timestamp goes here (OR CURRENT LOCATION COORDINATES) */}
+            <p className={mc.cardTitle}>Sensors last updated:</p>
+          </div>
+          <p className={mc.newValue}>
+            <span id="container_time_stamp">---</span>
+          </p>
+        </div>
+
+
         <div className={mc.card}>
           <div>
             <div>
               <p className={mc.cardTitle}>Current Temp:</p>
             </div>
-            <div style={{ width: '80%' }}>
+            <div style={{ width: '105%' }}>
               <TempChart data={tempData} />
             </div>
           </div>
           {/* Get temp from sensor data */}
-          <p className={mc.temperature}>20.1C</p>
+          {/* <p className={mc.temperature}>20.1C</p> */}
         </div>
 
 
@@ -82,38 +100,38 @@ const TopCards = ({ containers }) => {
           <div>
             <p className={mc.cardTitle}>Current Humidity:</p>
           </div>
-          <p className={mc.cardValue}>
+          <p className={mc.newValue}>
             {/* Get humidity from sensor data */}
             <span>50%</span>
           </p>
         </div>
 
-        <div className={mc.card}>
-          <div>
-            {/* Newest timestamp goes here (OR CURRENT LOCATION COORDINATES) */}
-            <p className={mc.cardTitle}>Sensors last updated:</p>
-          </div>
-          <p className={mc.cardValue}>
-            <span id="container_time_stamp">---timestamp---</span>
-          </p>
-        </div>
 
         <div className={'border-1 p-4 rounded-lg mb-4' + (isTrueSet ? 'hover:bg-red-400 bg-red-300 rounded-lg' : 'border bg-white rounded-lg')}>
           <div className={mc.status}>
             <p className={mc.cardTitle}>Door Closed:</p>
-            <p className={mc.doorStatus} id="doorStatus"></p>
+            <p className={mc.newValue} id="doorStatus">---</p>
             <p className={mc.cardTitle}>Last Opened:</p>
             {/* Redundant timestamp? */}
-            <p className={mc.lastOpened}>23/02/23 12pm</p>
+            <p className={mc.newValue}>23/02/23 12pm</p>
           </div>
         </div>
 
         <div className={mc.card}>
-          <div>
-            {/* Does this atttribute exist? */}
-            <p className={mc.cardTitle}>No water leak detected</p>
+          <div className={mc.status}>
+            <p className={mc.cardTitle}>Leak Status:</p>
+            <p className={mc.newValue} id="leak status">---</p>
+
           </div>
         </div>
+        <div className={mc.card}>
+          <div className={mc.status}>
+            <p className={mc.cardTitle}>Acceleration:</p>
+            <p className={mc.newValue} id="acceleration id">---</p>
+
+          </div>
+        </div>
+
       </div>
     </div>
   );

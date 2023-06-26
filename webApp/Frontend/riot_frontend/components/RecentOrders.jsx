@@ -52,8 +52,8 @@ const RecentOrders = ({ containers, location, date }) => {
 
     const [list, setList] = useState(containers)
 
-
     const updateCon = (con) => setCurrentContainer(con);
+
     const [IsChecked, setIsChecked] = useState(false);
     const updateChecked = () => {
         setIsChecked(!IsChecked);
@@ -71,6 +71,7 @@ const RecentOrders = ({ containers, location, date }) => {
         setMessageID(event.target.value)
     }
     const [updatedID, setUpdatedID] = useState(messageID)
+
     const handleClickLoc = () => {
         setUpdated(messageLoc)
     }
@@ -128,23 +129,23 @@ const RecentOrders = ({ containers, location, date }) => {
                 return containers
             } else if (updated != "" && updatedID === "") {
 
-                var tempList = list.filter((item) => item.container_start == updated
-                    || item.container_destination.includes(updated)
-                    || item.container_content.includes(updated))
+                var tempList = list.filter((item) => item.container_start.toLowerCase() == updated
+                    || item.container_destination.toLowerCase().includes(updated)
+                    || item.container_content.toLowerCase().includes(updated))
                 // || item.id === updated)
                 return tempList
 
             } else if (updated === "" && updatedID != "") {
-                return list.filter((item) => item.container_id == updatedID)
+                return list.filter((item) => item.container_id.toLowerCase() == updatedID)
 
             } else {
                 // console.log("else reached")
-                var tempList2 = list.filter((item) => item.container_start == updated
-                    && item.container_id === updatedID
-                    || item.container_destination.includes(updated)
-                    && item.container_id === updatedID
-                    || item.container_content.includes(updated)
-                    && item.container_id === updatedID)
+                var tempList2 = list.filter((item) => item.container_start.toLowerCase() == updated
+                    && item.container_id.toLowerCase() === updatedID
+                    || item.container_destination.toLowerCase().includes(updated)
+                    && item.container_id.toLowerCase() === updatedID
+                    || item.container_content.toLowerCase().includes(updated)
+                    && item.container_id.toLowerCase() === updatedID)
                 return tempList2
 
             }
@@ -248,7 +249,7 @@ const RecentOrders = ({ containers, location, date }) => {
 
                             sendProps()
                         }}
-                        className={"rounded-lg my-3 p-2 flex items-center cursor-pointer " + (isProblem(con) ? 'hover:bg-red-400 bg-red-300' : 'hover:bg-gray-200 bg-gray-100')
+                        className={"rounded-lg my-3 p-1 flex items-center cursor-pointer " + (isProblem(con) ? 'hover:bg-red-400 bg-red-300' : 'hover:bg-gray-200 bg-gray-100')
 
                         }
                     >
