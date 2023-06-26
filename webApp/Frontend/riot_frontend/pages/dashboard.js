@@ -44,7 +44,7 @@ export default Home
 // GetServerSideProps
 // const containers = useContainers() 
 export const getServerSideProps = async (context) => {
-
+  let refreshToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4Nzg2NTQ3NSwiaWF0IjoxNjg3Nzc5MDc1LCJqdGkiOiIwNGRjYjA5Y2QwNjQ0ODRkYTQyMGRjY2ZhMzllMmZlYiIsInVzZXJfaWQiOiJkMDY5OTEzNS0wMjcxLTQ2N2UtYjA1Mi03NmM0N2ViMzliOTUiLCJ1c2VybmFtZSI6ImVtaWx5bHVjaWEuYW50b3NjaEBoYXdoYW1idXJnLmRlIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0bmFtZSI6IkFudG9zY2gifQ.IP28b5GoBNoukVaxfei7mnhVr209K7eIfOxWVWgr9SU"
   const res2 = await fetch("http://178.128.192.215:8000/api/signIn/refresh/", {
     method: "POST",
     headers: {
@@ -52,7 +52,7 @@ export const getServerSideProps = async (context) => {
 
     },
     body: JSON.stringify({
-      refresh: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4Nzc5ODgyNiwiaWF0IjoxNjg3NzEyNDI2LCJqdGkiOiI3ODliNDEyNmVhNmQ0MDFmYWQ3NjFlNWY1ZjZmNTA0MyIsInVzZXJfaWQiOiJkMDY5OTEzNS0wMjcxLTQ2N2UtYjA1Mi03NmM0N2ViMzliOTUiLCJ1c2VybmFtZSI6ImVtaWx5bHVjaWEuYW50b3NjaEBoYXdoYW1idXJnLmRlIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0bmFtZSI6IkFudG9zY2gifQ.37wWnzKr02lm8RgSm01lgwq6bhaRR4rV8EPDRcvdcIA"
+      refresh: refreshToken
     })
   }).then((res) => {
     return res.json();
