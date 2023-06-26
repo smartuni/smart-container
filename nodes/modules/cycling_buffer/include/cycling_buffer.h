@@ -27,10 +27,10 @@ typedef struct {
     int timestamp;
 } sensor_data_entry;
 
-void initCyclingBuffer();
-sensor_data_entry* getCyclingBufferSlot();
-clist_node_t* getCyclingBuffer();
-void clearCyclingBuffer();
+void initCyclingBuffer(void);
+sensor_data_entry* getCyclingBufferSlot(void);
+clist_node_t* getCyclingBuffer(void);
+void clearCyclingBuffer(void);
 
 
 

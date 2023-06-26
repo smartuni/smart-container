@@ -12,6 +12,7 @@
 #include "fmt.h" /* String formatting */
 #include "senml/cbor.h"
 #include "concentrator_lorawan.h"
+#include "cycling_buffer.h"
 
 #define JOIN_DELAY (10U * MS_PER_SEC) /* Unit system wait time to complete join procedure in seconds */
 #define LORAWAN_DATARATE LORAMAC_DR_2 /* Delay between transmission in milliseconds */
@@ -75,7 +76,7 @@ gnrc_netif_t *get_lorawan_netif(void)
     return NULL;
 }
 
-void sendData(uint8_t *data, size_t len){
+void send_data(uint8_t *data, size_t len){
     gnrc_pktsnip_t *pkt, *hdr;
     uint8_t port = CONFIG_LORAMAC_DEFAULT_TX_PORT; /* Default: 2 */               /* [TASK 3: Allocate a packet snip for the counter data] */
     pkt = gnrc_pktbuf_add(NULL, (void *)&data, len, GNRC_NETTYPE_UNDEF); /* [TASK 3: Build GNRC Netif Header snip and prepend to packet] */
@@ -103,7 +104,7 @@ void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
         senml_bool_value_t vf = {0};
         vf.attr.base_name = "crash";
         vf.attr.time = senml_duration_s(element->timestamp);
-        vf.value = element->values.event;
+        vf.value = element->vals.event;
         senml_encode_bool_cbor(enc, &vf);
         break;
     }
@@ -121,13 +122,13 @@ void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
     }
     case SENSOR_TYPE_GPS:
     {
-        size_t string_len = strlen(element->values.gps);
+        size_t string_len = strlen(element->vals.gps);
         senml_string_value_t vs = {
             .attr = {
                 .time = senml_duration_s(6),
                 .base_name = "gps"
             },
-            .value = element->values.gps,
+            .value = element->vals.gps,
             .len = string_len
         };
         senml_encode_string_cbor(enc, &vs);
@@ -150,7 +151,7 @@ void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
         senml_bool_value_t vf = {0};
         vf.attr.base_name = "water";
         vf.attr.time = senml_duration_s(element->timestamp);
-        vf.value = element->values.event;
+        vf.value = element->vals.event;
         senml_encode_bool_cbor(enc, &vf);
         break;
     }
@@ -159,7 +160,7 @@ void _encode_list_member(nanocbor_encoder_t *enc, clist_node_t *data)
         senml_bool_value_t vf = {0};
         vf.attr.base_name = "door";
         vf.attr.time = senml_duration_s(element->timestamp);
-        vf.value = element->values.event;
+        vf.value = element->vals.event;
         senml_encode_bool_cbor(enc, &vf);
         break;
     }

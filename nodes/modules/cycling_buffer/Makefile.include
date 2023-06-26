@@ -1,0 +1,4 @@
+# coap
+$(info "message test")
+USEMODULE_INCLUDES_cycling_buffer := $(LAST_MAKEFILEDIR)/include
+USEMODULE_INCLUDES += $(USEMODULE_INCLUDES_cycling_buffer)

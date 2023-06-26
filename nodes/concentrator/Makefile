@@ -6,7 +6,7 @@ BOARD ?= nrf52840dk
 FEATURES_REQUIRED += periph_spi
 # enable this for testing on the small feather board
 # BOARD = feather-nrf52840
-
+USEMODULE+=ztimer_sec
 # This USEMODULE should be used if LORAWAN Board is connected to nrf52840dk board!!
 ifeq ($(BOARD),nrf52840dk)
   USEMODULE += sx1272
@@ -31,7 +31,10 @@ CFLAGS += -DPROVISIONING_CONFIG_CONCENTRATOR
 RIOTBASE ?= $(CURDIR)/../RIOT
 
 # Add project base for custom includes
-PROJECTBASE ?= $(CURDIR)/../..
+PROJECTBASE ?= $(CURDIR)/..
+
+$(info $(PROJECTBASE))
+
 
 # Add modules directory for custom modules
 EXTERNAL_MODULE_DIRS += $(PROJECTBASE)/modules

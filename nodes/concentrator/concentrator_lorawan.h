@@ -5,6 +5,7 @@
 #include "net/gnrc/netif.h" /* GNRC's network interfaces */
 
 
+/*
 #define GPS_BUFF 128
 typedef enum {
     SENSOR_TYPE_CRASH,
@@ -24,12 +25,12 @@ typedef struct {
         int value;
         char gps[GPS_BUFF];
     } values;
-} sensor_data_entry;
+} sensor_data_entry;*/
 
 gnrc_netif_t *get_lorawan_netif(void);
 void button_callback(void* arg);
 void activate(gnrc_netif_t *netif);
-void sendData(uint8_t data);
+void send_data(uint8_t *data, size_t len);
 
 void send_data_list(clist_node_t *list);
 
